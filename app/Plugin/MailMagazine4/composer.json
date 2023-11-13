@@ -1,0 +1,12 @@
+{
+  "name": "ec-cube/mailmagazine4",
+  "version": "4.1.3",
+  "description": "メールマガジンプラグイン",
+  "type": "eccube-plugin",
+  "require": {
+    "ec-cube/plugin-installer": "~0.0.6 || ^2.0"
+  },
+  "extra": {
+    "code": "MailMagazine4"
+  }
+}

@@ -1,0 +1,305 @@
+{#
+Plugin Name: JoolenPromotionModal4
+
+Copyright(c) joolen inc. All Rights Reserved.
+
+https://www.joolen.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['store', 'plugin', 'plugin_list'] %}
+
+{% block title %}{{ 'joolenpromotionmodal4.plugin_name'|trans }}{% endblock %}
+{% block sub_title %}プラグイン一覧{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/fileupload/jquery.fileupload.css', 'admin') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fileupload/jquery.fileupload-ui.css', 'admin') }}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+{% endblock stylesheet %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/js/vendor/fileupload/vendor/jquery.ui.widget.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.iframe-transport.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.fileupload.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.fileupload-process.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.fileupload-validate.js', 'admin') }}"></script>
+    <script>
+    $(function() {
+        var hideThumbnail = function() {
+            if ($('#thumb div').length > 0) {
+                $('#icon_no_image').css('display', 'none');
+            } else {
+                $('#icon_no_image').css('display', '');
+            }
+        };
+
+        var proto_img = '<div class="c-form__fileUploadThumbnail">' +
+            '<a class="delete-image"><i class="fa fa-times" aria-hidden="true"></i></a>' +
+            '</div>';
+        var image = $('#{{ form.image.vars.id }}').val();
+
+        if (image != '') {
+            var filename = $('#{{ form.image.vars.id }}').val();
+            if (image == '{{ oldImage }}') {
+                var path = '{{ asset('', 'save_image') }}' + filename;
+            } else {
+                var path = '{{ asset('', 'temp_image') }}' + filename;
+            }
+            var $img = $(proto_img).css('background-image', 'url(' + path + ')');
+            $('#{{ form.image.vars.id }}').val(filename);
+
+            $('#thumb').append($img);
+            hideThumbnail();
+        }
+        hideThumbnail();
+
+        $('#{{ form.image_file.vars.id }}').fileupload({
+                url: "{{ url('joolen_promotion_modal4_admin_config_image_add') }}",
+                type: 'post',
+                dataType: 'json',
+                dropZone: $('#upload-zone'),
+                done: function(e, data) {
+                    $('.progress').hide();
+                    var path = '{{ asset('', 'temp_image') }}/' + data.result.filename;
+                    var $img = $(proto_img).css('background-image', 'url(' + path + ')');;
+                    $('#{{ form.image.vars.id }}').val(data.result.filename);
+
+                    $('#thumb').append($img);
+                    hideThumbnail();
+                },
+                fail: function(e, data) {
+                    alert('{{ 'admin.common.upload_error'|trans }}');
+                },
+                always: function(e, data) {
+                    $('.progress').hide();
+                    $('.progress .progress-bar').width('0%');
+                },
+                start: function(e, data) {
+                    if ($('.c-form__fileUploadThumbnail').length >= 1) {
+                        $.each($('.delete-image'), function(index, delete_image) {
+                            delete_image.click();
+                        });
+                    }
+                    $('.progress').show();
+                    $('#thumb').find('div').remove();
+                    $('#{{ form.image.vars.id }}').val('');
+                },
+                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                maxFileSize: 10000000,
+                maxNumberOfFiles: 1,
+                progressall: function(e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('.progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                },
+                processalways: function(e, data) {
+                    if (data.files.error) {
+                        alert("{{ 'admin.common.upload_error'|trans }}");
+                    }
+                }
+        });
+
+
+        $('#thumb').on('click', '.delete-image', function() {
+            $('#{{ form.image.vars.id }}').val('');
+            var thumbnail = $(this).parents('div.c-form__fileUploadThumbnail');
+            $(thumbnail).remove();
+            hideThumbnail();
+        });
+
+        // 画像アップロード
+        $('#file_upload').on('click', function() {
+            $('#{{ form.image_file.vars.id }}').click();
+        });
+
+
+        if ($("#{{ form.interval_unlimited.vars.id }}").prop("checked")) {
+            $("#{{ form.interval_date.vars.id }}").attr("disabled", "disabled").val('');
+        } else {
+            $("#{{ form.interval_date.vars.id }}").removeAttr("disabled");
+        }
+
+        $("#{{ form.interval_unlimited.vars.id }}").on("click change", function() {
+            if ($(this).prop("checked")) {
+                $("#{{ form.interval_date.vars.id }}").attr("disabled", "disabled").val('');
+            } else {
+                $("#{{ form.interval_date.vars.id }}").removeAttr("disabled");
+            }
+        });
+ });
+</script>
+{% endblock javascript %}
+
+{% block main %}
+    <form role="form" method="post">
+        {{ form_widget(form._token) }}
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <span class="card-title">{{ 'joolenpromotionmodal4.admin.config.title.content'|trans }}</span></div>
+                                <div class="col-4 text-right">
+                                    <a data-toggle="collapse" href="#contentForm"
+                                       aria-expanded="true" aria-controls="contentForm"><i class="fa fa-lg fa-angle-up"></i></a></div>
+                            </div>
+                        </div>
+                        <div class="ec-cardCollapse collapse show" id="contentForm" style="">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'joolenpromotionmodal4.admin.tooltip.modal.image'|trans }}">
+                                            <span>{{ 'joolenpromotionmodal4.admin.config.modal.image'|trans }}</span>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <br>{{ 'joolenpromotionmodal4.admin.config.modal.image_size'|trans }}
+                                        </div>
+                                    </div>
+                                    <div class="col mb-2">
+                                        <div class="progress" style="display: none;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div id="thumb" class="c-form__fileUploadThumbnails clearfix"></div>
+                                        {{ form_widget(form.image, { attr : { style : 'display:none;' } }) }}
+                                        <div id="upload-zone" class="media py-5 border-ec-dashed mb-2 rounded">
+                                            <div class="media-body">
+                                                <i class="fa fa-cloud-upload fa-3x text-ec-lightGray mx-3 align-middle" aria-hidden="true"></i>
+                                                {{ 'admin.common.drag_and_drop_image_description'|trans }}
+                                                {{ form_widget(form.image_file, { attr : { accept : 'image/*', style : 'display:none;' } }) }}
+                                                {{ form_errors(form.image) }}
+                                                <a class="btn btn-ec-regular mr-2" onclick="$('#promotion_modal_image_file').click()">
+                                                    {{ 'admin.common.file_select'|trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'joolenpromotionmodal4.admin.tooltip.modal.description'|trans }}">
+                                            <span>{{ 'joolenpromotionmodal4.admin.config.modal.description'|trans }}</span><i class="fa fa-question-circle fa-lg ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col mb-2">
+                                        {{ form_widget(form.description) }}
+                                        {{ form_errors(form.description) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'joolenpromotionmodal4.admin.tooltip.modal.button.name'|trans }}">
+                                            <span>{{ 'joolenpromotionmodal4.admin.config.modal.button.name'|trans }}</span><i class="fa fa-question-circle fa-lg ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col mb-2">
+                                        {{ form_widget(form.button_name) }}
+                                        {{ form_errors(form.button_name) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'joolenpromotionmodal4.admin.tooltip.modal.url'|trans }}">
+                                            <span>{{ 'joolenpromotionmodal4.admin.config.modal.url'|trans }}</span><i class="fa fa-question-circle fa-lg ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col mb-2">
+                                        {{ form_widget(form.url) }}
+                                        {{ form_errors(form.url) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <span class="card-title">{{ 'joolenpromotionmodal4.admin.config.title.condition'|trans }}</span></div>
+                                <div class="col-4 text-right">
+                                    <a data-toggle="collapse" href="#conditionForm"
+                                       aria-expanded="true" aria-controls="conditionForm"><i class="fa fa-lg fa-angle-up"></i></a></div>
+                            </div>
+                        </div>
+                        <div class="ec-cardCollapse collapse show" id="conditionForm" style="">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="d-inline-block">
+                                            <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'joolenpromotionmodal4.admin.tooltip.modal.interval.date'|trans }}">
+                                                <span>{{ 'joolenpromotionmodal4.admin.config.modal.interval.date'|trans }}</span>
+                                                <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                                <span class="badge badge-primary ml-1">
+                                                    {{ 'admin.common.required'|trans }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div>
+                                            {{ form_widget(form.interval_date) }}
+                                            {{ form_errors(form.interval_date) }}
+                                            {{ form_widget(form.interval_unlimited) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="d-inline-block"><span>{{ 'joolenpromotionmodal4.admin.config.modal.login.user.display'|trans }}</span></div>
+                                    </div>
+                                    <div class="col mb-2">
+                                        {{ form_widget(form.login_user_display) }}
+                                        {{ form_errors(form.login_user_display) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <span>{{ 'joolenpromotionmodal4.admin.config.modal.non.member.display'|trans }}</span>
+                                    </div>
+                                    <div class="col mb-2">
+                                        {{ form_widget(form.non_member_display) }}
+                                        {{ form_errors(form.non_member_display) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink"
+                               href="{{ url('admin_store_plugin') }}">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                <span>プラグイン一覧</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div id="ex-conversion-action" class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                {{ form_widget(form.visible) }}
+                                {{ form_errors(form.visible) }}
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5" type="submit">{{ 'admin.common.registration'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

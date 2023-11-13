@@ -1,0 +1,48 @@
+<?php //Eccube%255CController%255CAdmin%255COrder%255CEditController%2523searchProduct
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        clone $p['Symfony\\Component\\Routing\\Annotation\\Route'],
+        clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/order/search/product',
+                '/%eccube_admin_route%/order/search/product/page/{page_no}',
+            ],
+            'name' => [
+                'admin_order_search_product',
+                'admin_order_search_product_page',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                    'POST',
+                ],
+                [
+                    'GET',
+                    'POST',
+                ],
+            ],
+            'requirements' => [
+                1 => [
+                    'page_no' => '\\d+',
+                ],
+            ],
+        ],
+        'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template' => [
+            'template' => [
+                2 => '@admin/Order/search_product.twig',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[2],
+    ],
+    []
+); }];

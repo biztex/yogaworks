@@ -1,0 +1,251 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+{% endblock javascript %}
+
+{% block main %}
+
+<!-- 新規登録CAMPAIGN-->
+<div class="regist_camp">
+    <div class="kv"><img src="{{ asset('assets/img/top/regist-camp2022.jpg') }}"></div>
+    <ul>
+        <li class="box01">
+            <img src="{{ asset('assets/img/regist/ic_l_track.png') }}">
+            <div class="title">最短で翌日お届け！</div>
+            <p><span>営業日15時までのご注文</span>(ご入金確認)で当日出荷が可能。お急ぎの際にも便利です。<br>
+<span class="cap">※お住まいの地域によりお届け日は異なります。</span></p></li>
+        <li class="box02">
+            <img src="{{ asset('assets/img/regist/ic_l_30days.png') }}">
+            <div class="title">30日間無料交換サービス！</div>
+            <p>商品に不満があれば30日以内の申請で無料交換。メーカー直営ならではの<a href="/user_data/guarantee">安心保証</a>。</p></li>
+        <li class="box03">
+            <img src="{{ asset('assets/img/regist/ic_l_point.png') }}">
+            <div class="title">ポイントがどんどん貯まる！</div>
+            <p><span>1pt=1円</span>で使えるポイントが買い物の度に貯まります。さまざまな機会でポイントプレゼントも♪</p></li>
+        <li class="box04">
+            <img src="{{ asset('assets/img/regist/ic_l_mail.png') }}">
+            <div class="title">メルマガ登録でもっとお得！</div>
+            <p><span>新商品やお得なCP情報</span>をイチ早くお届け！またヨガライフに役立つニュースも不定期で配信します。</p></li>
+    </ul>
+    
+    <div class="bn_line"><a href="https://lin.ee/iAKwGpZ"><img src="{{ asset('assets/img/regist/bn_line_coupon.png') }}"></a></div>
+</div>
+
+<!--//新規登録CAMPAIGN-->
+
+    <div class="ec-registerRole">
+        <div class="ec-pageHeader">
+            <h1>{{ '新規会員登録'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <form method="post" action="{{ url('entry') }}" novalidate class="h-adr">
+                    <span class="p-country-name" style="display:none;">Japan</span>
+                    {{ form_widget(form._token) }}
+                    <div class="ec-borderedDefs">
+                        <dl>
+                            <dt>
+                                {{ form_label(form.name, 'お名前', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-halfInput{{ has_errors(form.name.name01, form.name.name02) ? ' error'}}">
+                                    {{ form_widget(form.name.name01, { 'attr': { 'placeholder': '姓' }}) }}
+                                    {{ form_widget(form.name.name02, { 'attr': { 'placeholder': '名' }}) }}
+                                    {{ form_errors(form.name.name01) }}
+                                    {{ form_errors(form.name.name02) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.kana, 'お名前(カナ)', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-halfInput{{ has_errors(form.kana.kana01, form.kana.kana02) ? ' error'}}">
+                                    {{ form_widget(form.kana.kana01, { 'attr': { 'placeholder': 'セイ' }}) }}
+                                    {{ form_widget(form.kana.kana02, { 'attr': { 'placeholder': 'メイ' }}) }}
+                                    {{ form_errors(form.kana.kana01) }}
+                                    {{ form_errors(form.kana.kana02) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.company_name, '会社名', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>*お届け先が会社(法人)の場合にご入力ください<br>
+                                <div class="ec-halfInput{{ has_errors(form.company_name) ? ' error' }}">
+                                    {{ form_widget(form.company_name) }}
+                                    {{ form_errors(form.company_name) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.address, '住所', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-zipInput{{ has_errors(form.postal_code) ? ' error' }}"><span>{{ '〒'|trans }}</span>
+                                    {{ form_widget(form.postal_code) }}
+                                    
+                                    <div class="ec-zipInputHelp">
+                                        <div class="ec-zipInputHelp__icon">
+                                            <div class="ec-icon"><img
+                                                        src="{{ asset('assets/icon/question-white.svg') }}" alt="">
+                                            </div>
+                                        </div><a href="https://www.post.japanpost.jp/zipcode/" target="_blank"><span>{{ '郵便番号検索'|trans }}</span></a>
+                                    </div>
+                                    {{ form_errors(form.postal_code) }}
+                                </div>
+
+                                <div class="ec-select{{ has_errors(form.address.pref) ? ' error' }}">
+                                    {{ form_widget(form.address.pref) }}
+                                    {{ form_errors(form.address.pref) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.address.addr01) ? ' error' }}">
+                                    {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': '市区町村名(例：中央区銀座)' }}) }}
+                                    {{ form_errors(form.address.addr01) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.address.addr02) ? ' error' }}">
+                                    {{ form_widget(form.address.addr02,  { 'attr': { 'placeholder': '番地・ビル名(例：3-10-15　東銀2ビル)' }}) }}
+                                    {{ form_errors(form.address.addr02) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.phone_number, '電話番号', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-telInput{{ has_errors(form.phone_number) ? ' error' }}">
+                                    {{ form_widget(form.phone_number) }}
+                                    {{ form_errors(form.phone_number) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.email, 'メールアドレス', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-input{{ has_errors(form.email.first) ? ' error' }}">
+                                    {{ form_widget(form.email.first, { 'attr': { 'placeholder': '例：shop@yogaworks.jp' }}) }}
+                                    {{ form_errors(form.email.first) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.email.second) ? ' error' }}">
+                                    {{ form_widget(form.email.second, { 'attr': { 'placeholder': '確認のためもう一度入力してください' }}) }}
+                                    {{ form_errors(form.email.second) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.password, 'パスワード', { 'label_attr': {'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-input{{ has_errors(form.password.first) ? ' error' }}">
+                                    {{ form_widget(form.password.first, {
+                                        'attr': { 'placeholder': '半角英数記号%min%〜%max%文字'|trans({ '%min%': eccube_config.eccube_password_min_len, '%max%': eccube_config.eccube_password_max_len }) },
+                                        'type': 'password'
+                                    }) }}
+                                    {{ form_errors(form.password.first) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.password.second) ? ' error' }}">
+                                    {{ form_widget(form.password.second, {
+                                        'attr': { 'placeholder': '確認のためもう一度入力してください'|trans },
+                                        'type': 'password'
+                                    }) }}
+                                    {{ form_errors(form.password.second) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.birth, '生年月日', { 'label_attr': {'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-birth{{ has_errors(form.birth) ? ' error' }}">
+                                    {{ form_widget(form.birth.year) }}<span>/</span>
+                                    {{ form_widget(form.birth.month) }}<span>/</span>
+                                    {{ form_widget(form.birth.day) }}
+                                    {{ form_errors(form.birth) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.sex, '性別', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-radio{{ has_errors(form.sex) ? ' error' }}">
+                                    {{ form_widget(form.sex) }}
+                                    {{ form_errors(form.sex) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.job, '職業', { 'label_attr': {'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-select{{ has_errors(form.job) ? ' error' }}">
+                                    {{ form_widget(form.job) }}
+                                    {{ form_errors(form.job) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        {# エンティティ拡張の自動出力 #}
+                        {% for f in form|filter(f => f.vars.eccube_form_options.auto_render) %}
+                            {% if f.vars.eccube_form_options.form_theme %}
+                                {% form_theme f f.vars.eccube_form_options.form_theme %}
+                                {{ form_row(f) }}
+                            {% else %}
+                                <dl>
+                                    <dt>
+                                        {{ form_label(f) }}
+                                    </dt>
+                                    <dd>
+                                        <div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+                                            {{ form_widget(f) }}
+                                            {{ form_errors(f) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="ec-registerRole__actions">
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <div class="ec-checkbox{{ has_errors(form.user_policy_check) ? ' error' }}">
+                                    <label>
+                                        {{ form_widget(form.user_policy_check) }}
+                                        {{ '<a class="ec-link" href="%url%" target="_blank">利用規約</a>に同意してお進みください'|trans({ '%url%': url('help_agreement') })|raw }}
+                                    </label>
+                                    {{ form_errors(form.user_policy_check) }}
+                                </div>
+                                <button class="ec-blockBtn--action" type="submit" name="mode" value="confirm">{{ '同意する'|trans }}</button>
+                                <a class="ec-blockBtn--cancel" href="{{ url('homepage') }}">{{ '同意しない'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

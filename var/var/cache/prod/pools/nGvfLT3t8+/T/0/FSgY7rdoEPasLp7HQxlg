@@ -1,0 +1,35 @@
+<?php //Eccube%255CEntity%255CDelivery%2524DeliveryTimes
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\OneToMany'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\OneToMany')),
+        clone ($p['Doctrine\\ORM\\Mapping\\OrderBy'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\OrderBy')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'mappedBy' => [
+                'Delivery',
+            ],
+            'targetEntity' => [
+                'Eccube\\Entity\\DeliveryTime',
+            ],
+            'cascade' => [
+                [
+                    'persist',
+                    'remove',
+                ],
+            ],
+            'value' => [
+                1 => [
+                    'sort_no' => 'ASC',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+); }];

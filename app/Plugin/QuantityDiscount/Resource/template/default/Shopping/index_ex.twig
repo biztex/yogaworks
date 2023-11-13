@@ -1,0 +1,7 @@
+{% set qdIndex = 0 %}
+{% for shipping in Order.shippings %}
+    {% for orderItem in shipping.productOrderItems %}
+        {{ include('@QuantityDiscount/shopping_parts.twig', {'orderItem': orderItem}, ignore_missing=true) }}
+        {% set qdIndex = qdIndex + 1 %}
+    {% endfor %}
+{% endfor %}

@@ -1,0 +1,31 @@
+{#
+ This file is part of the PostCarrier
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% if not is_granted('ROLE_USER') %}
+<div>
+    <form method="post" id="postcarrier_mailmaga" action="{{ path('postcarrier_mailmaga') }}">
+        {{ form_widget(form._token) }}
+        <div>
+            <div>
+                <h3 style="font-weight: bold;">メルマガ会員登録</h3>
+            </div>
+            <div>
+                <p>{{ form_widget(form.email, {'attr':{'placeholder':"メールアドレス", 'size':25}}) }}</p>
+                <p>
+                    <button type="submit" class="btn btn-primary btn-sm" name="action" value="subscribe">登録</button>
+                    <button type="submit" class="btn btn-primary btn-sm" name="action" value="unsubscribe">解除</button>
+                </p>
+                <p>※EC会員の登録は<a href="{{ path('entry') }}">こちら</a></p>
+            <div>
+        </div>
+    </form>
+<div>
+{% endif %}

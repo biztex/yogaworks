@@ -1,0 +1,161 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_template'] %}
+
+{% block title %}{{ 'postcarrier.template.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.core.min.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.widget.min.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.mouse.min.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.sortable.min.js', 'admin') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="c-outsideBlock__contents mb-5">
+        {% if pagination %}
+            <span class="font-weight-bold ml-2">{{ 'admin.postcarrier.history.search_count'|trans({'%count%':pagination.totalItemCount}) }}</span>
+        {% endif %}
+    </div>
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                {% if pagination and pagination.totalItemCount %}
+                    <div class="row justify-content-between mb-2">
+                        <div class="col-6"></div>
+
+                        <div class="col-5 text-right">
+                            {#Dropdown page count#}
+                            <div class="d-inline-block mr-2">
+                                <select class="custom-select" onchange="location = this.value;">
+                                    {% for pageMax in pageMaxis %}
+                                        <option {% if pageMax.name == page_count %} selected {% endif %}
+                                                value="{{ path('plugin_post_carrier_template_page', {'page_no': 1, 'page_count': pageMax.name }) }}">
+                                            {{ 'admin.common.count'|trans({ '%count%': pageMax.name }) }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="d-inline-block">
+                                <div class="btn-group" role="group"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+{#
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-toggle="tooltip" data-placement="top" title="Tooltip">
+                                        <span class="card-title">
+                                            {{ 'postcarrier.template.card_title'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                </div>
+                            </div>
+                        </div>
+#}
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-2 pb-2">{{ 'postcarrier.template.th_created_date'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2">{{ 'postcarrier.template.th_subject'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2">{{ 'postcarrier.template.th_mail_format'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2">{{ '種別' }}</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center pr-3">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for Template in pagination %}
+                                    <tr>
+                                        <td>{{ Template.date_created|date("Y/m/d H:i") }}</td>
+                                        <td>
+                                            <a href="{{ url('plugin_post_carrier_template_edit', { id: Template.template_id }) }}">{{ Template.subject }}</a>
+                                        </td>
+                                        <td>
+                                            {% if Template.type == 'text' %}
+                                                {{ 'postcarrier.mail_format.text'|trans }}
+                                            {% else %}
+                                                {{ 'postcarrier.mail_format.html'|trans }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ Template.kind }}
+                                        </td>
+                                        <td class="icon_edit align-middle pr-3 text-center">
+                                            <div class="row justify-content-end">
+                                                <div class="col-auto text-center">
+                                                    <a href="{{ url('plugin_post_carrier_template_preview', { id: Template.template_id }) }}">
+                                                        {{ 'postcarrier.template.btn_review'|trans }}
+                                                    </a>
+                                                </div>
+                                                <div class="col-auto text-center">
+                                                    <a href="{{ url('plugin_post_carrier_template_copy', { id: Template.template_id }) }}">
+                                                        {{ 'postcarrier.template.btn_copy'|trans }}
+                                                    </a>
+                                                </div>
+                                                <div class="col-auto text-center">
+                                                    <a href="#" data-toggle="modal" data-target="#deleteModal{{ Template.template_id }}">{{ 'postcarrier.template.btn_del'|trans }}</a>
+                                                    <div id="deleteModal{{ Template.template_id }}" class="modal" data-keyboard="false" data-backdrop="static">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">{{ 'postcarrier.template.modal_del_message'|trans }}</h4>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-ec-regular" data-dismiss="modal">
+                                                                        {{ 'admin.common.cancel'|trans }}
+                                                                    </button>
+                                                                    <form action="{{ url('plugin_post_carrier_template_delete', { id: Template.template_id }) }}" method="post" enctype="application/x-www-form-urlencoded">
+                                                                        <button type="submit" class="btn btn-ec-delete">
+                                                                            {{ 'admin.common.execute'|trans }}
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="row justify-content-md-center mb-4">
+                                {% if pagination.totalItemCount > 0 %}
+                                    {% include "@admin/pager.twig" with { 'pages' : pagination.paginationData, 'routes' : 'plugin_post_carrier_template_page' } %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card rounded border-0">
+                        <div class="card-body p-4">
+                            <div class="text-center text-muted">{{ 'admin.postcarrier.history.notice_no_data'|trans }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row justify-content-md-center mb-4 ">
+                    <div class="col-auto">
+                        <a class="btn btn-ec-regular btn-lg" href="{{ url('plugin_post_carrier_template_regist') }}">
+                            {{ 'postcarrier.template.btn_new'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

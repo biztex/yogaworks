@@ -1,0 +1,3 @@
+site_kit_routes:
+  resource: '../../../../PluginData/GMC/routes.yaml'
+  prefix: /

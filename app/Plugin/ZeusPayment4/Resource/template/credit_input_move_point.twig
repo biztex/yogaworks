@@ -1,0 +1,8 @@
+<script>
+    $(function(){
+        if($('#shopping_order_use_point').length>0){
+            $('#shopping_order_use_point').closest('.ec-orderPayment').insertBefore($("input[name='_shopping_order[Payment]']").closest('.ec-orderPayment'));
+        }
+    });
+
+</script>

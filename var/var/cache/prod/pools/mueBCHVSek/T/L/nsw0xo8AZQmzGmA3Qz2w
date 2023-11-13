@@ -1,0 +1,3 @@
+1652226710
+eccube_entity_master_pagemax%255Beccube_entity_master_pagemax_eccube.entity.master.pagemax_20%255D%255B1%255D
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:3:{s:2:"id";i:20;s:4:"name";s:2:"20";s:7:"sort_no";i:1;}s:5:"class";s:28:"Eccube\Entity\Master\PageMax";}

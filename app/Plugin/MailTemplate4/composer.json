@@ -1,0 +1,12 @@
+{
+  "name": "ec-cube/mailtemplate4",
+  "version": "1.0.0",
+  "description": "MailTemplate4",
+  "type": "eccube-plugin",
+  "require": {
+    "ec-cube/plugin-installer": "~0.0.7 || ^2.0"
+  },
+  "extra": {
+    "code": "MailTemplate4"
+  }
+}

@@ -1,0 +1,1 @@
+{"name":"ec-cube\/zeuspayment4","version":"1.1.1","description":"\u30bc\u30a6\u30b9\u6c7a\u6e08\u30d7\u30e9\u30b0\u30a4\u30f3","type":"eccube-plugin","extra":{"code":"ZeusPayment4","id":1825},"require":{"ec-cube\/plugin-installer":"~0.0.6 || ^2.0"}}

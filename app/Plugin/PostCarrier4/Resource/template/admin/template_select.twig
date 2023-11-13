@@ -1,0 +1,1021 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+{#
+[メルマガ管理]-[配信内容設定]-[テンプレート選択]画面
+#}
+
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier'] %}
+
+{% block title %}{{ 'postcarrier.index.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css', 'admin') }}">
+    <style type="text/css">
+        .datepicker-days th.dow:first-child,
+        .datepicker-days td:first-child {
+            color: #f00;
+        }
+
+        .datepicker-days th.dow:last-child,
+        .datepicker-days td:last-child {
+            color: #00f;
+        }
+    </style>
+{% endblock stylesheet %}
+
+{% block javascript %}
+    <script>
+        $(function(){
+{#
+            $.when(
+                $.getScript("{{ asset('assets/js/vendor/moment.min.js', 'admin') }}"),
+                $.getScript("{{ asset('assets/js/vendor/moment-with-locales.min.js', 'admin') }}"),
+                $.getScript("{{ asset('assets/js/vendor/tempusdominus-bootstrap-4.min.js', 'admin') }}")
+            ).done(function() {
+                $('#post_carrier_sch_date').datetimepicker({
+                    locale: '{{ eccube_config.locale }}',
+                    format: 'YYYY-MM-DD HH:mm',
+                    useCurrent: false,
+                    buttons: {
+                        showToday: true,
+                        showClose: true
+                    }
+                });
+            });
+#}
+            $("#post_carrier_d__template").on("change", function(){
+                var id = $(this).val()
+                if (id) {
+                    action= '{{ url('plugin_post_carrier_select') }}/' + id;
+                } else {
+                    action= '{{ url('plugin_post_carrier_select') }}';
+                }
+
+                $('#mode').val('select');
+
+                document.form1.action = action;
+                document.form1.submit();
+            });
+
+            $("#post_carrier_d__trigger").on("change", function(){
+                postcarrierSelectTrigger();
+            });
+
+            $("#post_carrier_b__event").on("change", function(){
+                postcarrierSelectEvent();
+            });
+
+            $('input[name=post_carrier\\[d__mail_method\\]]').on("change", function(){
+                postcarrierSelectMailMethod();
+            });
+
+            postcarrierSelectTrigger(true);
+            postcarrierSelectMailMethod();
+
+            $('#post_carrier_insert_to_subject').on('click', function() {
+                var item = $('#post_carrier_d__varList').val();
+                if (item) {
+                    $('#post_carrier_d__subject').insertAtCaret(item);
+                }
+            });
+            $('#post_carrier_insert_to_body').on('click', function() {
+                var item = $('#post_carrier_d__varList').val();
+                if (item) {
+                    $('#post_carrier_d__body').insertAtCaret(item);
+                }
+            });
+            $('#post_carrier_insert_to_htmlBody').on('click', function() {
+                var item = $('#post_carrier_d__varList2').val();
+                if (item) {
+                    $('#post_carrier_d__htmlBody').insertAtCaret(item);
+                }
+            });
+
+            $('#testSendModal input').on('keyup', function() {
+                if (this.checkValidity()) {
+                    $(this).parents('div.form-group').removeClass('has-error');
+                } else {
+                    $(this).parents('div.form-group').addClass('has-error');
+                }
+                if ($('#testSendModal form').get(0).checkValidity()) {
+                    $('#sendTestMail').removeAttr('disabled');
+                } else {
+                    $('#sendTestMail').attr('disabled', 'disabled');
+                }
+            });
+            $('#sendTestMail').on('click', function() {
+                changeAction('{{ url('plugin_post_carrier_test') }}');
+            });
+
+            {% if not form.d__testEmail.vars.valid %}
+            $('#testSendModal').modal();
+            {% endif %}
+
+            // 商品検索モーダル表示イベント
+            $('#addProduct').on('show.bs.modal', function(event) {
+                {# 商品追加ボタンのデータ属性を、モーダルの商品検索ボタンに反映する。 #}
+                var postcarrierTarget = $(event.relatedTarget).data('postcarrierTarget');
+                $(this).find('#searchProductModalButton').attr('data-postcarrier-target', postcarrierTarget);
+            });
+
+            $('#addProduct').on('hide.bs.modal', function(event) {
+                {# モーダルを開いても商品追加しなかった場合は初期化する #}
+                var node = $('#post_carrier_OrderItems_0_order_item_type');
+                if (!node.attr('id')) $('#form1').submit();
+                node = $('#post_carrier_OrderStopItems_0_order_item_type');
+                if (!node.attr('id')) $('#form1').submit();
+            });
+
+            // 商品検索
+            $('#searchProductModalButton').on('click', function() {
+                var list = $('#searchProductModalList');
+                list.children().remove();
+
+                {# data[src/Eccube/Resource/template/admin/Order/search_product.twig]中のfnAddOrderItemの反映対象を制御する。 #}
+                var postcarrierTarget = $(this).attr('data-postcarrier-target');
+                if (postcarrierTarget == 'stop') {
+                    $collectionHolder = $('#table-form-field-stop');
+                    formIdPrefix = '#post_carrier_OrderStopItems_';
+                } else {
+                    $collectionHolder = $('#table-form-field');
+                    formIdPrefix = '#post_carrier_OrderItems_';
+                }
+                if ($(formIdPrefix+'0_order_item_type').val() == 1) {
+                    var last_order_item = $collectionHolder.find('tbody > tr:last-of-type > input:first-of-type');
+                    index = last_order_item.attr('id').match(/_(\d+)_/)[1];
+                } else {
+                    $collectionHolder.children('tbody').remove();
+                    $collectionHolder.append('<tbody></tbody>');
+                    index = -1;
+                }
+
+                $.ajax({
+                    url: '{{ url('admin_order_search_product') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: {
+                        'id': $('#admin_search_product_id').val(),
+                        'category_id': $('#admin_search_product_category_id').val()
+                    }
+                }).done(function(data) {
+                    $('#searchProductModalList').html(data);
+                }).fail(function(data) {
+                    alert('search product failed.');
+                });
+            });
+
+            // 商品削除
+            $(document).on('click', '.delete', function() {
+                $(this).parents('tr').remove();
+                // index--; // インデックスは追加時に必ず初期化するので更新不要
+                $('#form1').submit();
+            });
+
+            // 購入回数で指定する
+            $('#addCountButton').on('click', function() {
+                $collectionHolder = $('#table-form-field');
+                formIdPrefix = '#post_carrier_OrderItems_';
+                $collectionHolder.children('tbody').remove();
+                $collectionHolder.append('<tbody></tbody>');
+
+                var prototype = $collectionHolder.data('prototype');
+                index = 0;
+                var newForm = prototype.replace(/__name__/g, index);
+                $collectionHolder.children('tbody').append(newForm);
+                var $lastRow = $collectionHolder.children('tbody').children('tr').last;
+
+                $($lastRow).find(formIdPrefix + index + '_price').val(0);
+                $($lastRow).find(formIdPrefix + index + '_quantity').val(1);
+                $($lastRow).find(formIdPrefix + index + '_order_item_type').val(2); {# OrderItemTypeMaster::DELIVERY_FEE #}
+                $($lastRow).find(formIdPrefix + index + '_product_name').val('商品の指定なし');
+
+                {# 追加した行を画面に反映するためsubmit. #}
+                $('#form1').submit();
+
+                return false;
+            });
+
+            // 無条件とする
+            $(document).on('click', '.postcarrier_no_condition', function() {
+                var target = $(this).data('postcarrierTarget');
+                if (target == 'stop') {
+                    $collectionHolder = $('#table-form-field-stop');
+                    formIdPrefix = '#post_carrier_OrderStopItems_';
+                    $product_name = '無条件。購入商品による除外はありません。';
+                } else {
+                    $collectionHolder = $('#table-form-field');
+                    formIdPrefix = '#post_carrier_OrderItems_';
+                    $product_name = '無条件。購入商品に関係なく配信されます。';
+                }
+                $collectionHolder.children('tbody').remove();
+                $collectionHolder.append('<tbody></tbody>');
+
+                var prototype = $collectionHolder.data('prototype');
+                index = 0;
+                var newForm = prototype.replace(/__name__/g, index);
+                $collectionHolder.children('tbody').append(newForm);
+                var $lastRow = $collectionHolder.children('tbody').children('tr').last;
+
+                $($lastRow).find(formIdPrefix + index + '_price').val(0);
+                $($lastRow).find(formIdPrefix + index + '_quantity').val(1);
+                $($lastRow).find(formIdPrefix + index + '_order_item_type').val(3); {# OrderItemTypeMaster::CHARGE #}
+                $($lastRow).find(formIdPrefix + index + '_product_name').val($product_name);
+
+                {# 追加した行を画面に反映するためsubmit. #}
+                $('#form1').submit();
+
+                return false;
+            });
+
+            // 確認画面へ
+            $('#postCarrierConfirmButton').on('click', function() {
+                $('#mode').val('confirm'); {# バリデータ有効 #}
+                $('#form1').submit();
+            });
+        });
+
+        function changeAction(action) {
+            document.form1.action = action;
+            document.form1.submit();
+        }
+
+        function postcarrierSelectTrigger(init = false) {
+            var trigger_type = $('#post_carrier_d__trigger').val();
+            var node_sch_date = $("#post_carrier_form_sch_date");
+            var node_event = $("#post_carrier_form_event");
+            var order_product = $("#order-product");
+            switch (trigger_type) {
+            case 'schedule':
+                node_event.hide();
+                order_product.hide();
+                node_sch_date.show();
+                break;
+            case 'event':
+                node_sch_date.hide();
+                node_event.show();
+                postcarrierSelectEvent(init);
+                break;
+            default:
+                node_sch_date.hide();
+                node_event.hide();
+                order_product.hide();
+                break;
+            }
+        }
+
+        function postcarrierSelectEvent(init = false) {
+            var event_type = $('#post_carrier_b__event').val();
+            var order_product = $('#order-product');
+            var addCountButton = $('#addCountButton');
+            var eventDaySelect = $('#post_carrier_b__eventDaySelect');
+
+            {# クリア漏れがあるので対応できるまで初期化する #}
+            if (!init) {
+                $collectionHolder = $('#table-form-field');
+                $collectionHolder.children('tbody').remove();
+                $collectionHolder.append('<tbody></tbody>');
+                $('#form1').submit();
+            }
+
+            switch (event_type) {
+            case 'birthday':
+                if (eventDaySelect.children('option').length == 1) {
+                    eventDaySelect.prepend($('<option>').val('front').text('前'));
+                }
+                if (!init) {
+                    eventDaySelect.val('front');
+                }
+                break;
+            case 'memberRegistrationDate':
+            case 'paymentDate':
+            case 'latestOrderDate':
+            case 'latestCommitDate':
+            case 'orderDate':
+            case 'commitDate':
+                $('select#post_carrier_b__eventDaySelect option[value=front]').remove();
+                break;
+            }
+
+            switch (event_type) {
+            case 'birthday':
+            case 'memberRegistrationDate':
+                order_product.hide();
+                break;
+            case 'paymentDate':
+            case 'latestOrderDate':
+            case 'latestCommitDate':
+                addCountButton.hide();
+                order_product.show();
+                break;
+            case 'orderDate':
+            case 'commitDate':
+                addCountButton.show();
+                order_product.show();
+                break;
+            }
+        }
+
+        function postcarrierSelectMailMethod() {
+            var node_htmlBody = $("#post_carrier_form_htmlBody");
+            var mail_method = $('input[name=post_carrier\\[d__mail_method\\]]:checked').val();
+            if (mail_method == 1) {
+                node_htmlBody.show();
+            } else {
+                node_htmlBody.hide();
+            }
+        }
+
+        $.fn.extend({
+            insertAtCaret: function(v) {
+                var o = this.get(0);
+                o.focus();
+
+                if (!jQuery.browser) {
+                    jQuery.browser={ msie: ( navigator.appName == 'Microsoft Internet Explorer') ? true : false }
+                }
+
+                if (jQuery.browser.msie) {
+                    var r = document.selection.createRange();
+                    r.text = v;
+                    r.select();
+                } else {
+                    var s = o.value;
+                    var p = o.selectionStart;
+                    var np = p + v.length;
+                    o.value = s.substr(0, p) + v + s.substr(p);
+                    o.setSelectionRange(np, np);
+                }
+            }
+        });
+    </script>
+{% endblock javascript%}
+
+{% block main %}
+    <form name="form1" role="form" class="form-horizontal" id="form1" method="post" action="{{ url('plugin_post_carrier_select') }}">
+        {{ form_widget(form._token) }}
+        <input id="mode" type="hidden" name="mode" value="">
+        <input type="hidden" name="modal" value="">
+
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="card rounded border-0 mb-4">
+{#
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span class="card-title">
+                                        {{ 'postcarrier.select.card_title'|trans }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                            </div>
+                        </div>
+                    </div>
+#}
+                    <div class="card-body mb-lg-5">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__trigger.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__trigger) }}
+                                {{ form_errors(form.d__trigger) }}
+                            </div>
+                        </div>
+                        {# スケジュール配信 #}
+                        <div class="row" id="post_carrier_form_sch_date" style="display: none;">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__sch_date.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__sch_date) }}
+                                {{ form_errors(form.d__sch_date) }}
+                            </div>
+                        </div>
+                        {# ステップメール配信 #}
+                        <div class="row" id="post_carrier_form_event" style="display: none;">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>ステップメール条件</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row form-inline">
+                                    <div class="col form-inline">
+                                        {{ form_widget(form.b__event) }}
+                                        {{ form_errors(form.b__event) }}
+                                    </div>
+                                    <div class="col form-inline" style="padding-right: 2px">
+                                        {{ form_widget(form.b__eventDay) }}
+                                        {{ form_errors(form.b__eventDay) }}
+                                    </div>
+                                    <div>
+                                        日
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.b__eventDaySelect) }}
+                                        {{ form_errors(form.b__eventDaySelect) }}
+                                    </div>
+                                    <div class="col form-inline">
+                                        {{ form_widget(form.d__stepmail_time.hour) }}<span>&nbsp;時&nbsp;</span>
+                                        {{ form_widget(form.d__stepmail_time.minute) }}<span>&nbsp;分&nbsp;</span>
+                                        {{ form_errors(form.d__stepmail_time) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="c-primaryCol">
+                    <div id="order-product" class="card rounded border-0 mb-4" style="display: none;">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-tooltip="false" data-placement="top" title="{{ 'tooltip.order.product_info'|trans }}"><span class="card-title">配信条件 （設定した条件に該当する受注を対象としてメールが配信されます）{#<i class="fa fa-question-circle fa-lg ml-1">#}</i></span></div>
+                                </div>
+{#
+                                <div class="col-4 text-right"><a data-toggle="collapse" href="#orderItem" aria-expanded="false" aria-controls="orderItem"><i class="fa fa-angle-up fa-lg"></i></a></div>
+#}
+                            </div>
+                        </div>
+                        <div class="collapse show ec-cardCollapse" id="orderItem">
+                            <div class="card-body">
+                                <div class="row justify-content-between mb-2">
+                                    <div class="col-6">
+
+                                        {# 無条件 #}
+                                        <a class="btn btn-ec-regular mr-2 postcarrier_no_condition">{{ 'postcarrier.stepmail.btn_no_condition'|trans }}</a>
+                                        {# 購入回数 #}
+                                        <a class="btn btn-ec-regular mr-2" id="addCountButton">{{ 'postcarrier.stepmail.btn_item_count'|trans }}</a>
+
+                                        {# 追加 #}
+                                        <a class="btn btn-ec-regular mr-2 add" data-toggle="modal" data-target="#addProduct">{{ 'postcarrier.stepmail.btn_add_product_item'|trans }}</a>
+                                        <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="addProduct" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">{{ 'admin.order.add_product_item'|trans }}</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ form_widget(searchProductModalForm.id, { attr : {'class': 'mb-3', 'placeholder': 'admin.product.multi_search_label' }}) }}
+                                                        {{ form_widget(searchProductModalForm.category_id) }}
+                                                        <button type="button" id="searchProductModalButton" class="btn btn-ec-conversion px-5 mb-4 mt-2" data-postcarrier-target="">{{ 'admin.common.search'|trans }}</button>
+                                                        <div id="searchProductModalList"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+{#
+                                        {{ form_errors(form.OrderItemsErrors) }}
+#}
+                                    </div>
+                                </div>
+
+                                <table id="table-form-field" class="table table-striped table-sm mb-0"
+                                       data-prototype="{% filter escape %}{{ include('@PostCarrier4/admin/order_item_prototype.twig', {'orderItemForm': form.OrderItems.vars.prototype}) }}{% endfilter %}">
+                                    <thead class="table-active">
+                                    <tr class="text-nowrap">
+                                        <th class="pt-2 pb-2 pl-3">{{ 'admin.product.product_name_and_code'|trans }}</th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.amount'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">
+                                            {% if form.OrderItems|length != 1 or form.OrderItems|first.vars.data.OrderItemType.Id != 3 %}
+                                                {{ 'postcarrier.stepmail.quantity'|trans }}
+                                            {# {% else %}
+                                                TEST #}
+                                            {% endif %}
+                                            </div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.tax_rate'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.tax_type'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.subtotal'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2 pr-3"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for orderItemForm in form.OrderItems %}
+                                        {% set OrderItem = orderItemForm.vars.data %}
+                                        <tr>
+                                            {# hidden values #}
+                                            {{ form_widget(orderItemForm.ProductClass) }}
+                                            {{ form_widget(orderItemForm.order_item_type) }}
+                                            <!-- 商品名 -->
+                                            <td class="align-middle w-25 pl-3">
+                                                <p class="mb-0 font-weight-bold">
+                                                    {# {{ dump(OrderItem) }} #}
+                                                    {{ OrderItem.product_name }}
+                                                    {{ form_widget(orderItemForm.product_name, { 'type': 'hidden' }) }}
+                                                </p>
+                                                <span>
+                                                    {{ OrderItem.product_code }}
+                                                    {% if OrderItem.class_category_name1 is not empty %}
+                                                        / (
+                                                        {{ OrderItem.class_name1 }}：
+                                                        {{ OrderItem.class_category_name1 }}
+                                                        {% if OrderItem.class_category_name2 is not empty %}
+                                                            /
+                                                            {{ OrderItem.class_name2 }}：
+                                                            {{ OrderItem.class_category_name2 }}
+                                                        {% endif %}
+                                                        )
+                                                    {% endif %}
+                                                </span>
+                                                {{ form_errors(orderItemForm.product_name) }}
+                                            </td>
+                                            <!-- 金額 -->
+                                            <td class="align-middle">
+                                                <div class="col mt-3" style="display: none">
+                                                    {{ form_widget(orderItemForm.price, { 'type': 'hidden' }) }}
+                                                </div>
+                                            </td>
+                                            <!-- 数量 -->
+                                            <td class="align-middle">
+                                                <div class="col-12 col-xl-8">
+                                                    {% if OrderItem.OrderItemType.Id != 3 %}
+                                                    {{ form_widget(orderItemForm.quantity) }}
+                                                    {{ form_errors(orderItemForm.quantity) }}
+                                                    {% else %}
+                                                    {{ form_widget(orderItemForm.quantity, { 'type': 'hidden' }) }}
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <!-- 税率 -->
+                                            <td class="align-middle">
+                                                <div class="col">
+                                                </div>
+                                            </td>
+                                            <!-- 課税区分 -->
+                                            <td class="align-middle">
+                                                <div class="col">
+                                                </div>
+                                            </td>
+                                            <!-- 小計 -->
+                                            <td class="align-middle">
+                                                <div class="col">
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="row justify-content-end">
+                                                    {% if OrderItem.OrderItemType.Id == 1 %}
+                                                    <div class="col-auto text-center">
+                                                        <div class="d-inline-block mr-3" data-tooltip="true"
+                                                             data-placement="top" title="{{ 'admin.common.delete'|trans }}">
+                                                            <a class="btn btn-ec-actionIcon" data-toggle="modal" data-target="#delete_{{ orderItemForm.vars.id }}">
+                                                                <i class="fa fa-close fa-lg text-secondary" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <!-- 明細の削除確認モーダル -->
+                                                        <div class="modal fade" id="delete_{{ orderItemForm.vars.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_{{ orderItemForm.vars.id }}" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title font-weight-bold">{{ 'admin.common.delete_modal__title'|trans }}</h5>
+                                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">×</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body text-left">
+                                                                        <p class="text-left">{{ 'admin.order.delete_item__confirm_message'|trans({ '%name%' : OrderItem.product_name }) }}</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-ec-sub" type="button" data-dismiss="modal">{{ 'admin.common.cancel'|trans }}</button>
+                                                                        <a href="#order-product" class="btn delete btn-ec-delete">{{ 'admin.common.delete'|trans }}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div><!-- .card.rounded -->
+
+
+                    <div id="order-stop-product" class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-tooltip="false" data-placement="top" title="{{ 'tooltip.order.product_info'|trans }}"><span class="card-title">除外条件 （いずれかの条件に一致(OR)した受注の場合、メールは配信されません）{#<i class="fa fa-question-circle fa-lg ml-1"></i>#}</span></div>
+                                </div>
+{#
+                                <div class="col-4 text-right"><a data-toggle="collapse" href="#orderItem" aria-expanded="false" aria-controls="orderItem"><i class="fa fa-angle-up fa-lg"></i></a></div>
+#}
+                            </div>
+                        </div>
+                        <div class="collapse show ec-cardCollapse" id="orderStopItem">
+                            <div class="card-body">
+                                <div class="row justify-content-between mb-2">
+                                    <div class="col-6">
+
+                                        {# 無条件 #}
+                                        <a class="btn btn-ec-regular mr-2 postcarrier_no_condition" data-postcarrier-target="stop">{{ 'postcarrier.stepmail.btn_no_condition'|trans }}</a>
+                                        <div class="modal fade" id="addStopOrderItemType" tabindex="-1" role="dialog" aria-labelledby="addOrderItemType" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">{{ 'admin.order.add_other_item'|trans }}</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="searchStopOrderItemTypeList"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {# 追加 #}
+                                        <a class="btn btn-ec-regular mr-2 add" data-toggle="modal" data-target="#addProduct" data-postcarrier-target="stop">{{ 'postcarrier.stepmail.btn_add_product_item'|trans }}</a>
+
+{#
+                                        {{ form_errors(form.OrderItemsErrors) }}
+#}
+                                    </div>
+                                </div>
+
+                                <table id="table-form-field-stop" class="table table-striped table-sm mb-0"
+                                       data-prototype="{% filter escape %}{{ include('@PostCarrier4/admin/order_item_prototype.twig', {'orderItemForm': form.OrderStopItems.vars.prototype}) }}{% endfilter %}">
+                                    <thead class="table-active">
+                                    <tr class="text-nowrap">
+                                        <th class="pt-2 pb-2 pl-3">{{ 'admin.product.product_name_and_code'|trans }}</th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.amount'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'postcarrier.stepmail.quantity'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.tax_rate'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.tax_type'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2">
+                                            <div class="col-8">{# {{ 'admin.order.subtotal'|trans }} #}</div>
+                                        </th>
+                                        <th class="pt-2 pb-2 pr-3"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for orderItemForm in form.OrderStopItems %}
+                                        {% set OrderItem = orderItemForm.vars.data %}
+                                        <tr>
+                                            {# hidden values #}
+                                            {{ form_widget(orderItemForm.ProductClass) }}
+                                            {{ form_widget(orderItemForm.order_item_type) }}
+                                            <!-- 商品名 -->
+                                            <td class="align-middle w-25 pl-3">
+                                                <p class="mb-0 font-weight-bold">
+                                                    {# {{ dump(OrderItem) }} #}
+                                                    {{ OrderItem.product_name }}
+                                                    {{ form_widget(orderItemForm.product_name, { 'type': 'hidden' }) }}
+                                                </p>
+                                                <span>
+                                                    {{ OrderItem.product_code }}
+                                                    {% if OrderItem.class_category_name1 is not empty %}
+                                                        / (
+                                                        {{ OrderItem.class_name1 }}：
+                                                        {{ OrderItem.class_category_name1 }}
+                                                        {% if OrderItem.class_category_name2 is not empty %}
+                                                            /
+                                                            {{ OrderItem.class_name2 }}：
+                                                            {{ OrderItem.class_category_name2 }}
+                                                        {% endif %}
+                                                        )
+                                                    {% endif %}
+                                                </span>
+                                                {{ form_errors(orderItemForm.product_name) }}
+                                            </td>
+                                            <!-- 金額 -->
+                                            <td class="align-middle">
+                                                <div class="col mt-3" style="display: none">
+                                                    {{ form_widget(orderItemForm.price, { 'type': 'hidden' }) }}
+                                                </div>
+                                            </td>
+                                            <!-- 数量 -->
+                                            <td class="align-middle">
+                                                <div class="col-12 col-xl-8">
+                                                    {{ form_widget(orderItemForm.quantity, { 'type': 'hidden' }) }}
+                                                </div>
+                                            </td>
+                                            <!-- 税率 -->
+                                            <td class="align-middle">
+                                                <div class="col">
+                                                </div>
+                                            </td>
+                                            <!-- 課税区分 -->
+                                            <td class="align-middle">
+                                                <div class="col">
+                                                </div>
+                                            </td>
+                                            <!-- 小計 -->
+                                            <td class="align-middle">
+                                                <div class="col">
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="row justify-content-end">
+                                                    {% if OrderItem.OrderItemType.Id == 1 %}
+                                                        <div class="col-auto text-center">
+                                                            <div class="d-inline-block mr-3" data-tooltip="true"
+                                                                 data-placement="top" title="{{ 'admin.common.delete'|trans }}">
+                                                                <a class="btn btn-ec-actionIcon" data-toggle="modal" data-target="#delete_{{ orderItemForm.vars.id }}">
+                                                                    <i class="fa fa-close fa-lg text-secondary" aria-hidden="true"></i>
+                                                                </a>
+                                                            </div>
+                                                            <!-- 明細の削除確認モーダル -->
+                                                            <div class="modal fade" id="delete_{{ orderItemForm.vars.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_{{ orderItemForm.vars.id }}" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title font-weight-bold">{{ 'admin.common.delete_modal__title'|trans }}</h5>
+                                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">×</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body text-left">
+                                                                            <p class="text-left">{{ 'admin.order.delete_item__confirm_message'|trans({ '%name%' : OrderItem.product_name }) }}</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-ec-sub" type="button" data-dismiss="modal">{{ 'admin.common.cancel'|trans }}</button>
+                                                                            <a href="#order-product" class="btn delete btn-ec-delete">{{ 'admin.common.delete'|trans }}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+{#
+                                <hr class="mt-0">
+                                <!-- 小計 -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.subtotal'|trans }}</span></div>
+                                    <div class="col-2 text-right"><span class="h4 align-middle font-weight-normal">{{ Order.subtotal|price }}</span></div>
+                                </div>
+                                <!-- 内値引き -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.discount'|trans }}</span></div>
+                                    <div class="col-2 text-right"><span class="h4 align-middle text-danger font-weight-normal">{{ (0 - Order.discount)|price }}</span></div>
+                                </div>
+                                <!-- 内送料 -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.delivery_fee'|trans }}</span></div>
+                                    <div class="col-2 text-right"><span class="h4 align-middle font-weight-normal">{{ Order.delivery_fee_total|price }}</span></div>
+                                </div>
+                                <!-- 内手数料 -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.common.charge'|trans }}</span></div>
+                                    <div class="col-2 text-right"><span class="h4 align-middle font-weight-normal">{{ Order.charge|price }}</span></div>
+                                </div>
+                                <!-- 加算ポイント -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.add_point'|trans }}</span></div>
+                                    <div class="col-2 text-right">
+                                        <span class="h4 align-middle font-weight-normal">
+                                            {{ form.vars.value.addpoint|number_format }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- 利用ポイント -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.use_point'|trans }}</span></div>
+                                    <div class="col-2 text-right">
+                                        <span class="h4 align-middle font-weight-normal">
+                                            {# ポイント機能が有効かつ会員の場合のみポイントを編集可能とする #}
+{#
+                                            {% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+                                                {{ form_widget(form.use_point) }}
+                                            {% else %}
+                                                {{ form_widget(form.use_point, {'attr': { 'readonly': 'readonly' } }) }}
+                                            {% endif %}
+                                            {{ form_errors(form.use_point) }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <!-- 小計 -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.total'|trans }}</span></div>
+                                    <div class="col-2 text-right"><span class="h4 align-middle font-weight-normal">{{ Order.total|price }}</span></div>
+                                </div>
+                                <!-- 合計 -->
+                                <div class="row justify-content-end mb-3">
+                                    <div class="col-auto"><span class="align-middle">{{ 'admin.order.payment_total'|trans }}</span></div>
+                                    <div class="col-2 text-right"><span class="h4 align-middle font-weight-normal">{{ Order.payment_total|price }}</span></div>
+                                </div>
+#}
+                            </div>
+                        </div>
+                    </div><!-- .card.rounded -->
+                </div>
+
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span class="card-title">
+                                        {{ 'postcarrier.select.card_title'|trans }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mb-lg-5">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__template.vars.label|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__template) }}
+                                {{ form_errors(form.d__template) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__mail_method.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__mail_method) }}
+                                {{ form_errors(form.d__mail_method) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__fromAddr.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__fromAddr) }}
+                                {{ form_errors(form.d__fromAddr) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__fromDisp.vars.label|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__fromDisp) }}
+                                {{ form_errors(form.d__fromDisp) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__subject.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__subject) }}
+                                {{ form_errors(form.d__subject) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__body.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__varList) }}
+                                <div style="margin: 8px">
+                                    <button id="post_carrier_insert_to_subject" class="btn btn-ec-regular" type="button">件名に差し込む</button>
+                                    <button id="post_carrier_insert_to_body" class="btn btn-ec-regular" type="button">本文に差し込む</button>
+                                </div>
+                                {{ form_widget(form.d__body, {'attr' : { 'rows' : 20 }}) }}
+                                {{ form_errors(form.d__body) }}
+                            </div>
+                        </div>
+                        <div class="row" id="post_carrier_form_htmlBody">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__htmlBody.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__varList2) }}
+                                <div style="margin: 8px">
+                                    <button id="post_carrier_insert_to_htmlBody" class="btn btn-ec-regular" type="button">本文に差し込む</button>
+                                </div>
+                                {{ form_widget(form.d__htmlBody, {'attr' : { 'rows' : 20 }}) }}
+                                {{ form_errors(form.d__htmlBody) }}
+                            </div>
+                        </div>
+                        <div style="display: none">
+                            {{ form_rest(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink" href="{{ url('plugin_post_carrier') }}" onclick="changeAction('{{ url('plugin_post_carrier') }}'); return false;">
+                                <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.select.btn_back'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <a class="btn btn-primary btn-block btn-lg active" role="button" data-toggle="modal" data-target="#testSendModal">
+                                    {{ 'postcarrier.confirm.btn_send_test'|trans }}
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5" type="submit" id="postCarrierConfirmButton">
+                                    {{ 'postcarrier.select.btn_confirm'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="testSendModal" class="modal" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ 'postcarrier.confirm.modal.title'|trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="testEmail" class="col-sm-2 control-label">
+                                    {{ 'postcarrier.confirm.modal.label_from'|trans }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control {% if not form.d__testEmail.vars.valid %}is-invalid{% endif %}" id="{{ form.d__testEmail.vars.id }}" name="{{ form.d__testEmail.vars.full_name }}" placeholder="{{ 'postcarrier.confirm.modal.placeholder_from'|trans }}" value="{{ form.d__testEmail.vars.value }}">
+                                    {{ form_errors(form.d__testEmail) }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="sendTestMail">{{ 'postcarrier.confirm.modal.btn_send'|trans }}</button>
+                        <button class="btn btn-default" data-dismiss="modal">{{ 'postcarrier.confirm.modal.btn_cancel'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

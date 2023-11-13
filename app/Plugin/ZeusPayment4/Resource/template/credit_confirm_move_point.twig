@@ -1,0 +1,9 @@
+<script>
+    $(function(){
+        var $pointElement = $(".ec-orderPayment:contains('利用ポイント')");
+        if($pointElement.length>0 && $pointElement.parent().find('.ec-orderPayment').length>1){
+            $pointElement.insertBefore($pointElement.parent().find('.ec-orderPayment').first());
+        }
+    });
+
+</script>

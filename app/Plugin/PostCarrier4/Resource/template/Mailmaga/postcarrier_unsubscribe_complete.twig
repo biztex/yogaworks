@@ -1,0 +1,57 @@
+{#
+ This file is part of the PostCarrier
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{% block main %}
+    <div class="ec-role">
+        <div class="ec-pageHeader">
+            {% if app.request.query.get('status') == 'temporary' %}
+                <h1>{{ 'メルマガ会員解除(仮解除)'|trans }}</h1>
+            {% elseif app.request.query.get('status') == 'success' %}
+                <h1>{{ 'メルマガ会員解除(完了)'|trans }}</h1>
+            {% else %}
+                <h1>{{ 'メルマガ会員解除(仮解除失敗)'|trans }}</h1>
+            {% endif %}
+        </div>
+    </div>
+    <div class="ec-registerCompleteRole">
+        <div class="ec-off3Grid ec-text-ac">
+            <div class="ec-off3Grid__cell">
+                {% if app.request.query.get('status') == 'temporary' %}
+                    <div class="ec-reportHeading">
+                        <h2>{{ 'メルマガ会員登録を解除します'|trans }}</h2>
+                    </div>
+                    <p class="ec-reportDescription">{{ '現在、仮停止の状態です。ただいま、ご入力いただいたメールアドレス宛に、ご本人様確認用のメールをお送りいたしました。
+メール本文内のURLをクリックすると、メルマガ会員登録が解除となります。
+'|trans|nl2br }}</p>
+                {% elseif app.request.query.get('status') == 'success' %}
+                    <div class="ec-reportHeading">
+                        <h2>{{ 'メルマガ会員登録を解除しました'|trans }}</h2>
+                    </div>
+                    <p class="ec-reportDescription">{{ '今後ともご愛顧賜りますようよろしくお願い申し上げます。
+'|trans|nl2br }}</p>
+                {% else %}
+                    <div class="ec-reportHeading">
+                        <h2>{{ 'メルマガ会員解除に失敗しました'|trans }}</h2>
+                    </div>
+                    <p class="ec-reportDescription">{{ '何らかの問題が発生しました。
+時間を置いて再度お手続いただくか、お問い合わくださいますようお願いします。
+'|trans|nl2br }}</p>
+                {% endif %}
+                <div class="ec-off4Grid">
+                    <div class="ec-off4Grid__cell"><a class="ec-blockBtn--cancel" href="{{ path('homepage') }}">{{ 'トップページへ'|trans }}</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

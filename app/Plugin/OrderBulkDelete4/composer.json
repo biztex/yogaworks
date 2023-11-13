@@ -1,0 +1,1 @@
+{"name":"ec-cube\/orderbulkdelete4","version":"1.1.0","description":"\u53d7\u6ce8\u30c7\u30fc\u30bf\u4e00\u62ec\u524a\u9664\u30d7\u30e9\u30b0\u30a4\u30f3 for EC-CUBE4","type":"eccube-plugin","require":{"ec-cube\/plugin-installer":"~0.0.6 || ^2.0"},"extra":{"code":"OrderBulkDelete4","id":2101}}

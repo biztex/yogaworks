@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CCartController
+
+return [PHP_INT_MAX, []];

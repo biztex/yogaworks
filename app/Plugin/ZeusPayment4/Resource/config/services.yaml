@@ -1,0 +1,73 @@
+parameters:
+
+    zeus_payment_name: ゼウス決済
+    zeus_payment_page_name: ゼウス決済画面
+    zeus_plugin_code: ZeusPayment4
+
+    zeuspayment_urlpath: /app/plugin/ZeusPayment4
+    zeuspayment_img_urlpath: ZeusPayment4/assets/img
+
+    zeus_cvs_link_point_url: https://linkpt.cardservice.co.jp/cgi-bin/cvs.cgi
+    zeus_edy_link_point_url: https://linkpt.cardservice.co.jp/cgi-bin/edy.cgi
+    zeus_ebank_link_point_url: https://linkpt.cardservice.co.jp/cgi-bin/ebank.cgi
+    zeus_secure_link_url: https://linkpt.cardservice.co.jp/cgi-bin/secure/api.cgi
+    zeus_secure_3d_link_url: https://linkpt.cardservice.co.jp/cgi-bin/secure/api.cgi
+    zeus_secure_3d_information_link_url: https://linkpt.cardservice.co.jp/cgi-bin/secure/api.cgi
+    zeus_fetch_customer_info_url: https://linkpt.cardservice.co.jp/cgi-bin/secure/api.cgi
+    zeus_get_token_url: https://linkpt.cardservice.co.jp/cgi-bin/token/token.cgi
+    zeus_secure_link_batch_url: https://linkpt.cardservice.co.jp/cgi-bin/secure.cgi
+    zeus_resp_server_ips: "210.164.6.67,202.221.139.50"
+
+    zeus_auth_error_message: 認証に失敗しました。お手数ですが入力内容をご確認ください。
+    zeus_processing_error_message: 別タブ(ウィンドウ)で決済処理中です、複数タブ(ウィンドウ)で操作しないでください。
+
+    zeus_payment_method_credit: ZEUSクレジット決済
+    zeus_payment_method_cvs: ZEUSコンビニ決済
+    zeus_payment_method_edy: ZEUS楽天Edy決済
+    zeus_payment_method_ebank: ZEUS銀行振込決済
+
+#未入金
+    zeus_cvs_not_credited: 01
+#速報済（入金速報時）
+    zeus_cvs_preliminary_deposit: 04
+#確報済（売上確定時）
+    zeus_cvs_sales_confirmation: 05
+#速報取消（入金取消時）
+    zeus_cvs_cancel_payment: 06
+
+#支払済
+    zeus_edy_paid: 04
+#支払失敗
+    zeus_edy_failed: 05
+
+#受付中
+    zeus_ebank_wait: 01
+#未入金
+    zeus_ebank_not_paid: 02
+#入金済
+    zeus_ebank_paid: 03
+#エラー
+    zeus_ebank_error: 04
+#入金失敗
+    zeus_ebank_failed: 05
+
+    zeus_credit_options:
+        payment_choices:
+            '01': 一括払い
+            '03': 3回払い
+            '05': 5回払い
+            '06': 6回払い
+            '10': 10回払い
+            '12': 12回払い
+            '15': 15回払い
+            '18': 18回払い
+            '20': 20回払い
+            '24': 24回払い
+            '99': リボ払い
+
+services:
+    validator.unique.clientip:
+        class: Plugin\ZeusPayment4\Validator\Constraints\ClientIpValidator
+        arguments: ['@Plugin\ZeusPayment4\Service\ZeusPaymentService']
+        tags:
+          - { name: validator.constraint_validator, alias: unique.clientip }

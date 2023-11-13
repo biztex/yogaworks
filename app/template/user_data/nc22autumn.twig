@@ -1,0 +1,229 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+<!-- ここから -->
+<style type="text/css">
+
+.read_font {
+font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400;
+font-style: normal;
+}							
+img {width:100%;}
+a img {
+	display: block;
+}
+
+a:hover img {
+	opacity: .6;
+	-webkit-opacity: .6;
+	-moz-opacity: .6;
+	filter: alpha(opacity=60);
+	/* IE lt 8 */
+	-ms-filter: "alpha(opacity=60)";
+	/* IE 8 */
+	-webkit-transition: opacity .5s ease-out;
+	-moz-transition: opacity .5s ease-out;
+	-ms-transition: opacity .5s ease-out;
+	transition: opacity .5s ease-out;
+}
+.maincontent h1 {text-align:center; font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400; font-style: normal; margin:4rem 0 2rem;}
+
+.top_copy { padding:3rem 3rem 4rem; font-size: 18px; color: #333; line-height:1.6; width:60%; margin:0 auto; }
+
+.sub_copy { padding:3rem 3rem .0 0; font-size: 20px; font-weight:bold; font-family: fot-tsukubrdgothic-std, sans-serif; max-width:700px; margin:0 auto 20px;  border-bottom:10px solid #f5b093;
+text-align:center; }
+
+.maincontent { clear: both; overflow: hidden; }
+.maincontent .inner {width:800px; margin:0 auto; overflow: hidden; padding-bottom:50px;}
+.maincontent .inner_left-img {width:65%; float:left; padding:0 40px 0 0; }
+.maincontent .inner_left-img2 {width:65%; float:left; padding:0; }
+.maincontent .inner_left-txt {width:35%; float:left; position: relative; }
+
+.maincontent .inner_right-img { width:35%; float:left; position: relative;}
+.maincontent .inner_right-txt { width:65%; float:left; padding-left:40px;}
+
+.maincontent .inner_info {position:absolute; bottom:-63%;}
+.maincontent .inner_info2 { padding-top:200px;}
+.maincontent .pd_info {font-size:13px; border-bottom:1px solid #000; padding-bottom:.5rem;  margin-bottom:.5rem; font-family: fot-tsukubrdgothic-std, sans-serif; font-weight: bold; letter-spacing: -0.05rem;}
+.maincontent .pd_detail {clear:both; font-size:13px; }
+.maincontent .product_info {margin:10px 0;}
+
+.img_center {max-width:680px; margin:0 auto 50px;}
+.img_center60p {width:60%; margin:50px auto;}
+.img_center50p {width:50%; margin:0 auto 50px;}
+.img_center40p {width:40%; margin:0 auto 50px;}
+.img_center30p {width:30%; margin:0 auto 50px;}
+.img_center20p {width:20%; margin:0 0 50px;}
+
+.maincontent ul.env { width: 760px; margin: 0 auto; padding:0;}
+
+.maincontent ul.env li { list-style: none;
+float: left;
+margin: 15px 2.5% 50px;
+text-align: center;
+width: 27%; }
+.maincontent ul.env .item_txt span {font-weight: bold;}
+.maincontent ul.env .item_txt { margin: 15px 0%; font-size:13px; }
+
+
+	@media only screen and (max-width:768px) {
+		
+	}
+
+	@media only screen and (max-width:414px) {
+        .maincontent h1 {font-size:21px; line-height:1.6; }
+        .top_copy { padding:2rem 0; font-size: 14px; color: #333; line-height:1.6; width:90%; margin:0 auto; }
+        .sub_copy { padding:2rem 1rem .5rem; font-size: 15px; max-width:100%; letter-spacing: -0.15rem;}
+
+        .maincontent .inner {width:100%; margin:0 auto; overflow: hidden; padding-bottom:130px;}
+        .maincontent .inner_left-img {width:100%; float:none; padding:0; }
+        .maincontent .inner_left-img2 {width:100%; float:none; padding:0; }
+        .maincontent .inner_left-txt {width:100%; float:none; position: relative; }
+        .maincontent .inner_right-img { width:100%; float:none; position: relative;}
+        .maincontent .inner_right-txt { width:100%; float:none; padding:150px 0 0 0;}
+
+        .maincontent .inner_info {position:absolute; top:85%; padding:1rem;}
+        .maincontent .inner_info2 { padding-top:10px; margin:0 10px}
+        .maincontent .pd_info {font-size:14px; border-bottom:1px solid #000; padding-bottom:.5rem;  margin-bottom:.5rem; font-family: fot-tsukubrdgothic-std, sans-serif; font-weight: bold; letter-spacing: -0.05rem;}
+        .maincontent .pd_detail {clear:both; font-size:13px; }
+        .maincontent .product_info {width:80%; margin:20px auto; }
+        .img_center20p {width:40%; margin:0 0 20px;}
+		.img_center30p {width:80%; margin:-80px auto 10px;}
+        .img_center50p {width:86%; margin:-80px auto 10px;}
+        .img_center60p {width:90%; margin:-80px auto 10px;}
+        .maincontent ul.env { width: 100%; }
+        .maincontent ul.env li { list-style: none;
+        float: left;
+        margin: 5px 2% 20px;
+        text-align: center;
+        width: 29%; }
+        .maincontent ul.env .item_txt span {font-weight: bold;}
+        .maincontent ul.env .item_txt { margin: 15px 0%; font-size:13px; font-size:1rem;}
+	}
+</style>
+<main>
+	<div><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/kv.jpg"></div>
+	<!-- yogamat -->
+	<article>
+		<section class="maincontent">
+        <h1>ヨガワークス人気No.1ヨガマットに、待望の新色登場！</h1>
+
+		 <div class="top_copy">暑い夏が終わりに近づき、秋の気配を感じるこの頃…<br>
+            ヨガワークスから新色発売のご案内です！<br>
+            大人気のヨガマット6mm&ピラティスマット12mmより待望の新色が登場！<br>
+            2022年秋は、心やすらぐライトカラーが勢揃い。<br>
+            <br>
+            くすみカラー人気は継続中でも、明るく軽やかなカラーが今の気分。<br>
+            新しいマットで充実のヨガ時間を過ごしませんか？</div>		
+
+		<div class="img_center"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct01.jpg"></div>
+		
+
+        <div class="inner">
+            <div class="inner_left-img"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct02.jpg"></div>
+            <div class="inner_left-txt"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/item01.jpg">
+                <div class="inner_info">
+                    <div class="pd_info">心のバランスを保つとも言われているオレンジ。<br>
+                    秋にピッタリな落ち着いたカラー。</div>
+                    <div class="pd_detail">YW-A202-C155	ミルクオレンジ<br>
+                        ¥4,200（税込¥4,620）</div>
+                    <div class="product_info"><a href="/products/detail/3"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/btn_info.png"></a></div>
+                </div>
+            </div>      
+        </div>
+
+        <div class="inner">      
+            <div class="inner_right-img"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/item02.jpg">
+                <div class="inner_info">
+                    <div class="pd_info">優雅で可憐なライトパープル。<br>
+                        穏やかな気持ちでプラクティスに集中。</div>
+                    <div class="pd_detail">YW-A202-C154	ライラック<br>
+                        ¥4,200（税込¥4,620）</div>
+                    <div class="product_info"><a href="/products/detail/3"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/btn_info.png"></a></div>
+                </div>
+            </div>
+            <div class="inner_right-txt"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct03.jpg"></div>   
+        </div>
+
+        <div class="img_center30p"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct04.jpg"></div>
+
+        <div class="sub_copy">毎日使うものだから、環境にも安全にもこだわりました。</div>
+
+        <ul class="env">
+            <li class="item"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/ic_01.png" alt="EN71 Part3 PASS"><div class="item_txt"><span>欧州環境基準 EN71 Part3 をパス</span>
+                <p>有害性重金属の残留レベルを定めた基準に適合<br>>> <a href="https://www.yogaworks.co.jp/products/choose_yogamat/#headding03" target="_blank">EN71 Part3とは</a></p></div></li>
+            <li class="item"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/ic_02.png" alt="CARBON OFFSET"><div class="item_txt"><span>カーボンオフセット対応マット</span>
+                <p>製造・輸送で排出されるCO2を相殺したヨガマット<br>>> <a href="https://www.yogaworks.co.jp/csr/#headding01" target="_blank">カーボンオフセットとは</a></p></div></li>
+            <li class="item"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/ic_03.png" alt="AZO & DEHP FREE"><div class="item_txt"><span>AZOフリー、DEHPフリー</span>
+                <p>AZO（可分解芳香族アミン染料）および、DEHP（フタル酸ビス）を含みません　>> <a href="https://www.yogaworks.co.jp/products/choose_yogamat/#headding03" target="_blank">AZO / DEHPとは</a></p></div></li>
+        </ul>
+       
+
+        <div class="img_center60p"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct05.jpg"></div>
+
+
+        <div class="inner">
+            <div class="inner_left-img"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct06.jpg"></div>
+            <div class="inner_left-txt"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/item03.jpg">
+                <div class="inner_info">
+                    <div class="pd_info">青みがかったトレンドのグリーン。<br>
+                        お洒落なカラーでほっと一息。</div>
+                    <div class="pd_detail">YW-A250-C052	ミント<br>
+                        ¥5,800（税込¥6,380）<img style="width:60px;" src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/ic_price.png"></div>
+                    <div class="product_info"><a href="/products/detail/6"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/btn_info.png"></a></div>
+                </div>
+            </div>      
+        </div>
+
+        <div class="inner">      
+            <div class="inner_right-img"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/item04.jpg">
+                <div class="inner_info">
+                    <div class="pd_info">温かみのある薄めのグレー。<br>
+                        シックで、どんなカラーとも好相性！</div>
+                    <div class="pd_detail">YW-A250-C153	モカ<br>
+                        ¥5,800（税込¥6,380）<img style="width:60px;" src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/ic_price.png"></div>
+                    <div class="product_info"><a href="/products/detail/6"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/btn_info.png"></a></div>
+                </div>
+            </div>
+            <div class="inner_right-txt"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct07.jpg"></div>   
+        </div>
+
+        <div class="img_center50p"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct08.jpg"></div>
+
+
+        <div class="inner">
+            <div class="inner_left-img2"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct09.jpg"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info2">
+                    <div class="pd_info">ピラティスマットに対応した、<br>
+                        手編みのキャリーニットハート（別売）。<br>
+                        スタジオへの持ち歩きにおすすめです。</div>
+                    <div class="pd_detail">YW-F512-C000　キャリーニットハート<br>
+                        2,700円（税込2,970円） <img style="width:60px;" src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/ic_price.png"></div>
+                        <div class="product_info"><a href="/products/detail/47"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/btn_info.png"></a></div>
+                </div>
+                
+            </div>      
+        </div>
+
+
+        <div><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/pct10.jpg"></div>
+
+        <div class="img_center20p"><a href="https://studio-follow.com" target="_blank"><img src="https://www.yogaworks.jp/html/user_data/img/nc22autumn/logo_follow.png"></a></div>
+
+
+
+		
+
+
+		</section>
+
+	</article>
+	<!-- //yogamat -->
+
+</main>
+<!-- //ここまで -->
+{% endblock %}

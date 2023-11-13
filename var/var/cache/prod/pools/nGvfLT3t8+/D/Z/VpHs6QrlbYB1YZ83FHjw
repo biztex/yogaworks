@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CInstall%255CInstallController%2523createAppData
+
+return [PHP_INT_MAX, []];

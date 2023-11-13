@@ -1,0 +1,29 @@
+<?php //Eccube%255CEntity%255COrderPdf%2524member_id
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Id'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Id')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'member_id',
+            ],
+            'type' => [
+                'integer',
+            ],
+            'options' => [
+                [
+                    'unsigned' => true,
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+); }];

@@ -1,0 +1,24 @@
+<table>
+    <th id="plugin_qd_area_title" class="pt-2 pb-2"><a id="plugin_qd_area_title_link">{{ 'quantity_discount.admin.product_class_are_title'|trans }}</a></th>
+    {% for product_class_form in form.product_classes %}
+    {% set QdProductClass = product_class_form.QdProductClasses %}
+    <tr class="product_class_qd_area_target" data-product_class_name="{{ product_class_form.vars.name }}">
+        <td class="align-middle"
+            id="product_class_qd_area_target_{{ product_class_form.vars.name }}"
+            data-prototype="{% filter escape %}{{ include('@QuantityDiscount/admin/Product/qd_product_class_prototype.twig', {'qdForm': product_class_form.QdProductClasses.vars.prototype, 'key1': '__class__', 'key2': '__name__'}) }}{% endfilter %}"
+            >
+            <div class="product_class_qd_area_target_group">
+                {% for qdForm in QdProductClass %}
+                    {{ include('@QuantityDiscount/admin/Product/qd_product_class_prototype.twig', {'qdForm': qdForm, 'key1': product_class_form.vars.name, 'key2': loop.index0}) }}
+                {% endfor %}
+                <div class="fom-row">
+                    <a class="qd_add_btn" data-product_class_name="{{ product_class_form.vars.name }}">
+                        <i class="fa fa-plus-square-o"></i>
+                        <span class="font-weight-bold">{{ 'quantity_discount.admin.product_area_add'|trans }}</span>
+                    </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

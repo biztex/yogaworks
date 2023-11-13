@@ -1,0 +1,3 @@
+<?php //Eccube%255CEntity%255CBlockPosition%2523setLayout
+
+return [PHP_INT_MAX, []];

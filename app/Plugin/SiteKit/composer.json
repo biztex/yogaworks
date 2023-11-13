@@ -1,0 +1,1 @@
+{"name":"ec-cube\/sitekit","version":"1.1.2","description":"Site Kit \u30d7\u30e9\u30b0\u30a4\u30f3","type":"eccube-plugin","require":{"ec-cube\/plugin-installer":"~0.0.7 || ^2.0","google\/apiclient":"^2.4"},"extra":{"code":"SiteKit","id":2158}}

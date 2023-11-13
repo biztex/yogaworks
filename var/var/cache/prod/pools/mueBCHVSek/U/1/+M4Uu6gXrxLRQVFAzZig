@@ -1,0 +1,3 @@
+1652176853
+eccube_entity_master_loginhistorystatus%255Beccube_entity_master_loginhistorystatus_eccube.entity.master.loginhistorystatus_1%255D%255B1%255D
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:3:{s:2:"id";i:1;s:4:"name";s:6:"成功";s:7:"sort_no";i:1;}s:5:"class";s:39:"Eccube\Entity\Master\LoginHistoryStatus";}

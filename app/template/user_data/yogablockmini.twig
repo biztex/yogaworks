@@ -1,0 +1,82 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<link rel="stylesheet" href="../html/user_data/assets/css/pages_sf.css">
+<style type="text/css">
+<!--
+.ec-layoutRole__header {background:#fff;}
+.ec-layoutRole {background:#e8f1f1;}
+.page-kv {background-color:#7fc0c0; }
+.read {font-family: fot-tsukubrdgothic-std, sans-serif; font-weight: 400; font-style: normal;
+text-align:center; font-size:20px; line-height:1.8; padding:50px 0 80px; }
+.mini_info_frame {border:4px solid #7fc0c0; border-radius:25px; background:#fff; 
+position:relative; max-width:850px; padding:25px; margin:0 auto}
+.mini_info_frame .item {position:absolute; top:-50px; left:50px; width:200px;}
+.mini_info_frame .iteminner {padding-left:300px;}
+.mini_info_frame .subcopy {color:#5aa7a7; font-size:18px;}
+.mini_info_frame h2 {font-size:24px;}
+.mini_info_frame .iteminfo {font-size:16px;}
+.leftbox {float: left; width: 34%; margin: 30px 5% 30px 12%;}
+.rightbox {float: left; width: 34%; margin: 30px 8% 30px 4%;}
+br.sp {display:none;}
+
+@media only screen and (max-width: 450px) {
+    .page-kv {background-color:#7fc0c0; xpadding:0 15px;}
+    .read {font-size:18px; line-height:1.8; padding:30px 1rem 50px; }
+    .mini_info_frame { width:98%; padding:25px; margin:0 auto;}
+    .mini_info_frame .item {position:absolute; top:-30px; left:90px; width:180px;}
+    .mini_info_frame .iteminner {padding:200px 0 0 0;}
+    .mini_info_frame .subcopy {font-size:16px;}
+    .mini_info_frame h2 {font-size:20px;}
+    .mini_info_frame .iteminfo {font-size:14px;}
+    .leftbox {float: none; width: 80%; margin: 20px auto;}
+    .rightbox {float: none; width: 80%; margin: 20px auto;}
+    br.sp {display:block;}
+}
+--></style>
+
+<section class="head">
+	<article>
+        <div class="page-kv">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/yogablockmini/kv_blockmini.jpg','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/yogablockmini/kv_blockmini_sp.jpg','user_data') }} 870w">
+            <img srcset="{{ asset('img/yogablockmini/kv_blockmini_sp.jpg','user_data') }} 870w, 
+            {{ asset('img/yogablockmini/kv_blockmini.jpg','user_data') }} 2000w" width="100%" alt="ヨガブロックmini（ミニ）">
+            </picture>
+        </div>
+	</article>
+</section>
+
+<section>
+	<article>
+	    <div class="read">ワークショップやリトリートにも<br class="sp">持ち運べる軽量+小型サイズ<br>
+        手の平でしっかりグリップも<br class="sp">できるので安定性抜群！<br>
+        小さいことで、より細やかな調整も<br class="sp">（アジャスト）が可能<br>
+        2連結するなど、活用の幅は無限大◎</div>
+	    
+        <div class="mini_info_frame">
+            <div class="item">
+                <img src="{{ asset('img/yogablockmini/item01.png','user_data') }}">
+            </div>
+            
+            <div class="iteminner">
+                <div class="subcopy">ヨガワークス20周年ロゴ入りの限定モデル<br>
+                これからヨガを深めたい方へのプレゼントにも★</div>
+                <h2>20周年記念<br class="sp">ヨガブロックmini（ミニ）</h2>
+                <div class="iteminfo">販売予定日：2023年11月予定<br>
+                サ　イ　ズ：約12.5cm x 15cm x 7.5cm<br>
+                重　　　さ： 約100g</div>
+            </div>
+            
+        </div>
+        
+        <div style="padding:50px 0;">
+            <div class="leftbox"><img src="{{ asset('img/yogablockmini/pct01.png','user_data') }}"></div>
+            <div class="rightbox"><img src="{{ asset('img/yogablockmini/pct02.png','user_data') }}"></div>
+        </div>
+        
+	</article>
+</section>
+
+{% endblock %}

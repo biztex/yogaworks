@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CAdmin%255CSetting%255CShop%255CPaymentController
+
+return [PHP_INT_MAX, []];

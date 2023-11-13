@@ -1,0 +1,22 @@
+<?php //Eccube%255CEntity%255CProductStock%2524update_date
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'update_date',
+            ],
+            'type' => [
+                'datetimetz',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

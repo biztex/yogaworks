@@ -1,0 +1,232 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+{#
+[メルマガ管理]-[配信内容設定]-[確認]画面
+#}
+
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_mail_customer'] %}
+
+{% block title %}{{ 'postcarrier.mail_customer.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script>
+        function changeAction(action) {
+            document.form1.action = action;
+            document.form1.submit();
+        }
+        $(function () {
+            $('#sendMailMagazine').on('click', function (e) {
+                e.preventDefault();
+                {% if form.d__trigger.vars.value == 'immediate' %}
+                var msg = '{{ 'postcarrier.confirm.modal.confirm_prepare_message'|trans }}';
+                {% elseif form.d__id.vars.value != "" %}
+                var msg = 'この配信予約を更新しますか？';
+                {% else %}
+                var msg = 'この配信予約を登録しますか？';
+                {% endif %}
+                if (confirm(msg)) {
+                    $(this).attr('disabled', 'disabled');
+                    changeAction('{{ url('plugin_post_carrier_mail_customer_prepare') }}');
+                }
+                return false;
+            });
+            $('#testSendModal input').on('keyup', function() {
+                if (this.checkValidity()) {
+                    $(this).parents('div.form-group').removeClass('has-error');
+                } else {
+                    $(this).parents('div.form-group').addClass('has-error');
+                }
+                if ($('#testSendModal form').get(0).checkValidity()) {
+                    $('#sendTestMail').removeAttr('disabled');
+                } else {
+                    $('#sendTestMail').attr('disabled', 'disabled');
+                }
+            });
+            $('#sendTestMail').on('click', function() {
+                $.post(
+                    '{{ url('plugin_post_carrier_mail_customer_test') }}',
+                    $('#form1').serialize() + '&{{ form.d__testEmail.vars.full_name }}=' + encodeURIComponent($('#testEmail').val())
+                ).done(function (res) {
+                    if (res.status) {
+                        alert('{{ 'postcarrier.confirm.modal.confirm_test_success_message'|trans }}');
+                        $('#testSendModal').modal('hide');
+                    } else {
+                        alert('{{ 'postcarrier.confirm.modal.confirm_test_fail_message'|trans }}');
+                    }
+                }).fail(function (res) {
+                    alert('{{ 'postcarrier.confirm.modal.confirm_test_fail_message'|trans }}');
+                });
+            })
+        })
+    </script>
+{% endblock javascript%}
+
+{% block main %}
+    <form name="form1" role="form" class="form-horizontal" id="form1" method="post" action="">
+    {{ form_widget(form._token) }}
+        <div class="c-outsideBlock">
+            <div class="c-outsideBlock__contents">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block" data-toggle="tooltip" data-placement="top" title="Tooltip">
+                                    <span class="card-title">
+                                        {{ 'postcarrier.confirm.html'|trans }}
+                                    </span>
+                                    <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mb-lg-5">
+                        <div class="row">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th class="w-25">{{ 'postcarrier.select.label_trigger'|trans }}</th>
+                                        <td>
+                                        {% if form.d__trigger.vars.value == 'immediate' %}
+                                            {{ '即時配信' }}
+                                        {% elseif form.d__trigger.vars.value == 'schedule' %}
+                                            {{ 'スケジュール配信' }}&nbsp;&nbsp;{{ form.vars.value.d__sch_date|date('Y年m月d日 H時i分') }}
+                                        {% elseif form.d__trigger.vars.value == 'event' %}
+                                            {{ 'ステップメール配信' }}&nbsp;&nbsp;{{ stepDisp }} {{ form.vars.value.d__stepmail_time|date('H時i分') }}
+
+                                            {#
+                                            {% if form.OrderItems|length > 0 %}<br>■ 配信条件{% endif %}
+                                            {% for orderItemForm in form.OrderItems %}
+                                                {% set OrderItem = orderItemForm.vars.data %}
+                                                {% if form.b__event.vars.value not in ['memberRegistrationDate', 'birthday'] %}
+                                                <br>{{ OrderItem.product_name }} 購入回数: {{ OrderItem.quantity }}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% if form.OrderStopItems|length > 0 %}<br>■ 除外条件{% endif %}
+                                            {% for orderItemForm in form.OrderStopItems %}
+                                                {% set OrderItem = orderItemForm.vars.data %}
+                                                <br>{{ OrderItem.product_name }}
+                                            {% endfor %}
+                                            #}
+                                        {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25">{{ 'postcarrier.select.label_mail_method'|trans }}</th>
+                                        <td>
+                                        {% if form.d__mail_method.vars.value == 1 %}
+                                            {{ 'HTML' }}
+                                        {% else %}
+                                            {{ 'テキスト' }}
+                                        {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25">{{ 'postcarrier.select.label_fromAddr'|trans }}</th>
+                                        <td>{{ form.d__fromAddr.vars.value }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25">{{ 'postcarrier.select.label_fromDisp'|trans }}</th>
+                                        <td>{{ form.d__fromDisp.vars.value }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25">{{ 'postcarrier.select.label_subject'|trans }}</th>
+                                        <td>{{ form.d__subject.vars.value }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'postcarrier.select.label_body'|trans }}</th>
+                                        <td><xmp>{{ form.d__body.vars.value }}</xmp></td>
+                                    </tr>
+                                    {% if form.d__mail_method.vars.value == 1 %}
+                                    <tr>
+                                        <th>{{ 'postcarrier.select.label_body_html'|trans }}</th>
+                                        <td><xmp>{{ form.d__htmlBody.vars.value|raw }}</xmp></td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <th>{{ 'postcarrier.confirm.label_count'|trans }}</th>
+                                        <td>{{ form.d__count.vars.value|number_format }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-none">
+                                {{ form_rest(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink" href="{{ url('plugin_post_carrier_mail_customer') }}" onclick="changeAction('{{ url('plugin_post_carrier_mail_customer_select') }}'); return false;">
+                                <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.confirm.btn_back'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <a class="btn btn-primary btn-block btn-lg active" role="button" data-toggle="modal" data-target="#testSendModal">
+                                    {{ 'postcarrier.confirm.btn_send_test'|trans }}
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-danger btn-block btn-lg" id="sendMailMagazine">
+                                {% if form.d__trigger.vars.value == 'immediate' %}
+                                    {{ 'postcarrier.confirm.btn_send'|trans }}
+                                {% else %}
+                                    {{ 'postcarrier.confirm.btn_schedule'|trans }}
+                                {% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="testSendModal" class="modal" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ 'postcarrier.confirm.modal.title'|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="testEmail" class="col-sm-2 control-label">
+                                {{ 'postcarrier.confirm.modal.label_from'|trans }}
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="testEmail" placeholder="{{ 'postcarrier.confirm.modal.placeholder_from'|trans }}" value="{{ form.d__testEmail.vars.value }}" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sendTestMail">{{ 'postcarrier.confirm.modal.btn_send'|trans }}</button>
+                    <button class="btn btn-default" data-dismiss="modal">{{ 'postcarrier.confirm.modal.btn_cancel'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

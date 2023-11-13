@@ -1,0 +1,266 @@
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['order', 'plugin_ZeusPayment_admin_order'] %}
+
+{% block title %}
+{{ maintitle }}
+{% endblock %}
+{% block sub_title %}
+{{ subtitle }}
+{% endblock %}
+
+{% form_theme searchForm '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}
+
+<style>
+#zues-order-list .input_search {
+	width: 33%;
+}
+</style>
+
+{% endblock stylesheet %}
+
+{% block javascript %}
+<script>
+        $(function () {
+
+            $('#bt-cancel-order').click(function(event){
+
+                event.preventDefault();
+                var href = $(this).attr('href');
+                var isChecked = false;
+                $('input[id^=check-]').each(function () {
+                    var check = $(this).prop('checked');
+                    if (check) {
+                        isChecked = true;
+                    }
+                });
+                if (!isChecked) {
+                    alert("チェックボックスが選択されていません");
+                    return false;
+                }
+				$('#dropdown-form').attr('action', "{{ url('zeus_order_cancel') }}");
+                $('#dropdown-form').submit();
+
+            });
+
+            $('#bt-setsale-order').click(function(event){
+
+                event.preventDefault();
+                var href = $(this).attr('href');
+                var isChecked = false;
+                $('input[id^=check-]').each(function () {
+                    var check = $(this).prop('checked');
+                    if (check) {
+                        isChecked = true;
+                    }
+                });
+                if (!isChecked) {
+                    alert("チェックボックスが選択されていません");
+                    return false;
+                }
+                $('#dropdown-form').attr('action', "{{ url('zeus_order_setsale') }}");
+                $('#dropdown-form').submit();
+
+            });
+
+            // 登録チェックボックス
+            $('#check-all').click(function () {
+                var checkall = $('#check-all').prop('checked');
+                if (checkall) {
+                    $('input[id^=check-]').prop('checked', true);
+                } else {
+                    $('input[id^=check-]').prop('checked', false);
+                }
+            });
+
+        });
+
+    </script>
+{% endblock javascript %}
+
+{% block main %}
+<!--検索条件設定テーブルここから-->
+<div class="c-outsideBlock search-box" id="zues-order-list">
+	<form name="search_form" id="search_form" method="post"
+		action="{{ url('zeus_order_list') }}">
+		<div class="c-outsideBlock__contents">
+			{{ form_widget(searchForm._token) }}
+			<div class="row">
+				<div class="col-12">
+					<label class="col-form-label">注文番号・ゼウスオーダーNo</label>
+					{{ form_widget(searchForm.multi) }}
+
+					<div class="d-inline-block mb-3 mt-3 collapsed"
+						data-toggle="collapse" href="#searchDetail" aria-expanded="false"
+						aria-controls="searchDetail">
+						<a> <i class="fa font-weight-bold mr-1 fa-plus-square-o">
+								<span class="font-weight-bold">{{ 'admin.common.search_detail'|trans }}</span>
+						</i>
+						</a>
+					</div>
+
+				</div>
+				<!-- /.col -->
+			</div>
+		</div>
+
+		<div class="c-subContents ec-collapse collapse{{ active ? ' show' }}"
+			id="searchDetail">
+			<div class="row">
+				<div class="col">
+					<label class="col-form-label">注文番号</label>
+					{{ form_widget(searchForm.order_id) }}
+				</div>
+				<div class="col">
+					<label class="col-form-label">ゼウスオーダーNo</label>
+					{{ form_widget(searchForm.zeus_order_id) }}
+				</div>
+				<div class="col">
+					<label class="col-form-label">売上種別</label>
+					{{ form_widget(searchForm.zeus_sale_type) }}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="c-outsideBlock__contents">
+			<div class="row">
+				<div class="mb-4">
+					<div class="col-12">
+						<button class="btn btn-ec-conversion px-5" type="submit"
+							id="search_submit">
+							{{ 'admin.common.search'|trans }}
+						</button>
+						{% if pagination %}
+						<span class="font-weight-bold ml-2" id="search_total_count">{{ 'admin.common.search_result'|trans({"%count%":pagination.totalItemCount})|raw }}</span>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!--検索条件設定テーブルここまで-->
+
+
+<div class="c-contentsArea__cols">
+	<div class="c-contentsArea__primaryCol">
+		<div class="c-primaryCol">
+			{% if pagination%}
+			{% if  pagination.totalItemCount  %}
+			<form id="dropdown-form" action="{{ url('zeus_order_cancel') }}">
+				<div class="row justify-content-between mb-2">
+					<div class="col-7"></div>
+					<div class="col-5 text-right">
+						<div class="d-inline-block">
+							<select class="custom-select" onchange="location = this.value;">
+								{% for pageMax in pageMaxis %}
+								<option {% if pageMax.name == page_count %} selected {% endif %}
+									value="{{ path('zeus_order_list', {'page_no': 1, 'page_count': pageMax.name}) }}">
+									{{ 'admin.common.count'|trans({ '%count%': pageMax.name }) }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="d-inline-block">
+							<a class="btn btn-ec-regular" id="bt-cancel-order">一括取消</a>
+						</div>
+						<div class="d-inline-block">
+							<a class="btn btn-ec-regular" id="bt-setsale-order">一括実売上</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="card rounded border-0 mb-4 d-block">
+					<div class="card-body p-0">
+						<table class="table table-sm" id="search_result">
+							<thead>
+								<tr>
+									<th class="text-center"><input type="checkbox"
+										id="check-all"></th>
+									<th style="min-width: 110px">受注日</th>
+									<th style="min-width: 60px">注文番号</th>
+									<th style="min-width: 100px">ゼウスオーダーNo</th>
+									<th style="min-width: 50px">お名前</th>
+									<th style="min-width: 60px">支払方法</th>
+									<th style="min-width: 80px">購入金額(円)</th>
+									<th style="min-width: 50px">対応状況</th>
+									<th style="min-width: 50px">売上種別</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for Order in pagination %}
+								<tr>
+									<td class="align-middle text-center">
+										{% if( Order.OrderStatus.id in can_cancel_status) %}<input type="checkbox" id="check-{{ Order.id }}" data-id="{{ Order.id }}" name="ids{{ Order.id }}">{% endif %}
+									</td>
+									<td class="align-middle">{{ Order.order_date|date_format }}</td>
+									<td class="align-middle">{{ Order.id }}</td>
+									<td class="align-middle">{{ Order.zeus_order_id }}</td>
+									<td class="align-middle">{{ Order.name01 }} {{ Order.name02 }}</td>
+									<td class="align-middle">{{ Order.payment_method }}</td>
+									<td class="align-middle text-right">{{ Order.payment_total|number_format }}</td>
+									<td class="align-middle">{{ Order.OrderStatus }}</td>
+									<td class="align-middle">
+{% if (Order.payment_method == credit_payment_method) %}
+{% if (Order.ZeusSaleType == 1) %}
+仮売上
+{% else  %}
+実売上
+{% endif %}
+{% else  %}
+-
+{% endif %}
+									</td>
+									<td class="align-middle">
+										<div class="px-1 d-inline-block">
+											<a class="btn btn-ec-actionIcon pdf-print"
+												href="{{ url('admin_order_edit', { id : Order.id }) }}"
+												data-tooltip="true" data-placement="top" title="編集"> <i
+												class="fa fa-edit fa-lg text-secondary" aria-hidden="true"></i>
+											</a>
+{% if ( Order.OrderStatus.id in can_cancel_status) %}
+											<a class="btn btn-ec-actionIcon pdf-print"
+												href="{{ url('zeus_order_cancel', {('ids' ~ Order.id) : 1} ) }}"
+												data-tooltip="true" data-placement="top" title="取消"> <i
+												class="fa fa-ban fa-lg text-secondary" aria-hidden="true"></i>
+											</a>
+{% endif %}
+{% if ( (Order.ZeusSaleType == 1) and ( Order.OrderStatus.id in can_cancel_status)) %}										
+											<a class="btn btn-ec-actionIcon pdf-print"
+												href="{{ url('zeus_order_setsale', {('ids' ~ Order.id) : 1} ) }}"
+												data-tooltip="true" data-placement="top" title="実売上"> <i
+												class="fa fa-yen-sign fa-lg text-secondary" aria-hidden="true"></i>
+											</a>
+{% endif %}											
+										</div>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</form>
+			{% else %}
+			<div class="box-header with-arrow">
+				<h3 class="box-title">検索条件に該当するデータがありませんでした。</h3>
+			</div>
+			<!-- /.box-header -->
+			{% endif %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% if pagination %}
+<div class="row justify-content-md-center mb-4">
+	{% if pagination.totalItemCount > 0 %}
+	{% include "@admin/pager.twig" with { 'pages' : pagination.paginationData, 'routes' : 'zeus_order_list' } %}
+	{% endif %}
+</div>
+{% endif %}
+{% endblock %}

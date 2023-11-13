@@ -1,0 +1,56 @@
+<script>
+
+    const QD_TYPE_PRICE = "{{ constant('Plugin\\QuantityDiscount\\Entity\\QdProductClass::QD_TYPE_PRICE') }}";
+    const QD_TYPE_RATE = "{{ constant('Plugin\\QuantityDiscount\\Entity\\QdProductClass::QD_TYPE_RATE') }}";
+
+    $(function () {
+
+        $('#qd_area_title').tooltip();
+
+        // 追加ボタンイベント追加
+        let qdCollectionHolder = $('#qd_area_body');
+        let qdCollectionIndex = $('.qd_area_row').length - 1;
+
+        // 追加
+        $('#qd_add_btn').on('click', function () {
+
+            let prototype = qdCollectionHolder.data('prototype');
+            qdCollectionIndex++;
+
+            var newForm = prototype.replace(/__name__/g, qdCollectionIndex);
+            var $lastRow = $('.qd_area_row:last')
+            $lastRow.after(newForm);
+        });
+
+        // 削除
+        $(document).on('click', '.qd_del_btn', function() {
+            let key = $(this).data('key');
+            $('#qd_area_row_' + key).hide();
+            $('#admin_product_class_QdProductClasses_' + key + '_del_flg').val(1);
+        });
+
+        // type変更
+        $(document).on('change', '.qd_type_radio', function () {
+            changeType($(this));
+        });
+
+        // 初期処理
+        $('input[id^="admin_product_class_QdProductClasses_0_qd_type_"]:checked').each(function () {
+            changeType($(this));
+        });
+    });
+
+    function changeType(checkObj) {
+
+        let parent = checkObj.parent().parent();
+        let target_index = parent.data('target_index');
+
+        if(checkObj.val() == QD_TYPE_PRICE) {
+            $('#qd_price_' + target_index).removeClass('d-none');
+            $('#qd_rate_' + target_index).addClass('d-none');
+        } else {
+            $('#qd_price_' + target_index).addClass('d-none');
+            $('#qd_rate_' + target_index).removeClass('d-none');
+        }
+    }
+</script>

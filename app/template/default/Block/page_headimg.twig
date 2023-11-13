@@ -1,0 +1,23 @@
+{% set request_uri = app.request.server.get('REQUEST_URI') %}
+{% if 'luckybag2023' in request_uri %}
+{# Peanuts #}
+<div>
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('img/luckybag2023/kv.jpg','user_data') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('img/luckybag2023/kv_sp.png','user_data') }} 870w">
+    <img srcset="{{ asset('img/luckybag2023/kv_sp.png','user_data') }} 870w, {{ asset('img/luckybag2023/kv.jpg','user_data') }} 2000w" width="100%" alt="2023 福袋">
+    </picture>
+</div>
+
+{% elseif 'xxx' in request_uri %}
+<!--{# trialclass2023 #}
+<div style="margin-bottom:5px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/top/top_23fukubukuro.jpg') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/top/23fukubukuro_sp.jpg') }} 870w">
+    <img srcset="{{ asset('assets/img/top/23fukubukuro_sp.jpg') }} 870w, {{ asset('assets/img/top/top_23fukubukuro.jpg') }} 2000w" width="100%" alt="New Products">
+    </picture>
+</div>-->
+
+{% else %}
+{% endif %}

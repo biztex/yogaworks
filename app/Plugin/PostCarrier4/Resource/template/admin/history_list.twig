@@ -1,0 +1,234 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_history'] %}
+
+{% block title %}{{ 'postcarrier.history.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.core.min.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.widget.min.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.mouse.min.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.ui/jquery.ui.sortable.min.js', 'admin') }}"></script>
+
+<script>
+function sendMail(id, offset, token) {
+    $.post('{{ url('plugin_post_carrier_commit') }}', { id : id, offset: offset || 0, _token:token })
+        .done(function(res) {
+            if (res.status) {
+                $('#send-progress').css('width', (res.count / res.total * 100) + '%');
+                $('#send-status-message').text(res.count + ' / ' + res.total + ' 件処理完了');
+                if (res.count < res.total) {
+                    sendMail(id, res.count);
+                } else {
+                    $('.modal-title').text('配信先リストのアップロード完了');
+                    $('#send-progress').removeClass('progress-bar-striped active');
+                    $('.modal-footer').show();
+                }
+            } else {
+                $('#send-progress').css('width', '0%');
+                $('#send-status-message').text('配信先リストのアップロードに失敗しました。');
+                $('#send-progress').removeClass('progress-bar-striped active');
+                $('.modal-footer').show();
+            }
+        })
+        .fail(function() {
+            alert('エラーが発生しました。');
+        });
+}
+$(function () {
+    var lock = false;
+    $('.retry-btn').click(function(e) {
+        e.preventDefault();
+        if (!lock && confirm('配信失敗と未配信のメールを再送します。\nよろしいですか？')) {
+            lock = true;
+            $('#sendModal').modal('show');
+            var id = $(this).data('id');
+            $.post($(this).data('url'))
+                .done(function() { sendMail(id, 0); })
+                .fail(function() { alert('エラーが発生しました。'); });
+        }
+        return false;
+    });
+    $('#sendModal').on('show.bs.modal', function () {
+        $('.modal-title').text('送信中...');
+        $('#send-progress').addClass('progress-bar-striped active');
+        $('#send-status-message').text('');
+    });
+    $('#sendModal .btn-close').on('click', function() {
+        location.reload(true);
+    });
+    {% if app.session.flashBag.has('eccube.postcarrier.history') %}
+    $('#sendModal').modal('show');
+    sendMail({{ app.session.flashBag.get('eccube.postcarrier.history')[0] }}, 0);
+    {% endif %}
+})
+</script>
+{% endblock %}
+
+{% block main %}
+<form name="form1" id="form1" method="post" action="">
+    <div class="c-outsideBlock__contents mb-5">
+        {% if pagination %}
+            <span class="font-weight-bold ml-2">{{ 'admin.postcarrier.history.search_count'|trans({'%count%':pagination.totalItemCount}) }}</span>
+        {% endif %}
+    </div>
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                {% if pagination and pagination.totalItemCount %}
+                    <div class="row justify-content-between mb-2">
+                        <div class="col-6">
+                            <div class="d-inline-block">
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-ec-regular" href="{{ url('plugin_post_carrier_history') }}"><span>{{ 'postcarrier.history.btn_update'|trans }}</span></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-5 text-right">
+                            {#Dropdown page count#}
+                            <div class="d-inline-block mr-2">
+                                <select class="custom-select" onchange="location = this.value;">
+                                    {% for pageMax in pageMaxis %}
+                                        <option {% if pageMax.name == page_count %} selected {% endif %}
+                                                value="{{ path('plugin_post_carrier_history_page', {'page_no': 1, 'page_count': pageMax.name }) }}">
+                                            {{ 'admin.common.count'|trans({ '%count%': pageMax.name }) }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="d-inline-block">
+                                <div class="btn-group" role="group"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-body p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-2 pb-2">{{ 'admin.postcarrier.history.th_send_start_time'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center" rowspan="2">{{ 'admin.postcarrier.history.th_subject'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2">{{ 'admin.postcarrier.history.th_trigger_type'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.postcarrier.history.th_ncustomers'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.postcarrier.history.th_nclick'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2"></th>
+                                        <th class="border-top-0 pt-2 pb-2"></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-top-0 pt-2 pb-2">{{ 'admin.postcarrier.history.th_send_end_time'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2"></th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.postcarrier.history.th_total'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.postcarrier.history.th_sum_conversion'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2"></th>
+                                        <th class="border-top-0 pt-2 pb-2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for SendHistory in pagination %}
+
+                                    {% set execStatus = 'background: #ffffff;' %}
+                                    {% if SendHistory.executing %}
+                                    {%     set execStatus = 'background: #ffff00;' %}
+                                    {% endif %}
+
+                                    {% set triggerTypeDisp = 'postcarrier.trigger_type.immediate' %}
+                                    {% if SendHistory.triggerType == 'SCHEDULE' %}
+                                    {%    set triggerTypeDisp = 'postcarrier.trigger_type.schedule' %}
+                                    {% elseif SendHistory.triggerType == 'EVENT' %}
+                                    {%    set triggerTypeDisp = 'postcarrier.trigger_type.stepmail' %}
+                                    {% endif %}
+                                    <tr style="{{ execStatus }}">
+                                        <td>{{ SendHistory.startTime|date("Y/m/d H:i") }}</td>
+                                        <td rowspan="2">
+                                            <a href="{{ url('plugin_post_carrier_history_reuse', { id: SendHistory.deliveryId }) }}">{{ SendHistory.subject }}
+                                                <br>[{{ SendHistory.type|upper }}]
+                                            </a>
+                                        </td>
+                                        <td>{{ triggerTypeDisp|trans }}</td>
+                                        <td class="text-right">{{ SendHistory.nCustomers|number_format }}</td>
+                                        <td class="text-right">{{ SendHistory.nClick|number_format }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ url('plugin_post_carrier_history_analysis', { id: SendHistory.deliveryId }) }}">
+                                                {{ 'postcarrier.history.btn_analysis'|trans }}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ url('plugin_post_carrier_history_result', { id: SendHistory.deliveryId }) }}">
+                                                {{ 'postcarrier.history.btn_result'|trans }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr style="{{ execStatus }}">
+                                        <td>
+                                            {% if SendHistory.endTime is not null %}
+                                                {{ SendHistory.endTime|date("Y/m/d H:i") }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('plugin_post_carrier_history_copy', { id: SendHistory.deliveryId }) }}" >
+                                                {{ 'postcarrier.history.btn_copy'|trans }}
+                                            </a>
+                                        </td>
+                                        <td class="text-right">{{ SendHistory.total|number_format }}</td>
+                                        <td class="text-right">{{ SendHistory.sumConversion|number_format }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ url('plugin_post_carrier_history_preview', { id: SendHistory.deliveryId }) }}" >
+                                                {{ 'postcarrier.history.btn_preview'|trans }}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ url('plugin_post_carrier_history_condition', { id: SendHistory.deliveryId }) }}">
+                                                {{ 'postcarrier.history.btn_condition'|trans }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="row justify-content-md-center mb-4">
+                                {% if pagination.totalItemCount > 0 %}
+                                    {% include "@admin/pager.twig" with { 'pages' : pagination.paginationData, 'routes' : 'plugin_post_carrier_history_page' } %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card rounded border-0">
+                        <div class="card-body p-4">
+                            <div class="text-center text-muted">{{ 'admin.postcarrier.history.notice_no_data'|trans }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+<div id="sendModal" class="modal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">アップロード中...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div id="send-progress" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                </div>
+                <div id="send-status-message"></div>
+            </div>
+            <div class="modal-footer" style="display: none;">
+                <button type="button" class="btn btn-default btn-close">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

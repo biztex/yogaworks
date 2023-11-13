@@ -1,0 +1,579 @@
+@charset "UTF-8";
+
+/*配信履歴　ドーナツグラフ-------------------------------------------*/
+
+.sendHistry {
+	position: relative;
+	left: 0;
+	top: 0px;
+	height:330px;
+	width: 330px;
+	margin:auto;
+/*
+	position: absolute;
+	left: 27px;
+	top: 80px;
+	width: 270px;
+*/
+	-webkit-perspective: 600;
+	-webkit-perspective-origin: center;
+}
+.caption {
+	font-family: Lato,sans-serif;
+	color: #222;
+	font-size: 12px;
+	font-weight: 600;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top:100px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	white-space: nowrap;
+	width: 330px;
+}
+.caption p{
+	display:block;
+	margin:0;
+
+}
+.caption p:nth-of-type(1){
+	font-weight: normal;
+	font-size: 14px;
+}
+.caption p:nth-of-type(2){
+	font-weight: normal;
+	font-size: 64px;
+	line-height: 90px;
+}
+.caption p:nth-of-type(2):after{
+	content:"%";
+	font-size:32px;
+}
+.sendHistry .circle01 {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.sendHistry .circle02 {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+}
+/*-------------------------------------------配信履歴　ドーナツグラフ*/
+
+/*顧客別　複合グラフ-------------------------------------------*/
+.byCustomer {
+	width:760px;
+	left:5px;
+	height:260px;
+	position: relative;
+	margin-left:30px;
+}
+/*-------------------------------------------顧客別　複合グラフ*/
+
+/*リンク別　棒グラフ-------------------------------------------*/
+.byLink {
+	width:830px;
+	top:20px;
+	left:20px;
+	position: relative;
+	font-size:14px;
+	padding-bottom:30px;
+}
+.byLink dl{
+	clear:both;
+	padding-top:30px;
+}
+.byLink dt{
+	float:left;
+	width:250px;
+	display:block;
+	margin:0;
+	padding-bottom:15px;
+	padding-top: 15px;
+	color:#6c757d;
+	border-right:1px solid #e8edf1;
+	padding-right:20px;
+	text-align: right;
+	font-weight: normal;
+}
+.byLink dd{
+	color:#6c757d;
+	float:left;
+	margin:0;
+	margin-left:10px;
+	width:570px;
+	display:block;
+	margin-bottom:10px;
+}
+.byLink dd>div span{
+	font-weight:normal;
+	margin:0 10px;
+}
+.byLink dd>div span:nth-of-type(1){
+	margin-left:15px;
+}
+.byLink dd>div span:nth-of-type(1):before{
+	margin-right:4px;
+	font-weight:normal;
+}
+.byLink dd>div span:nth-of-type(1):after{
+	font-weight:normal;
+}
+
+.byLink dd>div span:nth-of-type(2){
+	margin-left:10px;
+}
+
+.byLink dd>div span:nth-of-type(2):after{
+	font-weight:normal;
+}
+.byLink dd>div span:nth-of-type(3){
+	font-weight:bold;
+	margin-left:10px;
+}
+.byLink dd>div span:nth-of-type(3):before{
+	content:"CV率";
+	margin-right:10px;
+}
+
+.byLink dd>div span:nth-of-type(3):after{
+	content:"%";
+}
+
+.byLink dd>div span.plusPer:after{
+	content:"%";
+	font-weight: normal;
+}
+.byLink dd>div:nth-of-type(1){
+	float:left;
+	margin-bottom: -15px;
+}
+.byLink dd>div:nth-of-type(2){
+	float:right;
+	margin-bottom: -15px;
+	margin-right:30px;
+}
+.byLink>ul>li{
+	display:inline-block;
+	margin-right:25px;
+	padding:3px 15px;
+	float:left;
+}
+.byLink>ul>li:nth-of-type(1){
+	border-left: solid 4px #ffcb00;
+}
+.byLink>ul>li:nth-of-type(2){
+	border-left: solid 4px #073152;
+}
+.byLink>ul>li>div>span{
+	margin:0 4px;
+}
+.byLink>div{
+	float:right;
+	font-weight:bold;
+	margin-top: 4px;
+}
+.byLink>div:before{
+	content:"Total";
+	margin-right:6px;
+	font-weight:normal;
+}
+.byLink>div:after{
+	content:"clicks";
+	margin-left:6px;
+	font-weight:normal;
+}
+
+/*-------------------------------------------リンク別　棒グラフ*/
+.card-body.rnStyle01{
+	background-color: #073152;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	height: 58px;
+	padding: 12px 1.25rem;
+}
+.card-body.rnStyle01 div.row div.d-block{
+	display: flex!important;
+	width: 100%;
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+}
+
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular{
+	color:#fff;
+	background-color:transparent;
+	width:100%;
+	border:none;
+	height: 35px;
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular:hover{
+	background-color:rgba(255,255,255,0.1);
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular:before{
+	content: "";
+	width: 19px;
+	height: 18px;
+	display: inline-block;
+	position:relative;
+	top:3px;
+	left:-10px;
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular.-active{
+	font-weight:bold;
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular.-active:after{
+	content: "";
+	width: 15px;
+	height: 15px;
+	background-color: #fff;
+	position: relative;
+	top: 10px;
+	left: 0;
+	right: 0;
+	margin: auto;
+	display: block;
+	transform: rotate(45deg);
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular:nth-of-type(1):before{
+	background-image: url(../../../../../html/plugin/PostCarrier4/assets/images/ico_h_analysis.png);
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular.-active:nth-of-type(1):before{
+	background-image: url(../../../../../html/plugin/PostCarrier4/assets/images/ico_h_analysis_strong.png);
+
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular:nth-of-type(2):before{
+	background-image: url(../../../../../html/plugin/PostCarrier4/assets/images/ico_h_analysis_c.png);
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular.-active:nth-of-type(2):before{
+	background-image: url(../../../../../html/plugin/PostCarrier4/assets/images/ico_h_analysis_c_strong.png);
+
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular:nth-of-type(3):before{
+	background-image: url(../../../../../html/plugin/PostCarrier4/assets/images/ico_h_analysis_l.png);
+}
+.card-body.rnStyle01 div.row div.d-block a.btn-ec-regular.-active:nth-of-type(3):before{
+	background-image: url(../../../../../html/plugin/PostCarrier4/assets/images/ico_h_analysis_l_strong.png);
+}
+.card-body.rnStyle02{
+	padding-bottom:30px;
+}
+.rnTable01{
+	padding-bottom:100px;
+	min-width: 875px;
+}
+.rnTable01>table{
+	width:100%;
+}
+.rnTable01>table>tbody>tr>td>ul{
+	position: relative;
+
+	padding:0;
+/*
+	width: 100%;
+*/
+	margin: auto;
+	left: 0;
+	right: 0;
+	width: 374px;
+}
+.rnTable01>table>tbody>tr>td>ul>li{
+	display:inline-block;
+/*
+	width:120px;
+*/
+	width:160px;
+	box-sizing:border-box;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left:15px;
+	border-left: solid 4px #ffcb00;
+	margin-left:25px;
+	margin-top:40px;
+}
+.rnTable01>table>tbody>tr>td>ul>li:nth-of-type(1){
+	border-left: solid 4px #073152;
+}
+.rnTable01>table>tbody>tr>td>ul>li>span:nth-of-type(1){
+	font-size: 16px;
+	display: block;
+	margin-bottom: 9px
+}
+.rnTable01>table>tbody>tr>td>ul>li>span:nth-of-type(2){
+	font-size: 40px;
+	line-height: 30px;
+}
+.rnTable01>table>tbody>tr>td>ul>li>span:nth-of-type(2):after{
+	content:"%";
+	font-size:25px;
+	margin-left:5px;
+}
+
+.rnTable01>table:nth-of-type(1)>tbody>tr>td{
+/*	width: 213px;
+	vertical-align: top; */
+}
+.rnTable02{
+	margin-top:10px;
+}
+.rnTable02 th{
+	width:190px;
+	padding:19px 0;
+}
+
+.rnTable02 tr:nth-of-type(odd){
+	background-color:transparent!important;
+}
+.rnTable02 tr:nth-of-type(1) td,.rnTable02 tr:nth-of-type(1) th{
+	border-top:none;
+}
+.rnTable02 td{
+	font-size:18px;
+	padding:16px 0;
+}
+.rnTable02 td,.rnTable02 th{
+	font-weight: normal;
+	border-bottom:solid 1px #dfdfdf;
+}
+.rnTable02{
+	width:480px;
+	position:relative;
+	left:0px;
+}
+/*配信履歴　右側グラフ-------------------------------------------*/
+
+.cvAmount{
+	background-color:#073152;
+	position: relative;
+	left: 0px;
+	width:480px;
+	color:#fff;
+	height:79px;
+	margin-top:20px;
+	border-radius:5px;
+	margin-bottom:12px;
+}
+.cvAmount ul li {
+	display:inline-block;
+	vertical-align: middle;
+}
+.cvAmount ul li:nth-of-type(1){
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-right:40px;
+}
+.cvAmount ul li:nth-of-type(2){
+	margin-top: -3px;
+	font-size:26px;
+}
+.cvAmount ul li:nth-of-type(2) span{
+	font-size:50px;
+}
+
+.graphParts01{
+	position: relative;
+	left: 0px;
+	height:79px;
+	width:230px;
+	border:solid 1px #dfdfdf;
+	border-radius:5px;
+	position:relative;
+	display: inline-block;
+	margin-right:16px;
+}
+.graphParts01 p{
+	position:absolute;
+	z-index:9;
+	top:12px;
+	left:20px;
+}
+.graphParts01 p:nth-of-type(2){
+	top:40px;
+	font-size:18px;
+}
+.graphParts01 p:nth-of-type(2) span{
+	font-size:40px;
+	line-height: 0.6em;
+	margin-right:5px;
+}
+.graphParts01 p:nth-of-type(3){
+	top:39px;
+	left:auto;
+	right:20px;
+	font-size:26px;
+}
+.graphParts01 #graphParts01Inner{
+	background-color:#e8edf1;
+	height:79px;
+	width:0%;
+	transition: all 1000ms 0s ease-in;
+
+}
+
+.graphParts02{
+	position: relative;
+	left: 0px;
+	height:79px;
+	width:230px;
+	border:solid 1px #dfdfdf;
+	border-radius:5px;
+	position:relative;
+	display: inline-block;
+}
+.graphParts02 p{
+	position:absolute;
+	z-index:9;
+	top:12px;
+	left:20px;
+}
+
+.graphParts02 p:nth-of-type(2){
+	top:40px;
+	font-size:18px;
+}
+.graphParts02 p:nth-of-type(2) span{
+	font-size:40px;
+	line-height: 0.6em;
+	margin-right:5px;
+}
+.graphParts02 p:nth-of-type(3){
+	top:39px;
+	left:auto;
+	right:20px;
+	font-size:26px;
+}
+
+.graphParts02 #graphParts02Inner{
+	background-color:#e8edf1;
+	height:79px;
+	width:0%;
+	transition: all 1000ms 0s ease-in;
+}
+/*-------------------------------------------配信履歴　右側グラフ*/
+/*顧客別　その他パーツ-------------------------------------------*/
+ul.headLabel>li {
+	display:inline-block;
+	margin:10px 25px 20px 5px;
+	color:#6c757d;
+}
+ul.headLabel>li:nth-of-type(1):before {
+	content:"";
+	position:relative;
+	width:3px;
+	height:30px;
+	background-color:#eab7b7;
+	display:inline-block;
+	margin-bottom: -9px;
+	margin-right: 10px;
+}
+ul.headLabel>li:nth-of-type(2):before {
+	content:"";
+	position:relative;
+	width:3px;
+	height:30px;
+	background-color:#b9d9de;
+	display:inline-block;
+	margin-bottom: -9px;
+	margin-right: 10px;
+}
+ul.headLabel>li:nth-of-type(3):before {
+	content:"";
+	position:relative;
+	width: 8px;
+	height: 8px;
+	background-color:#ba1212;
+	display:inline-block;
+	border-radius: 50%;
+	margin-right: 40px;
+}
+ul.headLabel>li:nth-of-type(3):after{
+	content:"";
+	position:relative;
+	display:inline-block;
+	width: 30px;
+	height: 1px;
+	background-color:#ba1212;
+	top: -4px;
+	left: -135px;
+}
+ul.headLabel>li:nth-of-type(4):before {
+	content:"";
+	position:relative;
+	width: 8px;
+	height: 8px;
+	background-color:#073152;
+	display:inline-block;
+	border-radius: 50%;
+	margin-right: 40px;
+}
+ul.headLabel>li:nth-of-type(4):after{
+	content:"";
+	position:relative;
+	display:inline-block;
+	width: 30px;
+	height: 1px;
+	background-color:#073152;
+	top: -4px;
+	left: -135px;
+}
+.rnTable03{
+	width:790px;
+	text-align:center;
+	padding:0px!important;
+	margin-left:25px;
+	margin-top:20px;
+}
+.rnTable03 p{
+	text-align:left;
+	font-weight:bold;
+	font-size: 13px;
+}
+.table-striped tbody tr:nth-of-type(odd){
+	background-color:transparent;
+}
+
+.rnTable03 tr{
+	height:98px;
+}
+.rnTable03 th,.rnTable03 td{
+	border:none;
+	vertical-align: middle;
+	width:98px;
+	font-weight:normal;
+}
+.rnTable03 td{
+	border-bottom:1px solid #dfdfdf;
+}
+.rnTable03 td span{
+	display: block;
+	font-size: 16px;
+}
+.rnTable03 td span:nth-of-type(1){
+	font-weight:bold;
+	margin-bottom: 12px;
+}
+.rnTable03 td span:nth-of-type(1):after{
+	content:"%";
+	font-size:14px;
+}
+.rnTable03 tr:nth-of-type(1){
+	height:50px;
+	background-color:#e8edf1!important;
+
+}
+.graphLabel{
+	width:800px;
+	height: 50px;
+	font-size:12px;
+	font-weight:bold;
+}
+.graphLabel span:nth-of-type(1){
+	float:left;
+}
+.graphLabel span:nth-of-type(2){
+	float:right;
+}
+
+/*-------------------------------------------顧客別　その他パーツ*/

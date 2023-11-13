@@ -1,0 +1,50 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+<div class="ec-headerLinkArea">
+    <div class="ec-headerLink__list">
+
+        {% if is_granted('ROLE_USER') %}
+            <a class="ec-headerLink__item" href="{{ url('mypage') }}">
+                <div class="ec-headerLink__icon">
+                    <i class="fas fa-user fa-fw"></i>
+                </div>
+                <span>{{ 'マイページ'|trans }}</span>
+            </a>
+            {% if BaseInfo.option_favorite_product %}
+                <a class="ec-headerLink__item" href="{{ url('mypage_favorite') }}">
+                    <div class="ec-headerLink__icon">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                    <span>{{ 'お気に入り'|trans }}</span>
+                </a>
+            {% endif %}
+           
+        {% else %}
+           
+            {% if BaseInfo.option_favorite_product %}
+                <a class="ec-headerLink__item" href="{{ url('mypage_favorite') }}">
+                    <div class="ec-headerLink__icon">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                    <span>{{ 'お気に入り'|trans }}</span>
+                </a>
+            {% endif %}
+            
+        {% endif %}
+        <a class="ec-headerLink__item" href="{{ url('homepage') }}">
+            <div class="ec-headerLink__icon">
+                <i class="fa-regular fa-house"></i>
+            </div>
+            <span>{{ 'ホームに戻る'|trans }}</span>
+        </a>
+    </div>
+</div>

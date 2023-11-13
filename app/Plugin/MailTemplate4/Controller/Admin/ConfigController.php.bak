@@ -1,0 +1,96 @@
+<?php
+
+namespace Plugin\MailTemplate4\Controller\Admin;
+
+use Eccube\Controller\AbstractController;
+use Eccube\Entity\MailTemplate;
+use Eccube\Form\Type\Master\MailTemplateType;
+use Eccube\Repository\MailTemplateRepository;
+use Plugin\MailTemplate4\Form\Type\Admin\ConfigType;
+use Plugin\MailTemplate4\Repository\ConfigRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ConfigController extends AbstractController
+{
+    /**
+     * @var ConfigRepository
+     */
+    protected $configRepository;
+    protected $templateRepository;
+
+    /**
+     * ConfigController constructor.
+     *
+     * @param MailTemplateRepository $templateRepository
+     * @param ConfigRepository $configRepository
+     */
+    public function __construct(ConfigRepository $configRepository, MailTemplateRepository $templateRepository)
+    {
+        $this->configRepository = $configRepository;
+        $this->templateRepository = $templateRepository;
+    }
+
+    /**
+     * @Route("/%eccube_admin_route%/mail_template4/config", name="mail_template4_admin_config")
+     * @Template("@MailTemplate4/admin/config.twig")
+     */
+    public function index(Request $request)
+    {
+        $MailTemplates = $this->templateRepository->findAll();
+
+        //dump($MailTemplates);die();
+
+
+        $Config = $this->configRepository->get();
+        $form = $this->createForm(ConfigType::class, $Config);
+/*        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $Config = $form->getData();
+            $this->entityManager->persist($Config);
+            $this->entityManager->flush();
+            $this->addSuccess('登録しました。', 'admin');
+
+            return $this->redirectToRoute('mail_template4_admin_config');
+        }
+
+        $NewMailTemplate = new MailTemplate();
+        $builder = $this->formFactory
+            ->createBuilder(MailTemplateType::class, $NewMailTemplate);*/
+
+
+
+        return [
+            'MailTemplates' => $MailTemplates,
+            'form' => $form->createView(),
+        ];
+    }
+
+
+    /**
+     * @Route("/%eccube_admin_route%/mail_template4/config/add", name="mail_template4_admin_config_add", methods={"POST"},)
+     */
+    public function addTemplate(Request $request)
+    {
+        $name = $request->get('name');
+        $subject = $request->get('subject');
+
+        $MailTemplate = new MailTemplate();
+        $MailTemplate->setName($name);
+        $MailTemplate->setMailSubject($subject);
+//
+//        $fp = fopen('1.txt', 'w');
+//        fwrite($fp, '');
+//        fc
+        
+        dump();die();
+        $this->entityManager->persist($MailTemplate);
+        $this->entityManager->flush();
+
+
+        return new Response('ok');
+    }
+}

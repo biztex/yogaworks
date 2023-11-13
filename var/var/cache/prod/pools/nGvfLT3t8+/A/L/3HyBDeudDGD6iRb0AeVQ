@@ -1,0 +1,33 @@
+<?php //Eccube%255CController%255CCartController%2523handleCartItem
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/cart/{operation}/{productClassId}',
+            ],
+            'name' => [
+                'cart_handle_item',
+            ],
+            'requirements' => [
+                [
+                    'operation' => 'up|down|remove',
+                    'productClassId' => '\\d+',
+                ],
+            ],
+            'methods' => [
+                [
+                    'PUT',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

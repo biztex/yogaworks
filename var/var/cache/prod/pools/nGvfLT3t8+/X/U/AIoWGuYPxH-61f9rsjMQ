@@ -1,0 +1,48 @@
+<?php //Eccube%255CController%255CAdmin%255CSetting%255CSystem%255CLoginHistoryController%2523index
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        clone $p['Symfony\\Component\\Routing\\Annotation\\Route'],
+        clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/setting/system/login_history',
+                '/%eccube_admin_route%/setting/system/login_history/{page_no}',
+            ],
+            'name' => [
+                'admin_setting_system_login_history',
+                'admin_setting_system_login_history_page',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                    'POST',
+                ],
+                [
+                    'GET',
+                    'POST',
+                ],
+            ],
+            'requirements' => [
+                1 => [
+                    'page_no' => '\\d+',
+                ],
+            ],
+        ],
+        'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template' => [
+            'template' => [
+                2 => '@admin/Setting/System/login_history.twig',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[2],
+    ],
+    []
+); }];

@@ -1,0 +1,68 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_template'] %}
+
+{% block title %}{{ 'postcarrier.template.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% block main %}
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th class="w-25">{{ 'postcarrier.select.label_subject'|trans }}</th>
+                                    <td>{{ subject }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="w-25">{{ '本文' }}</th>
+                                    <td>{{ previewBody|raw }}</td>
+                                </tr>
+{#
+                                <tr>
+                                    <th class="w-25">{{ 'postcarrier.select.label_body'|trans }}</th>
+                                    <td><xmp>{{ body }}</xmp></td>
+                                </tr>
+                                <tr>
+                                    <th class="w-25">{{ 'postcarrier.select.label_body_html'|trans }}</th>
+                                    <td><xmp>{{ htmlBody|raw }}</xmp></td>
+                                </tr>
+#}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="c-conversionArea">
+        <div class="c-conversionArea__container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-6">
+                    <div class="c-conversionArea__leftBlockItem">
+                        <a class="c-baseLink" href="{{ url('plugin_post_carrier_template') }}">
+                            <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.template.preview.btn_back'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row align-items-center justify-content-end">
+                        <div class="col-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+<style type="text/css">
+.ec-headerNaviRole { padding-left: 0px; padding-right: 0px;}
+.ec-headerNaviRole .ec-headerNaviRole__left { width: calc(100% / 1); }
+.ec-headerNaviRole .ec-headerNaviRole__right { width: calc(100% * 3 / 3);}
+.header-logo_kau {width:140px; float:left; margin-right: 20px;}
+.header-logo_kau img {width:100%}
+    @media all and (min-width: 769px) and (max-width: 1045px) {
+        .header-logo_kau {padding-left:10px; }
+        .ec-headerNaviRole .ec-headerNaviRole__left { width: calc(50% / 1); }
+    }
+    @media all and (max-width: 768px) {
+        .ec-headerNaviRole {padding-left: 0px; padding-right: 15px; padding-bottom:10px;}
+        .ec-headerNavSP {left: 5px;}
+        .ec-headerNaviRole .ec-headerNaviRole__left {width: calc(100% / 3);}
+        .header-logo_kau {padding-left:50px; width:145px; margin-right: 0px;}
+        x.header-logo_kau img {width:100%}
+        }
+</style>
+
+<div class="ec-headerNaviRole">
+    <div class="ec-headerNaviRole__left">
+        <div class="header-logo_kau">
+            <a href="{{ url('homepage') }}">
+                <img src="{{ asset('assets/img/common/logo_ywol.svg') }}" alt="{{ BaseInfo.shop_name }}">
+            </a>
+        </div>
+        <div class="ec-headerNaviRole__search">
+            {{ render(path('block_search_product')) }}
+        </div>
+        <div class="ec-headerRole__navSP">
+            {{ include('Block/nav_sp.twig') }}
+        </div>
+    </div>
+    <div class="ec-headerNaviRole__right">
+        <div class="ec-headerNaviRole__nav">
+            {{ include('Block/login.twig') }}
+        </div>
+        <div class="ec-headerRole__cart">
+            {{ include('Block/cart.twig') }}
+        </div>
+    </div>
+</div>

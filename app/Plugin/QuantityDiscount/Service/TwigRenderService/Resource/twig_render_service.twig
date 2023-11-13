@@ -1,0 +1,36 @@
+<div id="{{ __support_block_id__ }}" class="d-none">
+    {% if __template_name__ is defined and __template_name__ != "" %}
+        {{ include(__template_name__) }}
+    {% endif %}
+
+    {% for ContentBlock in __ContentBlocks__ %}
+        {% if ContentBlock.Template != "" %}
+            {% if ContentBlock.include %}
+                {{ include(ContentBlock.Template) }}
+            {% else %}
+                {{ ContentBlock.Template|raw }}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        // Render Script
+        {% for ContentBlock in __ContentBlocks__ %}
+        {{ ContentBlock.RenderScript|raw }}
+        {% endfor %}
+
+        $("#{{ __support_block_id__ }}").remove();
+    });
+</script>
+
+{% if __control_script_name__ is defined and __control_script_name__ != "" %}
+    {{ include(__control_script_name__) }}
+{% endif %}
+
+{% for ContentBlock in __ContentBlocks__ %}
+    {% if ContentBlock.JavaScript != "" %}
+        {{ include(ContentBlock.JavaScript) }}
+    {% endif %}
+{% endfor %}

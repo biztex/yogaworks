@@ -1,0 +1,3 @@
+<?php //Eccube%255CEntity%255CProduct%2523getStockMax
+
+return [PHP_INT_MAX, []];

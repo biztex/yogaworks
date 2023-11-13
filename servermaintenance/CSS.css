@@ -1,0 +1,29 @@
+﻿/* ==================================================== */
+/* Template : Coming Soon */
+/* Authour  : https://downloadfort.com/ */
+/* LIcense  :  https://downloadfort.com/License */
+/* Template URL: https://downloadfort.com/ */
+/* ==================================================== */
+body {
+    padding: 8%;
+    font-family: verdana;
+    text-align: center;
+    margin-top: 1%;
+    line-height: 30px;
+    background-color:rgb(52, 52, 52);
+}
+.txtblue {
+    font-size: 16px;
+    font-weight: 400;
+    color: #e1ff00;
+}
+.txtwhite {
+    font-size: 16px;
+    color: #fff;
+}
+.txtyellow {
+    font-size: 16px;
+    color: #ffd400;
+}
+.imgcenter {width:20%;
+}

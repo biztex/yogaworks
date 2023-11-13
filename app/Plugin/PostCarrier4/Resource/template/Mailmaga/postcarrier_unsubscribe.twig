@@ -1,0 +1,41 @@
+{#
+ This file is part of the PostCarrier
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+    <div class="ec-role">
+        <div class="ec-pageHeader">
+            <h1>{{ 'メルマガ配信停止'|trans }}</h1>
+        </div>
+        <div class="ec-off2Grid">
+            <div class="ec-off2Grid__cell">
+                <form method="post" id="postcarrier_mailmaga" action="{{ path('postcarrier_mailmaga') }}">
+                    {{ form_widget(form._token) }}
+                    <div class="ec-reportHeading">
+                        <h3>{{ 'メルマガ停止の手続はこちら'|trans }}</h3>
+                    </div>
+                    <div>
+                        <div class="ec-halfInput{{ has_errors(form.email) ? ' error'}}" style="text-align: center;">
+                            {{ form_widget(form.email, {'attr':{'placeholder':"停止メールアドレス", 'size':20}}) }}
+                        </div>
+                    </div>
+                    <div class="ec-registerRole__actions">
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <button class="ec-blockBtn--action" type="submit" name="action" value="unsubscribe">{{ '解除'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

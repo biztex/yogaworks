@@ -1,0 +1,31 @@
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['store', 'plugin', 'plugin_list'] %}
+
+{% block title %}{{ 'gmc.admin.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'admin.store.plugin.plugin_list'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}{% endblock stylesheet %}
+
+{% block javascript %}{% endblock javascript %}
+
+{% block main %}
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header"><span>{{ 'gmc.admin.gmc.settings'|trans }}</span></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <a class="btn btn-primary" target="_blank" href="{{ gmc_proxy_url }}?authorize_url={{ url('oauth2_authorize')  }}&top_url={{ url('homepage') }}&shop_name={{ BaseInfo.shop_name }}">Google Merchant Center 連携設定</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

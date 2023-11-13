@@ -1,0 +1,3 @@
+<?php //Plugin%255CCoupon4%255CEntity%255CCoupon%2523setCouponLowerLimit
+
+return [PHP_INT_MAX, []];

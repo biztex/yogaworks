@@ -1,0 +1,27 @@
+<?php //Eccube%255CEntity%255CBaseInfo%2524option_mypage_order_status_display
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'option_mypage_order_status_display',
+            ],
+            'type' => [
+                'boolean',
+            ],
+            'options' => [
+                [
+                    'default' => true,
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

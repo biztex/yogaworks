@@ -1,0 +1,21 @@
+# -------------------------
+# 設定画面
+# -------------------------
+joolenpromotionmodal4.plugin_name: プロモーション用モーダル表示プラグイン for EC-CUBE 4
+
+joolenpromotionmodal4.admin.config.title.content: 表示内容
+joolenpromotionmodal4.admin.config.modal.image: 画像
+joolenpromotionmodal4.admin.tooltip.modal.image: 商品画像をドラッグ&ドロップで登録できます。登録しない場合は本項目を詰めてモーダルを表示します。
+joolenpromotionmodal4.admin.config.modal.image_size: '推奨サイズ : 横幅 500px以上'
+joolenpromotionmodal4.admin.config.modal.description: 説明
+joolenpromotionmodal4.admin.tooltip.modal.description: HTMLタグが利用可能です。登録しない場合は本項目を詰めてモーダルを表示します。
+joolenpromotionmodal4.admin.config.modal.button.name: ボタン名
+joolenpromotionmodal4.admin.tooltip.modal.button.name: ボタンに表示するテキストです。登録しない場合は本項目を詰めてモーダルを表示します。
+joolenpromotionmodal4.admin.config.modal.url: 遷移先URL
+joolenpromotionmodal4.admin.tooltip.modal.url: ボタンをクリックした時の遷移先URLを入力します。外部サイトのURLなどを利用することもできます。
+joolenpromotionmodal4.admin.config.title.condition: 表示条件
+joolenpromotionmodal4.admin.config.modal.interval.date: 再表示インターバル日数
+joolenpromotionmodal4.admin.tooltip.modal.interval.date: 次回表示までの期間を日数単位で設定できます。毎回表示にチェックを入れると常に表示します。
+joolenpromotionmodal4.admin.config.modal.interval.unlimited: 毎回表示
+joolenpromotionmodal4.admin.config.modal.login.user.display: ログイン時表示
+joolenpromotionmodal4.admin.config.modal.non.member.display: 非ログイン時表示

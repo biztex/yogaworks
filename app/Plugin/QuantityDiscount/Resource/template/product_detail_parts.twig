@@ -1,0 +1,54 @@
+{% set QdProductList = qd_product_list(Product) %}
+
+<div id="qd_list">
+    {% if QdProductList != false %}
+        {% if QdProductList.has_class %}
+            <div class="qd-Table col-3">
+                <ol class="qd-Header">
+                    <li class="qd-Header-Column box-m">規格名</li>
+                    <li class="qd-Header-Column box-s">数量</li>
+                    <li class="qd-Header-Column box-s">単価(税込)</li>
+                </ol>
+                {% for QdProductRow1 in QdProductList %}
+                    {% for QdProduct in QdProductRow1 %}
+                        {% set quantityDiscounts = QdProduct.quantity_discounts %}
+                        {% for quantityDiscount in quantityDiscounts %}
+                            <ul class="qd-product_class_id_{{ QdProduct.product_class_id }} qd-Row">
+                                <li class="qd-Row-Column box-m left">{{ QdProduct.class_name1 }}{% if QdProduct.class_name2 != "" %} × {{ QdProduct.class_name2 }}{% endif %}
+                                <li class="qd-Row-Column box-s left">
+                                    {% if quantityDiscount.quantity == quantityDiscount.max_quantity %}
+                                        {{ quantityDiscount.quantity }}
+                                    {% else %}
+                                        {{ quantityDiscount.quantity }} ～{% if quantityDiscount.max_quantity != "" %} {{ quantityDiscount.max_quantity }}{% endif %}
+                                    {% endif %}
+                                </li>
+                                <li class="qd-Row-Column box-s rigth">{{ quantityDiscount.price_inc_tax|price }}</li>
+                            </ul>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% else %}
+            {% set QdProduct = QdProductList[0][0] %}
+            <div class="qd-Table">
+                <ol class="qd-Header">
+                    <li class="qd-Header-Column">数量</li>
+                    <li class="qd-Header-Column">単価(税込)</li>
+                </ol>
+                {% set quantityDiscounts = QdProduct.quantity_discounts %}
+                {% for quantityDiscount in quantityDiscounts %}
+                    <ul class="qd-Row">
+                        <li class="qd-Row-Column ">
+                            {% if quantityDiscount.quantity == quantityDiscount.max_quantity %}
+                                {{ quantityDiscount.quantity }}
+                            {% else %}
+                                {{ quantityDiscount.quantity }} ～{% if quantityDiscount.max_quantity != "" %} {{ quantityDiscount.max_quantity }}{% endif %}
+                            {% endif %}
+                        </li>
+                        <li class="qd-Row-Column rigth">{{ quantityDiscount.price_inc_tax|price }}</li>
+                    </ul>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

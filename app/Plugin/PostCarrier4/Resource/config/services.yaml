@@ -1,0 +1,25 @@
+imports:
+    resource: 'load_parameters.php'
+
+parameters:
+    post_carrier_effective_address_count_key: 'hj0H_MpRt3z0ezZkAC3CDqYtBHf2sKww'
+
+services:
+    Plugin\PostCarrier4\Entity\AdminCustomerQueryCustomizer:
+        tags: ['eccube.query_customizer']
+
+monolog:
+    channels: ['postcarrier']
+    handlers:
+        postcarrier:
+            type: fingers_crossed
+            action_level: error
+            passthru_level: info
+            handler: postcarrier_rotating_file
+            channels: ['postcarrier']
+        postcarrier_rotating_file:
+            type: rotating_file
+            max_files: 60
+            path: '%kernel.logs_dir%/%kernel.environment%/postcarrier.log'
+            formatter: eccube.log.formatter.line
+            level: debug

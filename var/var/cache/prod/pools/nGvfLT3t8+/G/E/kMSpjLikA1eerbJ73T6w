@@ -1,0 +1,3 @@
+<?php //Plugin%255CRecommend4%255CEntity%255CRecommendProduct%2523setSortno
+
+return [PHP_INT_MAX, []];

@@ -1,0 +1,167 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_history'] %}
+
+{% block title %}{{ 'postcarrier.history.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% block main %}
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="d-inline-block"><span class="card-title">{{ 'admin.postcarrier.history.th_subject'|trans }}</span></div>
+                            </div>
+                            <div class="col">
+                                <div class="d-inline-block">{{ subject }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-body rnStyle01">
+                        <div class="row">
+                            <div class="d-block text-center">
+                                <a href="{{ url('plugin_post_carrier_history_analysis', { id: id }) }}"
+                                   class="btn btn-ec-regular -active">{{ 'postcarrier.history.btn_analysis'|trans }}</a>
+                                <a href="{{ url('plugin_post_carrier_history_analysis_customer', { id: id }) }}"
+                                   class="btn btn-ec-regular">{{ 'postcarrier.history.btn_analysis_customer'|trans }}</a>
+                                <a href="{{ url('plugin_post_carrier_history_analysis_link', { id: id }) }}"
+                                   class="btn btn-ec-regular">{{ 'postcarrier.history.btn_analysis_link'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body rnTable01">
+                        <table>
+                        <tr>
+                            <td>
+                                <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js'></script> {# グラフ描画用ライブラリ本体 #}
+                                <script src="{{ asset('PostCarrier4/assets/js/graph_create.js','plugin') }}"></script>
+                                <link rel="stylesheet" href="{{ asset('PostCarrier4/assets/css/graph_create.css','plugin') }}">
+                                <script type="text/javascript">
+                                    window.onload = function() {
+                                        var send_rate = {{ "%.2f"|format(arrMarketing.nSent/(arrMarketing.total-arrMarketing.nDiscard)*100) }};
+                                        var cv_rate = {{ "%.2f"|format(arrMarketing.nConversion/arrMarketing.nSent*100) }};
+                                        var click_rate = {{ "%.2f"|format(arrMarketing.nClick/arrMarketing.nSent*100) }};
+
+                                        doughnutGraphCreate(send_rate,cv_rate);
+                                        {# 右側グラフパーツ #}
+                                        document.getElementById("graphParts01Inner").style.width = cv_rate + '%'; {# CV率 #}
+                                        document.getElementById("graphParts02Inner").style.width = click_rate + '%'; {# クリック率 #}
+                                        {# カウントアップ #}
+                                        countUp(0, cv_rate);     {# CV率 #}
+                                        countUp(1, send_rate);   {# 正常配信率率 #}
+                                        countUp(2, click_rate);  {# クリック率 #}
+                                        countUp(3, {{ arrMarketing.amount }});       {# CV金額 #}
+                                        countUp(4, {{ arrMarketing.nConversion }});  {# CV通数 #}
+                                        countUp(5, {{ arrMarketing.nClick }});       {# クリック通数 #}
+                                    };
+                                </script>
+
+                                <div class="sendHistry">
+                                    <canvas id="dnt01" class="circle01" width="300" height="300"></canvas>
+                                    <canvas id="dnt02" class="circle02" width="300" height="264"></canvas>
+                                    <div class="caption">
+                                        <p>CV率</p>
+                                        <p class="countUpElm"></p>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <span>正常配信率</span>
+                                        <span class="countUpElm"></span>
+                                    </li>
+                                    <li>
+                                        <span>クリック率</span>
+                                        <span class="countUpElm"></span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <div class="cvAmount">
+                                    <ul>
+                                        <li>
+                                            CV金額
+                                        </li>
+                                        <li>
+                                            &yen;<span class="countUpElm"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="graphParts01">
+                                    <div id="graphParts01Inner"></div>
+                                    <p>CV通数</p>
+                                    <p><span class="countUpElm"></span>件</p>
+                                </div>
+                                <div class="graphParts02">
+                                    <div id="graphParts02Inner"></div>
+                                    <p>クリック通数</p>
+                                    <p><span class="countUpElm"></span>件</p>
+                                </div>
+                                <table class="table table-striped table-sm rnTable02">
+                                        <tr>
+                                            <th>配信予定メール通数</th>
+                                            <td class="right">{{ arrMarketing.total|number_format }} 通</td>
+                                        </tr>
+                                        <tr>
+                                            <th>除外メール通数</th>
+                                            <td class="right">{{ arrMarketing.nDiscard|number_format }} 通</td>
+                                        </tr>
+                                        <tr>
+                                            <th>エラー通数</th>
+                                            <td class="right">{{ arrMarketing.nError|number_format }} 通</td>
+                                        </tr>
+                                        <tr>
+                                            <th>正常配信通数</th>
+                                            <td class="right">{{ arrMarketing.nSent|number_format }} 通</td>
+                                        </tr>
+
+                                        {% if htmlMailFlg %}
+                                        <tr>
+                                            <th>メール開封率</th>
+                                            <td class="right">{{ arrMarketing.nOpened2|round(2,'floor') }} ％</td>
+                                        </tr>
+                                        <tr>
+                                            <th>メール開封通数</th>
+                                            <td class="right">{{ arrMarketing.nOpened|number_format }} 通</td>
+                                        </tr>
+                                        <tr>
+                                            <th>メール開封率対象通数</th>
+                                            <td class="right">{{ arrMarketing.populationOpened|number_format }} 通</td>
+                                        </tr>
+                                        {% endif %}
+                                </table>
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="c-conversionArea">
+        <div class="c-conversionArea__container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-6">
+                    <div class="c-conversionArea__leftBlockItem">
+                        <a class="c-baseLink" href="{{ url('plugin_post_carrier_history') }}">
+                            <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.history.preview.btn_back'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

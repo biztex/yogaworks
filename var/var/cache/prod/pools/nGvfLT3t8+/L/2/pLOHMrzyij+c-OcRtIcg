@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CAdmin%255CAbstractCsvImportController
+
+return [PHP_INT_MAX, []];

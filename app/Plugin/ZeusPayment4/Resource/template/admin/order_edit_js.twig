@@ -1,0 +1,9 @@
+{% set creditPayment = repository('Plugin\\ZeusPayment4\\Entity\\Config').get().getCreditPayment() %}
+<script>
+    $(function () {
+    	if ($('#order_Payment option:selected').val() == {{ creditPayment.getId() }}) {
+    		$('#_zeus_message').insertAfter('#order_Payment');
+    	}
+    })
+</script>
+<div id="_zeus_message" class="form-text font-weight-bold text-danger">ゼウスクレカ注文の実売上は<a href="{{ url('zeus_order_list') }}">ゼウス受注管理</a>より操作してください</div>

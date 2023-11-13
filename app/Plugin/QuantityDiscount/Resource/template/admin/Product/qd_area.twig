@@ -1,0 +1,36 @@
+<div id="plugin_qd_block" class="card rounded border-0 mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <div id="qd_area_title" class="d-inline-block" data-tooltip="true" data-placement="top"
+                     title="{{ 'quantity_discount.admin.product_area_tooltip'|trans }}">
+                    <span class="card-title">{{ 'quantity_discount.admin.product_area_title'|trans }}</span>
+                    <i class="fa fa-question-circle fa-lg ml-1"></i>
+                </div>
+            </div>
+            <div class="col-4 text-right">
+                <a data-toggle="collapse" href="#qdArea" aria-expanded="false"
+                   aria-controls="qdArea">
+                    <i class="fa fa-angle-up fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="collapse show ec-cardCollapse" id="qdArea">
+        <div class="card-body" id="qd_area_body"
+             data-prototype="{% filter escape %}{{ include('@QuantityDiscount/admin/Product/qd_product_prototype.twig', {'qdForm': form.class.QdProductClasses.vars.prototype, 'index': '__name__'}) }}{% endfilter %}">
+            {% for qdForm in form.class.QdProductClasses %}
+                {{ include('@QuantityDiscount/admin/Product/qd_product_prototype.twig', {'qdForm': qdForm, 'index': loop.index0}) }}
+            {% endfor %}
+            {% if form.class.QdProductClasses is empty %}
+                <div class="row qd_area_row"></div>
+            {% endif %}
+            <div class="row col-3">
+                <a id="qd_add_btn">
+                    <i class="fa fa-plus-square-o font-weight-bold mr-1"></i>
+                    <span class="font-weight-bold">{{ 'quantity_discount.admin.product_area_add'|trans }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

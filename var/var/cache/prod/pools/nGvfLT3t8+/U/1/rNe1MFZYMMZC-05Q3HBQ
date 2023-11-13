@@ -1,0 +1,19 @@
+<?php //Plugin%255CProductReview4%255CEntity%255CProductReview%2524reviewer_name
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'reviewer_name',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

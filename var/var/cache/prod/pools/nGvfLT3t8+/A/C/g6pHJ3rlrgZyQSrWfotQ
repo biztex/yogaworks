@@ -1,0 +1,27 @@
+<?php //Eccube%255CEntity%255CShipping%2524OrderItems
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\OneToMany'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\OneToMany')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'mappedBy' => [
+                'Shipping',
+            ],
+            'targetEntity' => [
+                'Eccube\\Entity\\OrderItem',
+            ],
+            'cascade' => [
+                [
+                    'persist',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

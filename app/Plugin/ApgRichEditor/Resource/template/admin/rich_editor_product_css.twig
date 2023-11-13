@@ -1,0 +1,56 @@
+{% if ApgRichEditorConfig.isEnableProductEditor %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/hint/show-hint.min.css" />
+    <style>
+        .CodeMirror {
+            border: 1px solid #C4CCCE;
+            font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+            font-size: 14px;
+            height: 100%;
+            line-height: 160%;
+            max-height: 600px;
+        }
+        .cm-tab:after {
+            content: "\21e5";
+            display: -moz-inline-block;
+            display: -webkit-inline-block;
+            display: inline-block;
+            width: 0px;
+            position: relative;
+            overflow: visible;
+            left: -1.4em;
+            color: #aaa;
+        }
+    </style>
+{% endif %}
+{% if ApgRichEditorConfig.isEnableProductMarkdown %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css"/>
+    <style>
+        #apg_markdown_help {
+            margin: 20px 0;
+            font-size: 0.8em;
+        }
+
+        #apg_markdown_help table {
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        #apg_markdown_help th {
+            font-weight: bold;
+            background: #EFEFEF;
+        }
+
+        #apg_markdown_help td, #apg_markdown_help th {
+            border-top: 1px solid #666;
+            padding: 10px;
+            line-height: 160%;
+        }
+
+        #apg_markdown_help tr:last-child td,
+        #apg_markdown_help tr:last-child th {
+            border-bottom: 1px solid #666;
+        }
+    </style>
+{% endif %}

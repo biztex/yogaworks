@@ -1,0 +1,267 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_mail_customer'] %}
+
+{% block title %}{{ 'postcarrier.mail_customer.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/js/vendor/spin.min.js', 'admin') }}"></script>
+    <script>
+        $(function() {
+            var opts = {
+                lines: 13,
+                length: 30,
+                width: 2,
+                radius: 12,
+                corners: 1,
+                rotate: 0,
+                direction: 1,
+                color: '#BBB',
+                speed: 1,
+                trail: 67,
+                shadow: true,
+                hwaccel: false,
+                className: 'spinner',
+                zIndex: 2e9,
+                top: top
+            };
+
+            ImageSpinner = new Spinner(opts).spin(document.getElementById('spinner'));
+            ImageSpinner.stop();
+
+            $('#upload-form').submit(function() {
+                $('#upload-button').attr('disabled', 'disabled');
+                $('#download-button').attr('disabled', 'disabled');
+                ImageSpinner.spin(document.getElementById('spinner'));
+            });
+
+            $('#file-select').click(function() {
+                $('#post_carrier_csv_import_import_file').click();
+                $('#post_carrier_csv_import_import_file').on('change', function() {
+                    var files = $(this).prop('files');
+                    if (files.length) {
+                        $('#post_carrier_csv_import_import_file_name').text(files[0].name);
+                    }
+                });
+            });
+        });
+
+function changeAction(action) {
+    $('#upload-form').attr('action', action).submit();
+    //$('#upload-form').submit();
+}
+
+    </script>
+{% endblock javascript %}
+
+{% block main %}
+{#
+    <form role="form" name="form1" id="form1" method="post" action="{{ url('plugin_post_carrier_mail_customer_import') }}" novalidate enctype="multipart/form-data">
+    <form id="upload-form" method="post" action="{{ url('plugin_post_carrier_mail_customer_import') }}" enctype="multipart/form-data">
+
+    <form id="upload-form" method="post" action="{{ url('plugin_post_carrier_mail_customer') }}" enctype="multipart/form-data">
+    <form id="upload-form" method="post" action="" enctype="multipart/form-data">
+#}
+    <form id="upload-form" method="post" action="{{ url('plugin_post_carrier_mail_customer_page', {'page_no': page_no}) }}" enctype="multipart/form-data">
+        {{ form_widget(form._token) }}
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.mail_customer.tooltip.csv_upload'|trans }}"><span>{{ 'postcarrier.mail_customer.card_title'|trans }}</span><i class="fa fa-question-circle fa-lg fa-lg ml-1"></i></div>
+                        </div>
+
+                        <div id="ex-csv_mail_customer-upload" class="card-body">
+                            <div class="row">
+                                <div class="col-2"><span>{{ 'postcarrier.mail_customer.th_group_name'|trans }}</span></div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.group_name) }}
+                                    {{ form_errors(form.group_name) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><span>{{ 'postcarrier.mail_customer.csv_file'|trans }}</span></div>
+                                <div class="col">
+                                        <div class="mb-2">
+                                            <span id="file-select" class="btn btn-ec-regular mr-2">{{ 'admin.common.file_select'|trans }}</span>
+                                            <span id="post_carrier_csv_import_import_file_name">{{ 'admin.common.file_select_empty'|trans }}</span>
+                                            {{ form_widget(form.import_file, {'attr': {'accept': 'text/csv,text/tsv', 'class': 'd-none'}}) }}
+                                            {{ form_errors(form.import_file) }}
+                                        </div>
+                                        <button class="btn btn-ec-conversion" id="upload-button" type="submit">{{ 'admin.common.bulk_registration'|trans }}</button>
+                                        {#
+                                        {% for error in errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                        #}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row justify-content-between">
+                                <div class="col-6">
+                                    <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'tooltip.product.csv_format'|trans }}"><span class="align-middle">{{ 'admin.common.csv_format'|trans }}</span><i class="fa fa-question-circle fa-lg fa-lg ml-1"></i></div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <a href="{{ url('plugin_post_carrier_mail_customer_csv_template') }}" class="btn btn-ec-regular" id="download-button">{{ 'admin.common.csv_skeleton_download'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ex-csv_mail_customer-format" class="card-body">
+                            <table class="table table-striped table-bordered">
+                                <tbody>
+                                {% for header, key in headers %}
+                                    <tr>
+                                        <th class="w-25 align-middle table-ec-lightGray" id="file_format_box__header--{{ loop.index }}">{{ header }}
+                                            {% if key.required %}
+                                                <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                            {% endif %}
+                                        </th>
+                                        <td class="align-middle">
+                                            {% if key.description %}
+                                                {{ key.description|trans|raw }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {% if pagination and pagination.totalItemCount %}
+                    <div class="row justify-content-between mb-2">
+                        <div class="col-6"></div>
+
+                        <div class="col-5 text-right">
+                            {#Dropdown page count#}
+                            <div class="d-inline-block mr-2">
+                                <select class="custom-select" onchange="location = this.value;">
+                                    {% for pageMax in pageMaxis %}
+                                        <option {% if pageMax.name == page_count %} selected {% endif %}
+                                                value="{{ path('plugin_post_carrier_mail_customer_page', {'page_no': 1, 'page_count': pageMax.name }) }}">
+                                            {{ 'admin.common.count'|trans({ '%count%': pageMax.name }) }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="d-inline-block">
+                                <div class="btn-group" role="group"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-body p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-2 pb-3 pl-3">{{ 'postcarrier.mail_customer.th_no'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-3">{{ 'postcarrier.mail_customer.th_create_date'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-3">{{ 'postcarrier.mail_customer.th_group_name'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-3">{{ 'postcarrier.mail_customer.th_total'|trans }}</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center pr-3"></th> {# 編集、削除、ダウンロード #}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for Group in pagination %}
+                                    <tr>
+                                        <td class="align-middle pl-3">{{ Group[0].id }}</td>
+                                        <td class="align-middle">{{ Group[0].create_date|date("Y/m/d") }}</td>
+                                        <td class="align-middle">
+                                            <a href="{{ url('plugin_post_carrier_mail_customer_idsearch', { id: Group[0].id }) }}">{{ Group[0].group_name }}</td></a>
+                                        <td class="align-middle">{{ Group.cnt }}</td>
+                                        <td class="align-middle pr-3">
+                                            <div class="text-right">
+                                                {% if Group[0].id == form.group_id.vars.value %}
+                                                <button class="btn btn-ec-sub action-edit-cancel" type="button" onclick="changeAction('{{ url('plugin_post_carrier_mail_customer_cancel_group', { page_no: page_no, cancel_id: Group[0].id }) }}'); return false;">{{ 'admin.common.cancel'|trans }}</button>
+                                                {% else %}
+                                                <div class="px-1 d-inline-block">
+                                                    <a class="btn btn-ec-actionIcon pdf-print" href="{{ url('plugin_post_carrier_mail_customer_idsearch', { id: Group[0].id }) }}" data-tooltip="true" data-placement="top" title="{{ 'admin.common.send'|trans }}">
+                                                        <i class="fa fa-envelope fa-lg text-secondary" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="px-1 d-inline-block">
+                                                    <a class="btn btn-ec-actionIcon mr-2 action-edit" href="?" onclick="changeAction('{{ url('plugin_post_carrier_mail_customer_edit_group', { page_no: page_no, edit_id: Group[0].id }) }}'); return false;" data-tooltip="true" data-placement="top" title="{{ 'admin.common.edit'|trans }}">
+                                                        <i class="fa fa-pencil fa-lg text-secondary"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="px-1 d-inline-block">
+                                                    <a class="btn btn-ec-actionIcon pdf-print" href="{{ url('plugin_post_carrier_mail_customer_export', { id: Group[0].id }) }}" data-tooltip="true" data-placement="top" title="{{ 'admin.common.csv_download'|trans }}">
+                                                        <i class="fa fa-cloud-download fa-lg text-secondary" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="px-1 d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'admin.common.delete'|trans }}">
+                                                    <a class="btn btn-ec-actionIcon{%if Group[0].id == 1 %} disabled{% endif %}" data-toggle="modal" data-target="#discontinuance-{{ Group[0].id }}">
+                                                        <i class="fa fa-close fa-lg text-secondary" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="modal fade" id="discontinuance-{{ Group[0].id }}" tabindex="-1" role="dialog" aria-labelledby="discontinuance" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title font-weight-bold">
+                                                                    {{ 'admin.common.delete_modal__title'|trans }}</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-left">
+                                                                <p class="text-left">
+                                                                    {{ 'admin.common.delete_modal__message'|trans({ '%name%' : Group[0].group_name }) }}</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-ec-sub" type="button" data-dismiss="modal">
+                                                                    {{ 'admin.common.cancel'|trans }}
+                                                                </button>
+                                                                <a href="{{ url('plugin_post_carrier_mail_customer_delete', {'id' : Group[0].id}) }}" class="btn btn-ec-delete"{{ csrf_token_for_anchor() }} data-method="delete" data-confirm="false">
+                                                                    {{ 'admin.common.delete'|trans }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %} {# 編集キャンセル #}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="row justify-content-md-center mb-4">
+                                {% if pagination.totalItemCount > 0 %}
+                                    {% include "@admin/pager.twig" with { 'pages' : pagination.paginationData, 'routes' : 'plugin_post_carrier_mail_customer_page' } %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card rounded border-0">
+                        <div class="card-body p-4">
+                            <div class="text-center text-muted">{{ 'admin.postcarrier.history.notice_no_data'|trans }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+       {{ form_rest(form) }}
+    </form>
+{% endblock %}

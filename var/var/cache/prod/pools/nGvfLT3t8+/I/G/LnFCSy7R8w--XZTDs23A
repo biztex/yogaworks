@@ -1,0 +1,32 @@
+<?php //Eccube%255CController%255CAdmin%255CContent%255CMaintenanceController%2523disableMaintenance
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/disable_maintenance/{mode}',
+            ],
+            'name' => [
+                'admin_disable_maintenance',
+            ],
+            'requirements' => [
+                [
+                    'mode' => 'manual|auto_maintenance|auto_maintenance_update',
+                ],
+            ],
+            'methods' => [
+                [
+                    'POST',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

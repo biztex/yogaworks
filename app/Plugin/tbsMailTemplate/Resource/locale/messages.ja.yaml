@@ -1,0 +1,29 @@
+# flash messages
+tbs_mail_template.admin.delete.complete: メールテンプレートを削除しました。
+tbs_mail_template.admin.cannot_delete: 標準のメールテンプレートは削除できません。
+tbs_mail_template.admin.duplicated: 既に使用されているファイル名は使用できません。
+
+# メールテンプレート管理画面
+tbs_mail_template.admin.mail_template.title: メール設定（拡張）
+tbs_mail_template.admin.mail_template.sub_title: 店舗設定
+tbs_mail_template.admin.mail_template.th_id: ID
+tbs_mail_template.admin.mail_template.th_name: テンプレート
+tbs_mail_template.admin.mail_template.th_mail_subject: 件名
+tbs_mail_template.admin.mail_template.delete: 削除
+tbs_mail_template.admin.mail_template.delete_cancel: キャンセル
+tbs_mail_template.admin.mail_template.delete_confirm_title: メールテンプレートを削除します
+tbs_mail_template.admin.mail_template.delete_confirm_message: 削除してよろしいですか？
+
+# メールテンプレート編集画面
+tbs_mail_template.admin.mail_template_edit.title: メールテンプレート登録
+tbs_mail_template.admin.mail_template_edit.sub_title: 店舗設定
+tbs_mail_template.admin.mail_template_edit.mail_template_registration: メールテンプレート登録
+tbs_mail_template.admin.mail_template_edit.label.id: ID
+tbs_mail_template.admin.mail_template_edit.label.name: テンプレート
+tbs_mail_template.admin.mail_template_edit.label.mail_subject: 件名
+tbs_mail_template.admin.mail_template_edit.preview: プレビュー
+tbs_mail_template.admin.mail_template_edit.conversion.save: 登録
+tbs_mail_template.admin.mail_template_edit.conversion.back: メール設定（拡張）
+
+# 受注登録画面
+tbs_mail_template.admin.order_edit.mail_create_html: HTMLメールを作成

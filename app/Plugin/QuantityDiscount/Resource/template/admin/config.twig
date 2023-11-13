@@ -1,0 +1,90 @@
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['store', 'plugin', 'plugin_list'] %}
+
+{% block title %}{{ 'quantity_discount.admin.config_title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'quantity_discount.admin.config_sub_title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block main %}
+
+    <form id="config_form" role="form" method="post" action="">
+
+        {{ form_widget(form._token) }}
+
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    {% set group = "" %}
+                    {% set output = true %}
+                    {% for qdConfigForm in form.qdConfigs %}
+                        {% if group != qdConfigForm.groupId.vars.value %}
+                            {% if group != "" %}
+                                </div>
+                            {% endif %}
+                            {% set group = qdConfigForm.groupId.vars.value %}
+                            {% set output = false %}
+                            <div class="card rounded border-0 mb-4">
+                            <div class="card-header">
+                                <span>{{ constant('Plugin\\QuantityDiscount\\Service\\ConfigService::SETTING_GROUPS')[qdConfigForm.groupId.vars.value]|trans }}</span>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                        {{ form_widget(qdConfigForm.configType) }}
+                        <div class="row mb-2">
+                            {% if qdConfigForm.configType.vars.value == constant('Plugin\\QuantityDiscount\\Entity\\QdConfig::TYPE_STRING') %}
+                                <div class="col-2"><span>{{ qdConfigForm.textValue.vars.label }}</span></div>
+                                <div class="col mb-2">
+                                    {{ form_widget(qdConfigForm.textValue) }}
+                                    {{ form_errors(qdConfigForm.textValue) }}
+                                </div>
+                            {% elseif qdConfigForm.configType.vars.value == constant('Plugin\\QuantityDiscount\\Entity\\QdConfig::TYPE_CHOICE') %}
+                                <div class="col-2"><span>{{ qdConfigForm.intValue.vars.label }}</span></div>
+                                <div class="col mb-2">
+                                    {{ form_widget(qdConfigForm.intValue, { 'label_attr': { 'class': 'radio-inline'}}) }}
+                                    {{ form_errors(qdConfigForm.intValue) }}
+                                </div>
+                            {% elseif qdConfigForm.configType.vars.value == constant('Plugin\\QuantityDiscount\\Entity\\QdConfig::TYPE_BOOL') %}
+                                <div class="col-2"><span>{{ qdConfigForm.boolValue.vars.label }}</span></div>
+                                <div class="col mb-2">
+                                    {{ form_widget(qdConfigForm.boolValue) }}
+                                    {{ form_errors(qdConfigForm.boolValue) }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if output %}
+                        </div>
+                        {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink"
+                               href="{{ url('admin_store_plugin') }}">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                <span>{{ 'quantity_discount.admin.config_back'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5"
+                                        type="submit">{{ 'admin.common.save'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

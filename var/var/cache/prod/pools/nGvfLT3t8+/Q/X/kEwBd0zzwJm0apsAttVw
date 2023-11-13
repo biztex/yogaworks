@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CAdmin%255CContent%255CFileController%2523getFileList
+
+return [PHP_INT_MAX, []];

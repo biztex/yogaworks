@@ -1,0 +1,313 @@
+{% if ApgRichEditorConfig.isEnableProductEditor %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/hint/xml-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/hint/html-hint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/display/autorefresh.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/fold/xml-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.2/addon/edit/closetag.min.js"></script>
+    <script>
+        $(function () {
+
+            var mirrorMode = {
+                mode: 'text/html',
+                tabMode: 'indent',
+                lineNumbers: true,
+                matchBrackets: true,
+                indentUnit: 4,
+                indentWithTabs: true,
+                enterMode: 'keep',
+                autoCloseTags: true,
+                autoRefresh: true,
+                extraKeys: {
+                    "Ctrl-Space": "autocomplete",
+                },
+                lineWrapping: true
+            };
+            {% if ApgRichEditorConfig.productDescriptionDetail == constant('Plugin\\ApgRichEditor\\Domain\\RichEditorType::EDITOR') %}
+            var productDescriptionEditor = CodeMirror.fromTextArea(document.getElementById("admin_product_description_detail"), mirrorMode);
+            productDescriptionEditor.setSize(null, 400);
+            {% endif %}
+            {% if ApgRichEditorConfig.productFreeArea == constant('Plugin\\ApgRichEditor\\Domain\\RichEditorType::EDITOR') %}
+            var freeAreaEditor = CodeMirror.fromTextArea(document.getElementById("wysiwyg-area"), mirrorMode);
+            freeAreaEditor.setSize(null, 400);
+            $('#free_box__body_toggle').click(function () {
+                freeAreaEditor.refresh();
+            });
+            {% endif %}
+        });
+    </script>
+{% endif %}
+{% if ApgRichEditorConfig.isEnableProductWysiwyg %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/tinymce.min.js"></script>
+    <script src="{{ asset('ApgRichEditor/assets/js/tinymce_ja.js','plugin') }}" charset="UTF-8"></script>
+    <script>
+        $(function () {
+
+            var targetTextArea = [];
+            {% if ApgRichEditorConfig.productDescriptionDetail == constant('Plugin\\ApgRichEditor\\Domain\\RichEditorType::WYSIWYG') %}
+            targetTextArea.push('textarea#admin_product_description_detail');
+            {% endif %}
+            {% if ApgRichEditorConfig.productFreeArea == constant('Plugin\\ApgRichEditor\\Domain\\RichEditorType::WYSIWYG') %}
+            targetTextArea.push('textarea#wysiwyg-area');
+            {% endif %}
+
+
+            {% if ApgRichEditorConfig.imageUploadType == constant('Plugin\\ApgRichEditor\\Domain\\ImageUploadType::EL_FINDER') %}
+            function setFileBrowser(field_name, url, type, win) {
+                tinymce.activeEditor.windowManager.open({
+                    file: '{{ url('plugin_ApgRichEditor_images') }}', // elFinderを配置した場所を指定して下さい(絶対パス)
+                    title: 'ファイルのアップロード・選択',
+                    width: 900,
+                    height: 450,
+                    resizable: 'yes'
+                }, {
+                    setUrl: function (url) {
+                        win.document.getElementById(field_name).value = url;
+                    }
+                });
+                return false;
+            }
+
+            tinymce.init(
+                {
+                    selector: targetTextArea.join(","),
+                    height: 300,
+                    menubar: true,
+                    plugins: "textcolor image link lists code",
+                    toolbar: [
+                        "",
+                        // 文字サイズ 文字色 画像 リンク
+                        "formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | forecolor image link | undo redo | code"
+                    ],
+                    relative_urls: false,
+                    file_browser_callback: setFileBrowser,
+                    language: "ja"
+                });
+            {% else %}
+            tinymce.init(
+                {
+                    selector: targetTextArea.join(","),
+                    height: 300,
+                    menubar: true,
+                    plugins: "textcolor image link lists code",
+                    toolbar: [
+                        "",
+                        // 文字サイズ 文字色 画像 リンク
+                        "formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | forecolor image link | undo redo | code"
+                    ],
+                    relative_urls: false,
+                    images_upload_handler: function (blobInfo, success, failure) {
+                        var xhr, formData;
+
+                        xhr = new XMLHttpRequest();
+                        xhr.withCredentials = false;
+                        xhr.open('POST', '{{ url('plugin_ApgRichEditor_uploadImage') }}');
+
+                        xhr.onload = function () {
+                            var json;
+
+                            if (xhr.status != 200) {
+                                failure('HTTP Error: ' + xhr.status);
+                                return;
+                            }
+
+                            json = JSON.parse(xhr.responseText);
+
+                            if (!json) {
+                                failure('レスポンスが不正です: ' + xhr.responseText);
+                                return;
+                            }
+
+                            if (json.error) {
+                                failure(json.error);
+                                return;
+                            }
+
+                            if (!json.location) {
+                                failure('レスポンスが不正です: ' + xhr.responseText);
+                                return;
+                            }
+                            success(json.location);
+                        };
+
+                        formData = new FormData();
+                        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                        xhr.send(formData);
+                    },
+                    language: "ja"
+                });
+
+            {% endif %}
+        });
+    </script>
+{% endif %}
+{% if ApgRichEditorConfig.isEnableProductMarkdown %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.4.0/marked.min.js"></script>
+    <script>
+        $(function () {
+            $(".iziModal").iziModal({
+                width: 600,
+                title: "Markdownチートシート",
+                zindex: 99999,
+                padding: 30,
+                transitionIn: 'fadeInDown',
+                transitionOut: 'fadeOutDown'
+            });
+            var toolbarConfig = [
+                {
+                    name: "bold",
+                    action: SimpleMDE.toggleBold,
+                    className: "fa fa-bold",
+                    title: "太字"
+                },
+                {
+                    name: "italic",
+                    action: SimpleMDE.toggleItalic,
+                    className: "fa fa-italic",
+                    title: "斜体"
+                },
+                {
+                    name: "strikethrough",
+                    action: SimpleMDE.toggleStrikethrough,
+                    className: "fa fa-strikethrough",
+                    title: "取り消し線"
+                },
+                {
+                    name: "heading",
+                    action: SimpleMDE.toggleHeadingSmaller,
+                    className: "fa fa-header",
+                    title: "H1タグ"
+                },
+                "|", // Separator
+                {
+                    name: "heading-1",
+                    action: SimpleMDE.toggleHeading1,
+                    className: "fa fa-header fa-header-x fa-header-1",
+                    title: "H1タグ"
+                },
+                {
+                    name: "heading-2",
+                    action: SimpleMDE.toggleHeading2,
+                    className: "fa fa-header fa-header-x fa-header-2",
+                    title: "H2タグ"
+                },
+                {
+                    name: "heading-3",
+                    action: SimpleMDE.toggleHeading3,
+                    className: "fa fa-header fa-header-x fa-header-3",
+                    title: "H3タグ"
+                },
+                "|", // Separator
+                {
+                    name: "quote",
+                    action: SimpleMDE.toggleBlockquote,
+                    className: "fa fa-quote-left\n",
+                    title: "引用"
+                },
+                {
+                    name: "unordered-list",
+                    action: SimpleMDE.toggleUnorderedList,
+                    className: "fa fa-list-ul",
+                    title: "リスト"
+                },
+                {
+                    name: "ordered-list",
+                    action: SimpleMDE.toggleOrderedList,
+                    className: "fa fa-list-ol",
+                    title: "リスト(番号つき)"
+                },
+                "|", // Separator
+                {
+                    name: "link",
+                    action: SimpleMDE.drawLink,
+                    className: "fa fa-link",
+                    title: "リンク"
+                },
+                {
+                    name: "image",
+                    action: SimpleMDE.drawImage,
+                    className: "fa fa-picture-o",
+                    title: "画像"
+                },
+                "|", // Separator
+                {
+                    name: "table",
+                    action: SimpleMDE.drawTable,
+                    className: "fa fa-table",
+                    title: "表"
+                },
+                {
+                    name: "horizontal-rule",
+                    action: SimpleMDE.drawHorizontalRule,
+                    className: "fa fa-minus",
+                    title: "横線"
+                },
+                "|", // Separator
+                {
+                    name: "preview",
+                    action: SimpleMDE.togglePreview,
+                    className: "fa fa-eye no-disable",
+                    title: "プレビュー"
+                },
+                "|", // Separator
+                {
+                    name: "image-upload",
+                    action: function customFunction(editor) {
+                        $('#apg_markdown_help').iziModal('open')
+                    },
+                    className: "fa fa-question-circle",
+                    title: "チートシート",
+                }
+                {#
+                {
+                    name: "guide",
+                    action: "https://simplemde.com/markdown-guide",
+                    className: "fa fa-question-circle",
+                    title: "ヘルプ"
+                }
+                #}
+            ];
+            {% if ApgRichEditorConfig.productDescriptionDetail == constant('Plugin\\ApgRichEditor\\Domain\\RichEditorType::MARKDOWN') %}
+            $('#admin_product_description_detail').val($('#admin_product_plg_markdown_description_detail').val());
+            var mkdownDescriptionDetail = new SimpleMDE({
+                element: document.getElementById("admin_product_description_detail"),
+                spellChecker: false,
+                toolbar: toolbarConfig,
+                previewRender: function (plainText) {
+                    return marked(plainText); // Returns HTML from a custom parser
+                }
+            });
+            mkdownDescriptionDetail.codemirror.setSize(null, 400);
+            mkdownDescriptionDetail.codemirror.on("change", function () {
+                $('#admin_product_plg_markdown_description_detail').val(marked(mkdownDescriptionDetail.value()));
+            });
+            $('#admin_product_plg_markdown_description_detail').val(marked(mkdownDescriptionDetail.value()));
+            {% endif %}
+            {% if ApgRichEditorConfig.productFreeArea == constant('Plugin\\ApgRichEditor\\Domain\\RichEditorType::MARKDOWN') %}
+            $('#wysiwyg-area').val($('#admin_product_plg_markdown_free_area').val());
+            var mkdownFreeArea = new SimpleMDE({
+                element: document.getElementById("wysiwyg-area"),
+                spellChecker: false,
+                toolbar: toolbarConfig,
+                previewRender: function (plainText) {
+                    return marked(plainText); // Returns HTML from a custom parser
+                }
+            });
+            mkdownFreeArea.codemirror.setSize(null, 400);
+            mkdownFreeArea.codemirror.on("change", function () {
+                $('#admin_product_plg_markdown_free_area').val(marked(mkdownFreeArea.value()));
+            });
+            $('#admin_product_plg_markdown_free_area').val(marked(mkdownFreeArea.value()));
+            {% endif %}
+        });
+    </script>
+{% endif %}
+

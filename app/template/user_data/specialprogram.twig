@@ -1,0 +1,225 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+<!--adobe font-->
+<script>
+(function(d) {
+	var config = {
+			kitId: 'asc5pkt',
+			scriptTimeout: 3000,
+			async: true
+		},
+		h = d.documentElement,
+		t = setTimeout(function() {
+			h.className = h.className.replace(/bwf-loadingb/g, "") + " wf-inactive";
+		}, config.scriptTimeout),
+		tk = d.createElement("script"),
+		f = false,
+		s = d.getElementsByTagName("script")[0],
+		a;
+	h.className += " wf-loading";
+	tk.src = 'https://use.typekit.net/' + config.kitId + '.js';
+	tk.async = true;
+	tk.onload = tk.onreadystatechange = function() {
+		a = this.readyState;
+		if (f || a && a != "complete" && a != "loaded")
+			return;
+		f = true;
+		clearTimeout(t);
+		try {
+			Typekit.load(config)
+		} catch (e) {}
+	};
+	s.parentNode.insertBefore(tk, s)
+})(document);
+</script>
+<!-- ここから -->
+<style type="text/css">
+
+.read_font {
+font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400;
+font-style: normal;
+}							
+img {width:100%;}
+a img {
+	display: block;
+}
+
+a:hover img {
+	opacity: .6;
+	-webkit-opacity: .6;
+	-moz-opacity: .6;
+	filter: alpha(opacity=60);
+	/* IE lt 8 */
+	-ms-filter: "alpha(opacity=60)";
+	/* IE 8 */
+	-webkit-transition: opacity .5s ease-out;
+	-moz-transition: opacity .5s ease-out;
+	-ms-transition: opacity .5s ease-out;
+	transition: opacity .5s ease-out;
+}
+
+.maincontent h2 {text-align:center; background:rgb(247 245 237); border-radius:50px; color:#4e1e1e; padding:.5rem 0 .3rem; font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400;
+font-style: normal; margin:4rem 0 2rem;}
+
+.maincontent h3 { padding:.5rem 0 .3rem; font-weight: 400;  margin:1rem 0;}
+
+.top_copy {
+padding:3rem 3rem 4rem;
+font-size: 20px;
+color: #333;
+text-align:center;
+line-height:1.6;
+}
+
+.sub_copy {
+padding:3rem 3rem 4rem;
+font-size: 16px;
+color: #333;
+line-height:1.6;
+max-width:900px; margin:0 auto; padding-bottom:50px;
+}
+
+.maincontent {
+	clear: both;
+	overflow: hidden;
+}
+.f_red {color:#f00;}
+
+.tokuten {max-width:800px; margin:0 auto;}
+
+.tokuten ol{list-style: decimal; padding-left:2rem;}
+
+.inner-product {width:30%; margin:20px 1%; float:left; position: relative;}
+.inner-product .thumb {float:left; margin:0 4% 10px 0;}
+.inner-product .thumb img {border-radius:10px;}
+.inner-product .icon {float:right; width:30%; position:absolute; top:280px; right:-20px; }
+.inner-product .price1 {}
+.inner-product .price2 {padding-left:2rem; font-size:20px; font-weight:400; margin-bottom:1rem;}
+.inner-product .copy {font-size:14px;}
+
+.special-program_btn {width:260px; margin:10px auto;}
+
+a {
+	box-sizing: border-box;
+}
+
+.chart {max-width:800px; margin:0 auto 50px;; text-align: center;}
+.coupon {max-width:831px; margin:0 auto 50px; text-align: center;}
+
+	@media only screen and (max-width:768px) {
+		.inner-product .icon { top:160px; right:-20px; }
+		.inner-product .price2 {font-size:16px;}
+	}
+
+	@media only screen and (max-width:414px) {
+		.top_copy {
+			font-size: 17px;
+			padding: 3rem 0.5rem 0;
+			letter-spacing: -0.1rem;
+		}
+		.maincontent h2 {letter-spacing: -0.2rem;}
+
+		.tokuten {font-size:14px;}
+		
+		.inner-product {width:90%; margin:20px; float:none;}
+		.inner-product img {float:none; border-radius:10px; margin:0 4% 10px 0;}
+		.inner-product .icon { top:300px; right:0; }
+		.inner-product .price2 {font-size:20px;}
+		.sub_copy {
+		padding:1rem 1rem 4rem;
+		font-size: 14px;
+		}
+	}
+</style>
+<main>
+	<div><img src="/html/user_data/img/specialprogram/kv_specialprogram.jpg"></div>
+	<!-- yogamat -->
+	<article>
+		<section class="maincontent">
+		 <div class="top_copy read_font">私たちヨガワークスは、ヨガをワーク（機能）させる最小単位としてヨガマットを考え、<br>
+		その販売を原点に2003年にスタートした日本初・東京発のヨガブランドです。<br>
+		素材や機能性、耐久性はもちろん、使いやすさ、教えやすさなど、<br>
+		ヨガ講師に寄り添ったプロユースにふさわしい高品質なマット・プロップスを開発することで、<br>
+		より快適にヨガができる環境を提供しつづけています。</div>		
+
+		<h2>- 特典と適用について -</h2>		
+		<div class="coupon"><img src="/html/user_data/img/specialprogram/coupon.png"><br>
+		※特典の適用はお一人様につき1回限りです</div>
+
+		<div class="tokuten">
+		<h3>＜特典適用方法＞</h3>
+		<ol>
+			<li>当サイトからお好きな商品を選んでいただき、カートに入れてください。</li>
+			<li>ご注文内容確認画面にて、「クーポン」欄に、受講されたスタジオからお知らせいただいた「クーポンコード」をご入力ください。</li>
+			<li>料金が総額から20%OFFになっていることをご確認の上、注文を確定ください。</li>
+		</ol>
+		<br>
+		<span>※クーポンコードをお忘れになった場合は、各スタジオ様へお問い合わせください。弊社ではお答えいたしかねますのでご了承ください。</span><br>
+		<span>※SALE対象・アウトレットなどの割引商品はクーポン対象外となりますのでご了承ください。</span>
+		</div>		
+
+		<h2>対象商品の例</h2>	
+
+		<div class="row">
+			<div class="col-sm-1 col-xs-1 inner-product">
+			<div class="thumb"><a href="/products/detail/3"><img src="/html/upload/save_image/0607082538_647fc07229f0a.jpg" alt="ヨガマット6mm"></a></div>
+				<div>
+				<img class="icon" src="/html/user_data/img/specialprogram/ic_no1.png" alt="人気No.1">
+				<h3><a href="/products/detail/3">ヨガマット6mm</a></h3>
+				<div class="price1">¥4,620（税込）</div>
+				<div class="price2">→ <span class="f_red">¥3,696</span>（税込）</div>
+				<div class="copy">座位や逆転ポーズをほどよいクッションでサポートする6ｍｍマット。<br>
+				製造・輸送で排出されるCO2量 1200グラムをオフセットした環境を配慮したヨガマットです。</div>
+				</div>
+			</div>
+
+			<div class="col-sm-1 col-xs-1 inner-product">
+			<div class="thumb"><a href="/products/detail/11"><img src="/html/upload/save_image/block-a_ol_220317.jpg" alt="ヨガブロックA"></a></div>
+				<div>
+				<img class="icon" src="/html/user_data/img/specialprogram/ic_teiban.png" alt="定番アイテム">
+				<h3><a href="/products/detail/11">ヨガブロックA</a></h3>
+				<div class="price1">¥2,200（税込）</div>
+				<div class="price2">→ <span class="f_red">¥1,760</span>（税込）</div>
+				<div class="copy">高さの微調整が行いやすい幅狭タイプ。<br>
+				適度な弾力もあり、体に強くブロックが 当たるような使用にも有効です。<br>
+				軽量のEVA樹脂製で持ち運びに適しています。</div>
+				</div>
+			</div>
+
+			<div class="col-sm-1 col-xs-1 inner-product">
+			<div class="thumb"><a href="/products/detail/16"><img src="/html/upload/save_image/0711225521_64ad5f4916f85.jpg" alt="ボルスター"></a></div>
+				<div>
+				<img class="icon" src="/html/user_data/img/specialprogram/ic_japanmade.png" alt="日本製高品質">
+				<h3><a href="/products/detail/16">ボルスター</a></h3>
+				<div class="price1">¥14,080（税込）</div>
+				<div class="price2">→ <span class="f_red">¥11,264</span>（税込）</div>
+				<div class="copy">リストラティブヨガや陰ヨガには欠かせません。熟練の職人がひとつひとつ丁寧に仕上げた日本製。<br>
+				カバーは取り外して洗濯ができます。</div>
+				</div>
+			</div>		
+		</div>
+
+		
+		
+		<h2>ヨガインストラクターの「夢を叶える」ブランドへ</h2>	
+
+		<div class="sub_copy">私たちがもうひとつ力を入れていることが、「ヨガを拡げる」役割を担っていただいているヨガインストラクターの支援です。インストクターの皆様がそれぞれの夢に進んでいくことで、より安心してヨガを受けることができる生徒さんが増えていく。<br><br>
+		それが業界の発展へと繋がり、ヨガに関わるすべての人を幸せにしていく…<br>
+		今回の特別プログラムを通して、そんな循環を一緒に生み出したいと願っています。
+		</div>
+
+		<div class="chart"><img src="/html/user_data/img/specialprogram/chart.png"></div>
+
+
+		</section>
+
+	</article>
+	<!-- //yogamat -->
+
+</main>
+<!-- //ここまで -->
+{% endblock %}

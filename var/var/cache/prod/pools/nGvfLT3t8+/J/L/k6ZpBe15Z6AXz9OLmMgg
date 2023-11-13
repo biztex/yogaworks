@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CAdmin%255COrder%255CMailController%2523createBody
+
+return [PHP_INT_MAX, []];

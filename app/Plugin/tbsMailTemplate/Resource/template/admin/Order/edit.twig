@@ -1,0 +1,13 @@
+{% if Order.id is not null %}
+    <script>
+        $(function() {
+            $('#mailHistory div.text-center').before($('#mail_create_html'));
+        });
+    </script>
+
+    <div id="mail_create_html" class="text-center" style="margin-bottom: 1rem;">
+        <a class="btn btn-ec-regular" data-action="confirm" title="{{ 'admin.common.move_to_confirm_message'|trans({
+               '%name%' : 'admin.order.mail'|trans
+           }) }}" href="{{ path('tbs_mail_template_admin_order_mail', { id : Order.id }) }}">{{ 'tbs_mail_template.admin.order_edit.mail_create_html'|trans }}</a>
+    </div>
+{% endif %}

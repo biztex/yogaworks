@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CInstallPluginController
+
+return [PHP_INT_MAX, []];

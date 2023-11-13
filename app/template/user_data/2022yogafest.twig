@@ -1,0 +1,278 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+<!-- ここから -->
+<style type="text/css">
+
+.read_font {
+font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+img {width:100%;}
+a img { display: block;}
+
+.maincontent h1 {text-align:center; font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400; font-style: normal; margin:4rem 0 2rem;}
+.maincontent h3 {color:#924a8f; font-weight: 500; margin:0 0 1rem; font-size:2.2rem;}
+
+.top_copy { padding:3rem 3rem 4rem; font-size: 18px; color: #333; line-height:1.8; text-align: center; width:70%; margin:0 auto; }
+
+.sub_copy { font-size: 1.6rem; font-family: fot-tsukubrdgothic-std, sans-serif; width:60%; margin:0 auto 50px; line-height:1.8; }
+
+.maincontent .merit {width:64%; margin:0 auto 30px; overflow: hidden; font-size:1.5rem; line-height:1.9;}
+.maincontent .merit .inner_l {float:left; width:74%;}
+.maincontent .merit .inner_l img {float:left; width: 70px; margin:0 30px 5rem 0;}
+.maincontent .merit .inner_r {float:left; width:22%; margin-left:4%;}
+.maincontent .merit .inner_r img {width: 100%;}
+
+.maincontent { clear: both; overflow: hidden; }
+
+.maincontent .inner {width:100%;  padding:50px 16%; margin:0 auto; overflow: hidden; padding-bottom:50px;}
+.maincontent .bgy {background:#fffddd;}
+
+.maincontent .inner_left-img {width:61%; float:left; padding:0 40px 0 0; }
+.maincontent .inner_left-img2 {width:65%; float:left; padding:0; }
+.maincontent .inner_left-txt {width:39%; float:left; position: relative; padding: 5% 0 0 0;}
+.maincontent .inner .inst_info {width:80%; margin:0 auto;}
+
+.maincontent .inner_info {position:absolute; }
+.maincontent .inner_info2 { padding-top:200px;}
+.maincontent .pd_info {font-size:1.3rem; border-bottom:1px solid #000; padding-bottom:.5rem;  margin-bottom:.5rem; font-family: fot-tsukubrdgothic-std, sans-serif; font-weight: bold; letter-spacing: -0.08rem;}
+.maincontent .pd_detail {clear:both; font-size:13px; }
+.maincontent .pd_detail img {width:45px; margin-bottom:3px;}
+.maincontent .pd_coupon {color:#e60012; font-weight:400; font-size:1.9rem; padding-top:5px;}
+.maincontent .pd_coupon span {font-size:1.5rem;}
+.maincontent .pd_coupon img {width:60px; margin:0 15px 0 0;}
+.maincontent .product_info {margin:15px 0;}
+
+.img_center {max-width:680px; margin:0 auto 30px;}
+.img_center70p {width:70%; margin:0 auto 30px;}
+.img_center60p {width:60%; margin:0 auto 30px;}
+.img_center30p {width:30%; margin:0 auto 50px;}
+.brsp {display:none;}
+
+
+	@media only screen and (max-width:414px) {
+        .maincontent h1 {font-size:2rem; line-height:1.6; }
+        .maincontent h3 {margin:0 0 1rem; font-size:1.8rem;}
+        .top_copy { padding:1rem 0; font-size: 1.3rem; color: #333; line-height:1.6; width:90%; margin:0 auto; }
+        .sub_copy { padding:2rem 1rem .5rem; font-size: 1.4rem; width:100%; letter-spacing: -0.15rem;}
+
+        .maincontent .merit {width:90%; margin:0 auto 30px; overflow: hidden; font-size:1.2rem; line-height:1.6;}
+        .maincontent .merit .inner_l {float:none; width:100%;}
+        .maincontent .merit .inner_l img {width: 50px; margin:0 20px 6rem 0;}
+        .maincontent .merit .inner_r {float:none; width:40%; margin:20px auto 0;}
+        .maincontent .merit .inner_r img {width: 100%;}
+
+        .maincontent .inner {width:100%; margin:0 auto; overflow: hidden; padding:15px;}
+        .maincontent .inner_left-img {width:100%; float:none; padding:0; }
+        .maincontent .inner_left-img2 {width:100%; float:none; padding:0; }
+        .maincontent .inner_left-txt {width:100%; float:none; position: relative; }
+        .maincontent .inner .inst_info {width:100%; margin:0 auto;}
+
+        .maincontent .inner_info {position:inherit; top:0; padding:1rem;}
+        .maincontent .inner_info2 { padding-top:10px; margin:0 10px}
+        .maincontent .pd_info {font-size:1.3rem; border-bottom:1px solid #000; padding-bottom:.5rem;  margin-bottom:.5rem; font-family: fot-tsukubrdgothic-std, sans-serif; font-weight: bold; letter-spacing: -0.05rem;}
+        .maincontent .pd_detail {clear:both; font-size:13px; }
+        .maincontent .product_info {width:100%; margin:20px auto; }
+        .img_center {width:100%; margin:0 0 10px;}
+		.img_center30p {width:80%; margin:30px auto;}
+        .img_center60p {width:96%; margin:0 auto 10px;}
+        .img_center70p {width:100%; margin:0 auto 30px;}
+        .brsp {display:block;}
+        .brpc {display:none;}
+	}
+</style>
+<main>
+	<div><img src="{{ asset('img/gotoyogafest/kv.jpg','user_data') }}"></div>
+	<!-- yogamat -->
+	<article>
+		<section class="maincontent">
+        <h1>「yogafest 2022」開催を記念して<br class="brsp">お得なクーポンプレゼント！</h1>
+
+		<div class="top_copy">5万人が集まるアジア最大級のヨガイベント「yogafest 2022」が今年も開催されます。<br>
+		今回はyogafest2022開催記念として、ヨガワークスからお得なクーポンをプレゼント♪<br>
+		お気に入りのアイテムに囲まれて、みんなで一年に一回のヨガのお祭りを楽しみましょう！</div>
+
+		<div class="img_center"><img src="{{ asset('img/gotoyogafest/coupon.png','user_data') }}"></div>
+		<p class="img_center60p font_14">※「注文手続き」画面の「クーポン」部分に上記コードを入力すると割引が適用されます。<br>
+            ※ご利用はお一人様1回限りです。<br>
+            ※アウトレット商品など、値引き済の商品はクーポン対象外となります。</p>
+
+        <div class="img_center30p"><a href="/products/list?category_id=&name="><img src="{{ asset('img/gotoyogafest/btn_item.png','user_data') }}"></a></div>
+        
+        <div class="img_center70p"><img src="{{ asset('img/gotoyogafest/pct01.jpg','user_data') }}" alt="オンラインでもちゃんとヨガ"></div>
+        
+        <div class="merit">
+            <div class="inner_l">
+                <img src="{{ asset('img/gotoyogafest/merit01.png','user_data') }}">
+                <h3>効果・体感度が変わる</h3>
+                <div>ヨガマットがなく、手元足元が滑る状態でポーズを行いつづけると間違った体の使い方の癖がついてしまうことも…。<br>
+                    早めにヨガマット&プロップスを使って正しい体の使い方でポーズを取ると 効果や体感が段違い！<br>
+                    ヨガ上達への早道です。</div>
+            </div>
+            <div class="inner_r"><img src="{{ asset('img/gotoyogafest/merit01pct.jpg','user_data') }}"></div>
+        </div>
+
+        <div class="merit">
+            <div class="inner_l">
+                <img src="{{ asset('img/gotoyogafest/merit02.png','user_data') }}">
+                <h3>集中力・モチベーションが上がる</h3>
+                <div>ヨガマットがあることで「さあ今からヨガを始めよう！」と気持ちを切り替えて しっかり集中することができます。
+                    お気に入りのマットとプロップスで、 お家に自分だけのヨガスペースを作ればモチベーションも大幅アップ！</div>
+            </div>
+            <div class="inner_r"><img src="{{ asset('img/gotoyogafest/merit02pct.jpg','user_data') }}"></div>
+        </div>
+
+        <div class="merit">
+            <div class="inner_l">
+                <img src="{{ asset('img/gotoyogafest/merit03.png','user_data') }}">
+                <h3>怪我の予防にも</h3>
+                <div>ヨガでは仰向けの姿勢や膝を床につく姿勢が出てくることが多く、 フローリングの床などでは怪我や痛みにつながることも…。<br>
+                ヨガマットがあることでしっかり体を保護し、手元や足元が滑ることによる ケガを予防します。</div>
+            </div>
+            <div class="inner_r"><img src="{{ asset('img/gotoyogafest/merit03pct.jpg','user_data') }}"></div>
+        </div>
+        
+        <div class="img_center60p"><img src="{{ asset('img/gotoyogafest/pct02.jpg','user_data') }}" alt="イチオシ商品"></div>
+
+        <div class="sub_copy">ヨガワークスでは、未来のトップティーチャーを応援するため、<br class="brpc">
+            毎年「トライアルクラス」を協賛・運営しております。<br>
+            今回はそんな講師陣が普段から愛用している、オススメ商品をご紹介します！</div>
+       
+        
+        <div class="inner">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item01.jpg','user_data') }}" alt="Yoga Mat 3.5mm"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">ジューシーなカラーリングと<br>
+                        お求めになりやすい価格で、<br>
+                        はじめの1枚にも、色違いの2枚目にも</div>
+                    <div class="pd_detail">YW-A201-C（色番号）<br>
+                        通常価格：¥3,520（税込）</div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥2,816<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/2"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts01.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner bgy">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item02.jpg','user_data') }}" alt="Yoga Mat 6mm"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">無敵のベストセラー。高いグリップ力と<br>
+                        「痛くない」厚みが安心の6mm!初心者から<br>
+                        上級者までオールマイティーなヨガマット</div>
+                    <div class="pd_detail">YW-A202-C（色番号）<br>
+                        通常価格：¥4,620（税込）</div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥3,696<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/3"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts02.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item03.jpg','user_data') }}" alt="Plates Mat 12mm"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">人気急上昇中！一度使ったらやみつき！！<br>
+                        12mm厚のマシュマロタッチで、<br>
+                        ピラティスはもちろん 「おうちヨガ」にも最適♪</div>
+                    <div class="pd_detail">YW-A250-C（色番号）<br>
+                        通常価格：¥6,380（税込）<img src="{{ asset('img/gotoyogafest/ic_newprice.png','user_data') }}"></div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥5,104<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/6"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts03.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner bgy">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item04.jpg','user_data') }}" alt="Planet Sadhana 4.2mm II"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">『一生もの』として愛されるドイツ製のロングセラー。<br>
+                        高いグリップ力・クッション性があり、欧州仕様のビックサイズ。<br>
+                        ヨガの相棒として育てていきたいマットです</div>
+                    <div class="pd_detail">YW-A121-C（色番号）<br>
+                        通常価格：¥14,850（税込）</div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥11,880<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/7"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts04.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item05.jpg','user_data') }}" alt="Yoga Block A"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">軽量ながら十分な硬さがあり、ポーズの微調整に適した スリムタイプのヨガブロック。<br>
+                        2つ揃えるとさまざまなポーズで使えて便利です！</div>
+                    <div class="pd_detail">YPN3-E311-C（色番号）<br>
+                        通常価格：¥3,520（税込）<img src="{{ asset('img/gotoyogafest/ic_newprice.png','user_data') }}"></div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥2,816<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/57"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts05.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner bgy">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item06.jpg','user_data') }}" alt="Cork Yoga Block L"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">環境にやさしい天然素材。重量感と安定感、<br>
+                        耐久性に優れ、より積極的に身体に働きかけます</div>
+                    <div class="pd_detail">YW-E416-C（色番号）<br>
+                        通常価格：¥3,300（税込）</div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥2,640<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/13"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts06.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item07.jpg','user_data') }}" alt="Yoga Zafu"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">紡績工程で出る落ち綿を使用。<br>
+                        熟練の職人技が光る逸品。臀部をふんわりつつみ込み、長時間正しい姿勢を保ちます</div>
+                    <div class="pd_detail">YW-E455-C（色番号）<br>
+                        通常価格：¥7,260（税込）<img src="{{ asset('img/gotoyogafest/ic_newprice.png','user_data') }}"></div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥5,808<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/17"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts07.png','user_data') }}"></div>
+        </div>
+
+        <div class="inner bgy">
+            <div class="inner_left-img"><img src="{{ asset('img/gotoyogafest/item08.jpg','user_data') }}" alt="Bolster"></div>
+            <div class="inner_left-txt">
+                <div class="inner_info">
+                    <div class="pd_info">リストラティブヨガや陰ヨガに。繰り返しの使用でも<br>
+                        型崩れしない耐久性と、ポーズのホールドが長くても<br>
+                        疲れを感じさせづらい適度な弾力が特徴。日本製</div>
+                    <div class="pd_detail">YW-E449-C（色番号）<br>
+                        通常価格：¥14,080（税込）</div>
+                    <div class="pd_coupon"><img src="{{ asset('img/gotoyogafest/ic_coupon.png','user_data') }}">¥11,264<span>（税込）</span></div>
+                    <div class="product_info"><a href="/products/detail/16"><img src="{{ asset('img/gotoyogafest/btn_more.png','user_data') }}"></a></div>
+                </div>
+            </div>
+            <div class="inst_info"><img src="{{ asset('img/gotoyogafest/insts08.png','user_data') }}"></div>
+        </div>
+
+		</section>
+
+	</article>
+	<!-- //yogamat -->
+
+</main>
+<!-- //ここまで -->
+{% endblock %}

@@ -1,0 +1,45 @@
+<?php //Symfony.Component.Form.Form
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        (\Symfony\Component\VarExporter\Internal\Registry::$factories['Symfony\\Component\\Validator\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::f('Symfony\\Component\\Validator\\Mapping\\ClassMetadata'))(),
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Form\\Extension\\Validator\\Constraints\\Form'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Form\\Extension\\Validator\\Constraints\\Form')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'Symfony\\Component\\Form\\Form',
+            ],
+            'defaultGroup' => [
+                'Form',
+            ],
+            'traversalStrategy' => [
+                2,
+            ],
+            'constraints' => [
+                [
+                    $o[1],
+                ],
+            ],
+            'constraintsByGroup' => [
+                [
+                    'Default' => [
+                        $o[1],
+                    ],
+                    'Form' => [
+                        $o[1],
+                    ],
+                ],
+            ],
+            'groups' => [
+                1 => [
+                    'Default',
+                    'Form',
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

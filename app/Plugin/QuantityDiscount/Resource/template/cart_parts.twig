@@ -1,0 +1,15 @@
+{% set isDiscount = is_quantity_discount(CartItem) %}
+{% if isDiscount %}
+    {% set discount = qd_discount_price_one_inc_tax(CartItem) %}
+    {% if qdIndex is defined %}
+        {% set suffix = '_'~qdIndex  %}
+    {% else %}
+        {% set ProductClass = CartItem.ProductClass %}
+        {% set suffix = '_d_'~ProductClass.id %}
+    {% endif %}
+    <div id="quantity_discount{{ suffix }}" class="quantity_discount ec-color-accent" style="font-size: 14px;">
+        {% if discount > 0 %}
+            {{ 'quantity_discount.front.quantity_discount_cart_enabled'|trans({'%discount%': discount, '%quantity%': CartItem.quantity}) }}
+        {% endif %}
+    </div>
+{% endif %}

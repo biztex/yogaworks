@@ -1,0 +1,12 @@
+<svg id="ic_sale-f" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="61.656" height="29.562" viewBox="0 0 61.656 29.562">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #d56a02;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="speech_bubbles_1" data-name="speech bubbles 1" class="cls-1" d="M497,482l-2.776-7.171a4.563,4.563,0,0,1-.576-2.22V457.127a4.7,4.7,0,0,0-4.677-4.69H440.009a4.7,4.7,0,0,0-4.678,4.69v16.927a4.7,4.7,0,0,0,4.678,4.69H485.83a7.928,7.928,0,0,1,4.289,1.26Z" transform="translate(-435.344 -452.438)"/>
+  <image id="SALE" x="5.656" y="6.562" width="47" height="14" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAAAOCAYAAAC/10U/AAAB30lEQVRIibWW4XEaMRCFv83wP1cCHeQ6MOmAVGBcAVCB6SBQAaQCkwpwKgBXwHXAdfD841a2ENJhk/Gb0Zxm9VZavV3pZDgkVcAYGLqpAbZm1tIDSSNg5NxDgVMBsz5OZs4+NGbWBPJCZSz6Fol4J0nDAu8pcD4Q+O+eWN4AMJA0Bh7ddwusgAqY0in6KOlgZtvMWvdRP/jMM7wq+fahjvrPBU4DnKmyj0clVZKOPrZOvX08YN+nrKRdrFgfPsP9xrsaQ69NALzW53S7X2V8J/5tgV/eryRNMtyvgaRZUrdrSeN4IwW/s6xEGdxluDcpr+5MXbTUYV04F7sLMhcHdeS2SWSrE/6twZewyAW0Vqd+illhs8fIVkW+64R/a/C7QrsQNJ6g1uX1WUVBBuydF9rR7SdFZXdr8Ne4eAAnJan2saCwlC+PPky+OvgB3R813NEPyXib6U/92wB/MnPe+5xTYHMtgP/BwBeYARNJL2a2hE5h3q/Dg5kdPDshQ6vAjSHpu89XS6rT54DKf+xl+hTp4bZmtgw1/JaqDI6hpHR+DrJXqaRhxFm47UnX8RmuJI0Gvtuf6p4Jd5GyDfCP88fZBvgB/C092MyskTT3uTZufgBeCioGhCx+hNua2fMrH6uOnnumofcAAAAASUVORK5CYII="/>
+</svg>

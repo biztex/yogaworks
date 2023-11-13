@@ -1,0 +1,132 @@
+/* SPECIAL PAGE用 CSS */
+
+
+/* COMMON */
+img {width:100%;}
+a img {
+    display: block;
+}
+
+a:hover img {
+    opacity: .6;
+    -webkit-opacity: .6;
+    -moz-opacity: .6;
+    filter: alpha(opacity=60);
+    /* IE lt 8 */
+    -ms-filter: "alpha(opacity=60)";
+    /* IE 8 */
+    -webkit-transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -ms-transition: opacity .5s ease-out;
+    transition: opacity .5s ease-out;
+}
+
+/* LUCKY BUG 2023 */
+picture h1, .maincontent {background-color: #ede8e2;}
+.maincontent {padding:1rem 0;}
+picture h1 {margin:0;text-align:center; font-family: fot-tsukuardgothic-std, sans-serif; font-weight: 400; font-style: normal; }
+.maincontent h2 {text-align:center; font-family: fot-tsukuardgothic-std, sans-serif; font-weight: 400; font-size:1rem; line-height:1.6; font-style: normal; margin:1rem;}
+
+.maincontent h3 {text-align:center; font-family: fot-tsukuardgothic-std, sans-serif;
+    font-weight: 700; font-style: normal; font-size:1.3rem; line-height:1.6; margin:0 0 5rem; position: relative;/*相対配置*/}
+.maincontent h3::before {content: '';
+    top: 0;
+    left: 0;
+    width: 80%;/*指定したい幅*/
+    display: block;}
+.maincontent h3::after {
+    position: absolute;
+  content: '';
+  top: 2.5rem;
+  left:0;
+  display: block;
+  width: 100%;/*幅*/
+  height: 300px;/*どれだけデカくなってもはみ出ないであろう高さを指定*/
+  background-image: url(../../../user_data/img/luckybag2023/line02.png);
+  background-size: contain;
+  background-repeat: no-repeat;}    
+
+.itemlist {
+width: 100%;
+margin: 0 auto 80px;
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+text-align: center;
+overflow: hidden;
+}
+.items {
+width: 100%;
+margin:0 5px 15px 10px;
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+    .maincontent h2 {font-size:2rem; margin:3rem 0 0 0;}
+
+    .maincontent h3 {font-size:1.8rem; line-height:1.6; margin:0 0 5rem; position: relative;/*相対配置*/}
+    .maincontent h3::before {content: '';
+        top: 0;
+        left: 0;
+        width: 60%;/*指定したい幅*/
+        display: block;}
+    .maincontent h3::after {
+        position: absolute;
+      content: '';
+      top: 5.5rem;
+    left: 19%;
+      display: block;
+      width: 60%;/*幅*/
+      height: 300px;/*どれだけデカくなってもはみ出ないであろう高さを指定*/
+      background-image: url(../../../user_data/img/luckybag2023/line02.png);
+      background-size: contain;
+      background-repeat: no-repeat;}    
+    .itemlist {
+        width: 90%;
+        margin: 0 auto 80px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+        overflow: hidden;
+        }
+        .items {
+        width: 48.5%;
+        margin: 5px 5px 25px;
+        }         
+}
+
+@media (min-width: 960px) {
+    .maincontent h2 {font-size:2rem; margin:3rem 0 0 0;}
+
+    .maincontent h3 {font-size:1.8rem; line-height:1.6; margin:0 0 5rem; position: relative;/*相対配置*/}
+    .maincontent h3::before {content: '';
+        top: 0;
+        left: 0;
+        width: 60%;/*指定したい幅*/
+        display: block;}
+    .maincontent h3::after {
+        position: absolute;
+      content: '';
+      top: 2.5rem;
+    left: 19%;
+      display: block;
+      width: 60%;/*幅*/
+      height: 300px;/*どれだけデカくなってもはみ出ないであろう高さを指定*/
+      background-image: url(../../../user_data/img/luckybag2023/line02.png);
+      background-size: contain;
+      background-repeat: no-repeat;}    
+    .itemlist {
+        width: 90%;
+        margin: 0 auto 80px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+        overflow: hidden;
+        }
+        .items {
+        width: 30.5%;
+        margin: 5px 10px 25px;
+        }    
+}
+

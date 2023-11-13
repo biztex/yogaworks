@@ -1,0 +1,1 @@
+{"name":"ec-cube\/joolenpointsformemberregistration4","version":"1.1.0","description":"\u65b0\u898f\u4f1a\u54e1\u767b\u9332\u6642\u30dd\u30a4\u30f3\u30c8\u4ed8\u4e0e\u30d7\u30e9\u30b0\u30a4\u30f3 for EC-CUBE 4","type":"eccube-plugin","require":{"ec-cube\/plugin-installer":"~0.0.6 || ^2.0"},"extra":{"code":"JoolenPointsForMemberRegistration4","id":2214}}

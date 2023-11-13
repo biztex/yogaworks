@@ -1,0 +1,48 @@
+<?php //Eccube%255CController%255CAdmin%255CProduct%255CProductController%2523index
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        clone $p['Symfony\\Component\\Routing\\Annotation\\Route'],
+        clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/product',
+                '/%eccube_admin_route%/product/page/{page_no}',
+            ],
+            'name' => [
+                'admin_product',
+                'admin_product_page',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                    'POST',
+                ],
+                [
+                    'GET',
+                    'POST',
+                ],
+            ],
+            'requirements' => [
+                1 => [
+                    'page_no' => '\\d+',
+                ],
+            ],
+        ],
+        'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template' => [
+            'template' => [
+                2 => '@admin/Product/index.twig',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[2],
+    ],
+    []
+); }];

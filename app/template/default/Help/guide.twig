@@ -1,0 +1,185 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+
+    <div class="ec-role">
+        <div class="ec-pageHeader">
+            <h1>{{ 'ご利用ガイド'|trans }}</h1>
+        </div>
+        
+        <div id="content_page">
+
+            <div class="ec-off1Grid">
+                <div class="ec-off1Grid__cell">
+
+                <h2>送料・配送について</h2>
+                <ul>
+                    <li>原則は、佐川急便での発送となります。沖縄・離島・九州の一部エリアは、ヤマト運輸での発送となります。</li>
+                    <li>土日祝・お盆・年末年始などの弊社規定定休日は、発送業務を行なっておりません。予めご了承下さい。</li>
+                    <li>代金引換をご利用になられる際は、代金引換手数料がかかります。詳しくは「<a href="#payment">お支払いについて</a>」の項をご確認ください。</li>
+                </ul>
+
+                <h3>送料およびお届け日数</h3>
+                <table class="table table-bordered" width="100%">
+                    <tr><th class="active tcenter">配送先地域</th><td class="tcenter">送料</td><td class="tcenter">発送〜お届けまでの日数</td></tr>
+                    <tr><th class="active">北海道</th><td>1,342円</td><td>2日（翌々日）</td></tr>
+                    <tr><th class="active">青森 秋田 岩手</th><td>1,155円</td><td rowspan="6">1日（翌日）</td></tr>
+                    <tr><th class="active">宮城 山形 福島</th><td>1,144円</td></tr>
+                    <tr><th class="active">群馬 栃木 茨城 千葉 埼玉 東京 神奈川 山梨</th><td>759円</td></tr>
+                    <tr><th class="active">新潟 長野 富山 石川 福井</th><td>1,023円</td></tr>
+                    <tr><th class="active">静岡 愛知 三重 岐阜</th><td>979円</td></tr>
+                    <tr><th class="active">滋賀 京都 大阪 兵庫 奈良 和歌山</th><td>1,067円</td></tr>
+                    <tr><th class="active">鳥取 島根 広島 岡山 山口</th><td>1,188円</td><td rowspan="4">2日（翌々日）</td></tr>
+                    <tr><th class="active">徳島 香川 愛媛 高知</th><td>1,166円</td></tr>
+                    <tr><th class="active">福岡 佐賀 長崎 大分</th><td>1,265円</td></tr>
+                    <tr><th class="active">熊本 宮崎 鹿児島</th><td>1,320円</td></tr>
+                    <tr><th class="active">沖縄</th><td>4,290円</td><td>2日（翌々日）以上※1</td></tr>
+                </table>
+                <p>※1 沖縄・離島・九州の一部エリアへの詳しいお届け日数は、<a href="https://faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1238/c/322" target="_balnk">ヤマト運輸様へ直接お問い合わせください</a>。<br />
+                    ※ 離島・一部地域は追加送料がかかる場合があります。</p>
+
+                <br>
+
+                <h3>発送日目安</h3>
+                <p>商品は日付指定のない限り、下記日程（最短）で発送しております。<br />
+                    ※ 到着日時のご希望にそえない場合がございますことご了承ください。<br />
+                    ※ 土日祝・お盆・年末年始などの弊社規定定休日の出荷業務は行なっておりません。予めご了承ください。<br />
+                    ※ 天候等による輸送ダイヤの乱れなどが発生した場合、配送に遅れが生じる場合がございます。予めご了承ください。<br />
+                    ※ ご不在が多い場合などは、配送業者の営業所受取もご検討ください。<br />
+                    &raquo; <a href="https://www2.sagawa-exp.co.jp/send/branch_search/moyori/" target="_blank" >佐川急便 営業所検索</a></p>
+                    <br>
+
+                    <table class="table table-bordered" width="100%">
+                        <tr><th class="active">お支払方法</th><th class="active">目安</th></tr>
+                        <tr><th class="active">クレジットカード決済/<br>
+                        代金引換の場合</th><td>平日15時までのご注文→ご注文当日に発送いたします。<br />平日15時以降のご注文→ ご注文日の翌営業日に発送いたします。<br />※金曜15時以降～月曜15時までのご注文につきましては月曜日の発送となります（月曜日が祝日の場合、翌営業日となります）</td></tr>
+                        <tr><th class="active">銀行振込の場合</th><td>弊社にてご入金確認後の商品発送となります。<br />平日15時までのご入金確認分→ご入金確認当日に発送いたします<br />平日15時以降のご入金確認分→ ご入金確認日の翌営業日に発送いたします<br />※ 金曜15時以降～月曜15時までのご入金確認分につきましては、月曜日の発送となります（月曜日が祝日の場合、翌営業日となります）。</td></tr>
+                    </table>
+
+                <br>
+
+                <h3>納品書について</h3>
+                <p>
+                    納品書には金額表示がございません。<br>
+                    金額の入った納品書が必要な場合は、ご注文時の「お問い合わせ欄」にその旨ご記入ください。<br>
+                    別途、対応いたします。</p>
+                    <br>
+                    <br>
+
+                </div><!--ec-off1Grid__cell-->
+            </div><!--ec-off1Grid-->
+
+            <div class="ec-off1Grid">
+                <div class="ec-off1Grid__cell">
+
+                <h2 id="payment">お支払いについて</h2>
+                <p>お支払い方法は下記ご用意しております。（お支払総額はご注文確定後のメールでもお知らせいたします。）</p>
+                <br>
+
+                <h3>クレジットカード決済</h3>
+
+                <p>クレジット決済確認後、商品を発送いたします。<br />
+                    ご利用いただけるカードは以下の通りです。</p>
+                    <img src="/html/user_data/img/credit_card.jpg" alt="対応カード"><br /><br />
+                <p>【クレジットカードご利用時の注意事項】</p>
+                <ul>
+                <li>ご本人様名義以外のクレジットカードは、ご利用いただけません。</li>
+                <li>入力時に有効期限やカード番号を良くお確かめ下さい。</li>
+                <li>お客様のご利用状況などによってクレジットカードがご利用いただけない場合、お支払い方法の変更やご注文のキャンセルをお願いする場合がございます。</li>
+                <li>クレジットカードのご利用控え(売上票)は、オンライン決済のため発行できかねます。<br />
+                また、クレジットカードのご利用詳細につきましては、カード会社からのご利用明細や、カード会社の WEB明細サービスなどにてご確認ください。</li>
+                </ul>
+                <p>■領収書発行ルール<br />
+                弊社からの発行はしておりません。<br />
+                クレジットカード会社が発行するご利用明細書を領収書としてご利用ください。</p>
+
+                <h3>銀行振込</h3>
+
+                <p>商品代金を前払いしていただく方法です。<br />
+                    弊社にてご入金が確認でき次第、商品を発送いたします。</p>
+                    
+                    <ul>
+                    <li>振込手数料は、お客様にご負担いただいております。</li>
+                    <li>お振込人の名義がご注文者名と異なる場合は、予め弊社までご連絡ください。</li>
+                    <li>ご注文後14日経過してもお振込が確認できなかった場合は、ご注文をキャンセルとさせていただきます。</li>
+                    </ul>
+                    
+                    <p>【振込先】<br />
+                    三菱UFJ銀行（0005）<br />
+                    京橋中央支店（324）<br />
+                    普通 5095426 <br />
+                    ユ）ヨガワークス　<br />
+                    ※振込手数料はお客様負担となります。</p>
+                    <br />
+                    <p>■領収書発行ルール<br />
+                    ご注文のメールアドレスへ電子領収書を送信いたします。メールエラーとなった場合は郵送いたします。<br />
+                    ご希望の場合、ご注文時の「お問い合わせ欄」にてご依頼ください。<br />
+                    領収書の宛名や送信先メールアドレスのご指定がある場合、併せてご記入ください。</p>
+
+                <h3>代金引換</h3>
+                <p>商品配送時に、商品と引き換えに代金を現金にてお支払いいただく方法です。<br />
+                    <br />
+                    お支払総額は、以下のとおりです。<br />
+                    商品代金合計(税込)+送料+代引手数料(下表をご参照ください)<br />
+                    <br />
+                    <p>■領収書発行ルール<br />
+                    ご注文のメールアドレスへ電子領収書を送信いたします。メールエラーとなった場合は郵送いたします。<br />
+                    ご希望の場合、ご注文時の「お問い合わせ欄」にてご依頼ください。<br />
+                    領収書の宛名や送信先メールアドレスのご指定がある場合、併せてご記入ください。</p><br />
+                    <br />
+                    <table class="table table-bordered" width="100%">
+                        <tr><th class="active">商品合計金額（税込）＋送料（税込）</th><th>代引手数料（税込）</th></tr>
+                        <tr><th class="active">～ 9,999円</th><th>330円</th></tr>
+                        <tr><th class="active">～ 29,999円</th><th>440円</th></tr>
+                        <tr><th class="active">～ 99,999円</th><th>660円</th></tr>
+                        <tr><th class="active">～ 300,000円</th><th>1,100円</th></tr>
+                    </table>
+                </div><!--ec-off1Grid__cell-->
+            </div><!--ec-off1Grid-->
+
+            <div class="ec-off1Grid">
+                <div class="ec-off1Grid__cell">
+
+                    <h2>30日無料交換サービスについて</h2>
+                    <p>安心して商品をご利用いただくために、商品到着後30日以内に不具合が発生した場合は、新品と交換させていただきます。<br />
+                    適用条件など、サービス詳細は以下のページにてご確認ください。<br />
+                    <a href="https://www.yogaworks.jp/user_data/guarantee">https://www.yogaworks.jp/user_data/guarantee</a></p>
+                    <br /><br />
+
+                    <h2>返品について</h2>
+                    <p>配送中の破損、不良品、発送商品の間違いの場合、商品到着後7日以内にご連絡のあったものを申し受けます。<br />
+                    返送前に一度ご連絡頂いた上、着払いでご返送ください。</p>
+                    <p>但し下記のような場合、返品はお受けできません。<br />
+                    下記該当商品が返送されてきた際の送料は、お客様負担とさせていただいております。</p>
+                    <br />
+                    <ul>
+                        <li>一度ご使用になった商品</li>
+                        <li>お客様のもとでキズや破損が生じた商品</li>
+                        <li>お客様のための特注や加工したもの</li>
+                        <li>期限が過ぎたもの</li>
+                        <li>商品パッケージを開封された商品</li>
+                    </ul>
+                </div><!--ec-off1Grid__cell-->
+            </div><!--ec-off1Grid-->
+
+        </div><!--//#content_page-->
+        
+        
+        
+    </div><!--//ec-role-->
+    
+
+
+    
+{% endblock %}

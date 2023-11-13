@@ -1,0 +1,9 @@
+parameters:
+  gmc_proxy_url: 'https://gmc-proxy.ec-cube.net'
+services:
+  Trikoder\Bundle\OAuth2Bundle\Manager\Doctrine\ClientManager:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+  Trikoder\Bundle\OAuth2Bundle\Manager\ClientManagerInterface:
+    alias: 'Trikoder\Bundle\OAuth2Bundle\Manager\Doctrine\ClientManager'
+    public: true

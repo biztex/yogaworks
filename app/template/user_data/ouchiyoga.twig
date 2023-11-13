@@ -1,0 +1,672 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<!-- ここから -->
+<style type="text/css">
+	<!--
+	img {width:100%;}
+	a:hover img {
+		opacity: .6;
+		-webkit-opacity: .6;
+		-moz-opacity: .6;
+		filter: alpha(opacity=60);
+		/* IE lt 8 */
+		-ms-filter: "alpha(opacity=60)";
+		/* IE 8 */
+		-webkit-transition: opacity .5s ease-out;
+		-moz-transition: opacity .5s ease-out;
+		-ms-transition: opacity .5s ease-out;
+		transition: opacity .5s ease-out;
+	}
+
+	#header #category {
+		display: none !important;
+	}
+
+	.messages {
+		width: 100%;
+		height: 164px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/copy.png");
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+	}
+
+	.maincontent {
+		clear: both;
+		overflow: hidden;
+	}
+
+	h2.yogamat {
+		width: 100%;
+		height: 100px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/yogamat_head.png");
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+	}
+
+	h2.props {
+		float: left;
+		width: 632px;
+		height: 116px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/props_head.png");
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		margin-bottom: 25px;
+	}
+
+	h2.items {
+		float: left;
+		width: 633px;
+		height: 130px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/items_head.png");
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+
+	}
+
+
+	.props_right {
+		float: right;
+		width: 403px;
+		height: 219px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/props_right_img.jpg");
+		overflow: hidden;
+		margin-bottom: 30px;
+
+	}
+
+	.props_link {
+		float: left;
+		background: no-repeat left/26px url("/html/user_data/img/ouchiyoga/ic_arrow.png");
+		padding: 3px 0 0 30px;
+		margin-left: 36px;
+		height: 28px;
+		font-size: 18px;
+	}
+
+	.items_right {
+		float: right;
+		width: 303px;
+		height: 219px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/items_right_img.jpg");
+		overflow: hidden;
+		margin-bottom: 30px;
+
+	}
+
+	.mat_select {
+		width: 100%;
+		height: 300px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/mat_select.png");
+		overflow: hidden;
+		text-indent: 100%;
+		margin: 1.5em 0;
+		white-space: nowrap;
+	}
+
+	h3 {
+		width: 430px;
+		height: 76px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/title_saitekimat.png");
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+	}
+
+	.line01 {
+		width: 100%;
+		height: 76px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/line_pink.png");
+		margin: 25px 0;
+	}
+
+	.line02 {
+		width: 100%;
+		height: 79px;
+		background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/line_green.png");
+		margin: 25px 0;
+	}
+
+	h4 {
+		font-size: 18px;
+		color: #444;
+		text-indent: 1.8em;
+		border-bottom: 1px dotted #eee;
+		padding-bottom: .5em;
+	}
+
+	h4.ic01 {
+		background: no-repeat left top/27px url("/html/user_data/img/ouchiyoga/icon01.png");
+	}
+
+	h4.ic02 {
+		background: no-repeat left top/27px url("/html/user_data/img/ouchiyoga/icon02.png");
+	}
+
+	h4.ic03 {
+		background: no-repeat left top/27px url("/html/user_data/img/ouchiyoga/icon03.png");
+	}
+
+	h4.ic04 {
+		background: no-repeat left top/27px url("/html/user_data/img/ouchiyoga/icon04.png");
+	}
+
+	.products li {
+		width: 260px;
+		margin: 0 0 0 15px;
+		list-style:none;
+	}
+
+	.products li img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.products p {
+		font-size: 12px;
+		line-height: 1.5;
+		color: #999;
+	}
+
+	h5 {
+		font-size: 15px;
+		text-align: center;
+		margin: .5em 0;
+	}
+
+	p.price {
+		text-align: center;
+		font-size: 12px;
+		color: #333;
+		margin: 0 0 .5em 0;
+	}
+
+	p.price span {
+		font-size: 16px;
+	}
+
+	a {
+		box-sizing: border-box;
+		display: block;
+	}
+
+	table.matselect {
+		font-size: 13px;
+		color: #555;
+		line-height: 1.8;
+	}
+
+	table.matselect a {
+		display: inline;
+	}
+
+	table.matselect th {
+		font-size: 14px;
+		background: #75a7c9;
+		color: #fff;
+		padding: 10px;
+		border-radius: 16px;
+		border-right: 5px solid #fff;
+		border-bottom: 5px solid #fff;
+		width:26%;
+	}
+
+	table.matselect td {
+		background: #e6eff5;
+		border-radius: 16px;
+		padding: 10px;
+		border-right: 5px solid #fff;
+		border-bottom: 5px solid #fff;
+		width:20%;
+	}
+
+	table.matselect td.pd {
+		background: #f3f7fa;
+		width:54%;
+	}
+
+	@media only screen and (max-width:768px) {
+		.messages {
+			height: 110px;
+
+		}
+
+		h2.yogamat {
+			height: 70px;
+			margin: 0;
+
+		}
+
+		h2.props {
+			width: 430px;
+			height: 100px;
+			margin-bottom: 0px;
+		}
+
+		.props_right {
+			width: 230px;
+			height: 155px;
+		}
+
+		.props_link {
+			float: left;
+			background: no-repeat left/20px url("/html/user_data/img/ouchiyoga/ic_arrow.png");
+			padding: 3px 0 0 30px;
+			margin: 0 0 5px 36px;
+			height: 20px;
+			font-size: 14px;
+		}
+
+		h2.items {
+			width: 440px;
+			height: 100px;
+
+
+		}
+
+		.items_right {
+			width: 240px;
+			height: 176px;
+
+			margin-bottom: 30px;
+
+		}
+
+		.mat_select {
+			height: 220px;
+			margin: 1.5em 0;
+		}
+
+		.products li {
+			width: 32.5%;
+			margin: 0 0 0 4px;
+		}
+
+		h3 {
+			width: 300px;
+			height: 50px;
+
+		}
+
+		table.matselect th {
+			width: 25%;
+		}
+
+		table.matselect td {
+			width: 30%;
+		}
+
+		table.matselect td.pd {
+			width: 45%;
+		}
+
+		.line01 {
+			width: 100%;
+			height: 38px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/line_pink.png");
+			margin: 5px 0;
+		}
+
+		.line02 {
+			width: 100%;
+			height: 38px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/line_green.png");
+			margin: 5px 0;
+		}
+
+	}
+
+	@media only screen and (max-width:375px) {
+
+		.messages {
+			height: 74px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/copy_sp.png");
+		}
+
+		h2.yogamat {
+			width: 100%;
+			height: 90px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/yogamat_head_sp.png");
+		}
+
+		h2.props {
+			width: 100%;
+			height: 75px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/props_head_sp.png");
+			margin:0 0 10px 0;
+		}
+
+		h2.items {
+			width: 100%;
+			height: 80px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/items_head_sp.png");
+			margin:0 0 10px 0;
+
+		}
+
+		.mat_select {
+			width: 100%;
+			height: 290px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/mat_select_sp.png");
+			margin: 20px 0;
+		}
+
+		.props_right {
+			float: none;
+			width: 100%;
+			height: 200px;
+			margin-bottom: 10px;
+
+		}
+
+		.props_link {
+			float: none;
+			background: no-repeat left/22px url("/html/user_data/img/ouchiyoga/ic_arrow.png");
+			padding: 1px 0 0 30px;
+			margin: 0 0 10px 36px;
+			height: 22px;
+			font-size: 14px;
+		}
+
+		.items_right {
+			width: 100%;
+			height: 260px;
+			margin: 0 auto 30px;
+
+		}
+
+		h3 {
+			width: 280px;
+			height: 50px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/title_saitekimat.png");
+		}
+
+
+		h4 {
+			font-size: 14px;
+			color: #666;
+			text-indent: 2.2em;
+			border-bottom: 0px;
+			padding-bottom: .5em;
+			line-height: 1.8;
+			margin-bottom:0;
+		}
+
+		h4 span {
+			font-size: 12px;
+			font-weight: normal;
+			color: #b1b1b1;
+			padding-left: 0em;
+			line-height: 1;
+		}
+
+		h5 {
+			font-size: 14px;
+			line-height: 1.2;
+			text-align: center;
+			margin: .5em 0;
+		}
+
+		.line01 {
+			width: 100%;
+			height: 28px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/line_pink.png");
+			margin: 10px 0;
+		}
+
+		.line02 {
+			width: 100%;
+			height: 28px;
+			background: no-repeat center/100% url("/html/user_data/img/ouchiyoga/line_green.png");
+			margin: 10px 0;
+		}
+
+		.products p {
+			font-size: 11px;
+			line-height: 1.4;
+			color: #999;
+		}
+
+		p.price {
+			text-align: center;
+			font-size: 11px;
+			color: #333;
+			margin: 0 0 .5em 0;
+		}
+
+		p.price span {
+			font-size: 14px;
+		}
+
+		.products li {
+			border-bottom: 1px dotted #e6f1bd;
+			width: 48.5%;
+			margin: 0 0 0 4px;
+		}
+
+		table.matselect {
+			font-size: 12px;
+			line-height: 1.6;
+		}
+
+		table.matselect th {
+			font-size: 14px;
+			display: block;
+			width: 100%;
+		}
+
+		table.matselect td {
+			display: block;
+			width: 100%;
+		}
+		table.matselect td br {display: none;}
+		table.matselect td.pd {
+			display: block;
+			width: 100%;
+			background: #fff;
+		}
+
+	}
+	-->
+</style>
+<main>
+	<div><img src="/html/user_data/img/ouchiyoga/headimg.jpg"></div>
+	<div class="messages">スタジオに通えない中、自宅で気軽にできるオンラインレッスンが人気です。ヨガワークスより、「おうちヨガ」でリフレッシュできるおススメアイテムをご紹介します！</div>
+
+	<!-- yogamat -->
+	<article>
+		<h2 class="yogamat">ヨガマット</h2>
+		<div class="mat_select">ヨガマットの選び方</div>
+
+		<h3>あなたに最適なヨガマットは？</h3>
+		<table class="matselect">
+			<tr>
+				<th rowspan="2">自宅やヨガスタジオに置いておく方</th>
+				<td>座位や仰向けのポーズがメインの<br>プラクティスを行う方向け</td>
+				<td class="pd">・<a href="{{url('homepage')}}products/detail/6">ピラティスマット 12mm</a></td>
+			</tr>
+			<tr>
+				<td>カラフルでベーシックな1枚<br>（安定感・クッション性など）</td>
+				<td class="pd">・<a href="{{url('homepage')}}products/detail/2">ヨガマット 3.5mm</a>　・<a href="{{url('homepage')}}detail/40">ヨガマットモリ 3.5mm</a>　・<a href="{{url('homepage')}}products/detail/4">ヨガマットポルカ 3.5mm</a>　・<a href="{{url('homepage')}}products/detail/4">ヨガマット 6mm</a></td>
+			</tr>
+			<tr>
+				<th>ヨガを極めたい方</th>
+				<td>世界中のヨギーニ愛される逸品</td>
+				<td class="pd">・<a href="{{url('homepage')}}products/detail/7">プラネット・サダナ 4.2mm</a>　・<a href="{{url('homepage')}}products/detail/8">ザ・ブラックマットⅡ 6.5mm</a></td>
+			</tr>
+			<tr>
+				<th rowspan="2">持ち運びに便利なマットをお探しの方</th>
+				<td>丸める・たためるタイプ</td>
+				<td class="pd">・<a href="{{url('homepage')}}products/detail/37">ヨガマット トロピカ 1.5mm</a>　・<a href="{{url('homepage')}}products/detail/5">トラベラー・ライト 1mm</a>　・<a href="{{url('homepage')}}products/detail/33">コリーン・ウィルコックス 1mm</a></td>
+			</tr>
+			<tr>
+				<td>折りたたみタイプ</td>
+				<td class="pd">・<a href="{{url('homepage')}}products/detail/9">トラベラー・トゥ・ゴー</a>　・<a href="{{url('homepage')}}products/detail/10">坐 メディテーション マット</a></td>
+			</tr>
+		</table>
+
+		<section class="maincontent">
+			<h4 class="ic01">まずはこの一枚！！ヨガだけでなくストレッチや筋トレにも◎</h4>
+			<ul class="products">
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/2"><img src="/html/user_data/img/ouchiyoga/pd/mat35.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/2">ヨガマット3.5mm</a></h5>
+					<p class="price"> <span>¥3,300</span> (税込)</p>
+					<p>定番のヨガマット！<br>スリムで持ち運びやすく１つは持っておきたいアイテム。お好きな色を選んで気分をあげよう</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/3"><img src="/html/user_data/img/ouchiyoga/pd/mat6.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/3">ヨガマット6mm</a></h5>
+					<p class="price"> <span>¥4,400</span> (税込)</p>
+					<p>ヨガだけでなくストレッチや筋トレにも◎<br>床からの冷えもカットし、 6mmマットの上で快適に過ごしませんか？</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/6"><img src="/html/user_data/img/ouchiyoga/pd/pilatesmat12.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/6">ピラティスマット12mm</a></h5>
+					<p class="price"> <span>¥5,500</span> (税込)</p>
+					<p>ヨガだけでなくストレッチや筋トレにも◎<br>厚みがあり、安心感があります</p>
+				</li>
+			</ul>
+		</section>
+
+		<section class="maincontent">
+			<h4 class="ic02">丸洗いが出来て清潔！折りたためるので収納するときも便利。</h4>
+			<ul class="products">
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/10"><img src="/html/user_data/img/ouchiyoga/pd/meditationmat.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/10">坐 メディテーション マット</a></h5>
+					<p class="price"> <span>¥6,490</span> (税込)</p>
+					<p>1枚で「ヨガマット」、「ブロック」、「ボルスター」、「ザフ」として活用できます。丸洗いができ、しかも収納が便利です。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/9"><img src="/html/user_data/img/ouchiyoga/pd/travellertogo.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/9">トラベラー・トゥ・ゴー</a></h5>
+					<p class="price"> <span>¥5,500</span> (税込)</p>
+					<p>丸洗いができ、しかも収納が便利。<br>
+						オリジナルセンターライン、フォールドライン入りで目印として活用でき、折りたたんで持ち運びやすいです。</p>
+				</li>
+			</ul>
+		</section>
+
+		<section class="maincontent">
+			<h4 class="ic03">柄マットで気分をあげる！お気に入りのデザインを選べば気分も↑↑</h4>
+			<ul class="products">
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/4"><img src="/html/user_data/img/ouchiyoga/pd/porca.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/4">ヨガマットポルカ</a></h5>
+					<p class="price"> <span>¥4,400</span> (税込)</p>
+					<p>ゴールドのロゴがワンポントになっています。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/40"><img src="/html/user_data/img/ouchiyoga/pd/mori.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/40">ヨガマット モリ</a></h5>
+					<p class="price"> <span>¥4,400</span> (税込)</p>
+					<p>森の息吹を感じる植物柄のヨガマット。<br>お好みに応じて選べる３色。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/33"><img src="/html/user_data/img/ouchiyoga/pd/colleen.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/33">コリーン・ウィルコックス ヨガマット</a></h5>
+					<p class="price"> <span>¥8,580</span> (税込)</p>
+					<p>コリーン・ウィルコックの人気ARTをヨガマットに。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/37"><img src="/html/user_data/img/ouchiyoga/pd/tropica.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/37">ヨガマット トロピカ</a></h5>
+					<p class="price"> <span>¥6,820</span> (税込)</p>
+					<p>吸水性に優れたマイクロファイバーと天然ゴムのヨガマットが一体化。</p>
+				</li>
+
+			</ul>
+		</section>
+
+		<section class="maincontent">
+			<h4 class="ic04">プロユースな1枚で毎日練習したくなる？！<br>
+				  一生もののヨガマットをゲットして、ヨガを極める。心も体もリラクゼーション効果があり、stay positive!</h4>
+			<ul class="products">
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/7"><img src="/html/user_data/img/ouchiyoga/pd/sadhana.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/7">プラネット サダナ4.2mm</a></h5>
+					<p class="price"> <span>¥13,750</span> (税込)</p>
+					<p>固めの表面は、使い込むほどに手足に馴染む。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/8"><img src="/html/user_data/img/ouchiyoga/pd/blackmat.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/8">ザ・ブラックマット・ツー6.5mm</a></h5>
+					<p class="price"> <span>¥ 19,250</span> (税込)</p>
+					<p>世界のヨギーに「一生もの」として愛されるブラックマットの進化版。</p>
+				</li>
+			</ul>
+		</section>
+	</article>
+	<!-- //yogamat -->
+
+	<div class="line01"></div>
+
+	<!-- プロップス -->
+	<article>
+		<h2 class="props">プロップス</h2>
+
+		<div class="props_right"></div>
+
+		<div class="props_link"><a href="https://www.yogaworks.co.jp/labo/beltblock10way/" target="_blank">ヨガベルト、ブロックの10の法則</a></div>
+		<div class="props_link"><a href="https://www.yogaworks.co.jp/labo/bolster/" target="_blank">ボルスターを使う10の理由</a></div>
+
+		<section class="maincontent">
+			<ul class="products">
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/11"><img src="/html/user_data/img/ouchiyoga/pd/yogablock.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/11">ヨガブロックA</a></h5>
+					<p class="price"> <span>¥1,980 ~ 3,564</span> (税込)</p>
+					<p>ポーズに伸びやかさをプラスにする万能アイテム。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/14"><img src="/html/user_data/img/ouchiyoga/pd/yogabelt.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/14">ヨガベルト240cm</a></h5>
+					<p class="price"> <span>¥1,980</span> (税込)</p>
+					<p>無理することなく、ストレッチしたい箇所に意識を向けられます。おうちでのストレッチアイテムとしていかが？</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/16"><img src="/html/user_data/img/ouchiyoga/pd/bolster.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/16">ボルスター</a></h5>
+					<p class="price"> <span>¥2,387 ~ 12,980</span> (税込)</p>
+					<p>リストラティブヨガや陰ヨガには欠かせません。<br>熟練の職人が丁寧に仕上げる日本製。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/17"><img src="/html/user_data/img/ouchiyoga/pd/yogazafu.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/17">ヨガザフ</a></h5>
+					<p class="price"> <span>¥6,160</span> (税込)</p>
+					<p>落ち綿リサイクルした日本製ヨガザフ。プラナヤマのパートナーに。</p>
+				</li>
+			</ul>
+		</section>
+	</article>
+	<!-- //プロップス -->
+
+	<div class="line02"></div>
+
+	<!-- アイテム -->
+	<article>
+		<h2 class="items">アイテム</h2>
+		<div class="items_right"></div>
+		<section class="maincontent">
+			<ul class="products">
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/29"><img src="/html/user_data/img/ouchiyoga/pd/dvd.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/29">DVD</a></h5>
+					<p class="price"> <span>¥6,380</span> (税込)</p>
+					<p>人目を気にせず自分のペースで、好きな時間にヨガを。</p>
+				</li>
+
+				<li class="col-sm-3 col-xs-3"><a href="{{url('homepage')}}products/detail/28"><img src="/html/user_data/img/ouchiyoga/pd/spray.jpg"></a>
+					<h5><a href="{{url('homepage')}}products/detail/28">ヨガスプレー</a></h5>
+					<p class="price"> <span>¥2,530</span> (税込)</p>
+					<p>心地よい香りでリラックスしておうちヨガを。ヨガマットにシュッと吹きかければお手入れやニオイ対策にも。<br>気分転換したいときにルームスプレーとして使用するのもオススメ。</p>
+				</li>
+
+			</ul>
+		</section>
+	</article>
+	<!-- //アイテム -->
+
+</main>
+
+<!-- //ここまで -->
+{% endblock %}

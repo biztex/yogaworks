@@ -1,0 +1,496 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+{#
+[メルマガ管理]-[配信内容設定]-[テンプレート選択]画面
+#}
+
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_mail_customer'] %}
+
+{% block title %}{{ 'postcarrier.mail_customer.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css', 'admin') }}">
+    <style type="text/css">
+        .datepicker-days th.dow:first-child,
+        .datepicker-days td:first-child {
+            color: #f00;
+        }
+
+        .datepicker-days th.dow:last-child,
+        .datepicker-days td:last-child {
+            color: #00f;
+        }
+    </style>
+{% endblock stylesheet %}
+
+{% block javascript %}
+    <script>
+        $(function(){
+{#
+            $.when(
+                $.getScript("{{ asset('assets/js/vendor/moment.min.js', 'admin') }}"),
+                $.getScript("{{ asset('assets/js/vendor/moment-with-locales.min.js', 'admin') }}"),
+                $.getScript("{{ asset('assets/js/vendor/tempusdominus-bootstrap-4.min.js', 'admin') }}")
+            ).done(function() {
+                $('#post_carrier_sch_date').datetimepicker({
+                    locale: '{{ eccube_config.locale }}',
+                    format: 'YYYY-MM-DD HH:mm',
+                    useCurrent: false,
+                    buttons: {
+                        showToday: true,
+                        showClose: true
+                    }
+                });
+            });
+#}
+            $("#post_carrier_group_d__template").on("change", function(){
+                var id = $(this).val()
+                if (id) {
+                    action = '{{ url('plugin_post_carrier_mail_customer_select') }}/' + id;
+                } else {
+                    action = '{{ url('plugin_post_carrier_mail_customer_select') }}';
+                }
+
+                $('#mode').val('select');
+
+                document.form1.action = action;
+                document.form1.submit();
+            });
+
+            $("#post_carrier_group_d__trigger").on("change", function(){
+                postcarrierSelectTrigger();
+            });
+
+            $('input[name=post_carrier_group\\[d__mail_method\\]]').on("change", function(){
+                postcarrierSelectMailMethod();
+            });
+
+            postcarrierSelectTrigger(true);
+            postcarrierSelectMailMethod();
+
+            $('#post_carrier_insert_to_subject').on('click', function() {
+                var item = $('#post_carrier_group_d__varList').val();
+                if (item) {
+                    $('#post_carrier_group_d__subject').insertAtCaret(item);
+                }
+            });
+            $('#post_carrier_insert_to_body').on('click', function() {
+                var item = $('#post_carrier_group_d__varList').val();
+                if (item) {
+                    $('#post_carrier_group_d__body').insertAtCaret(item);
+                }
+            });
+            $('#post_carrier_insert_to_htmlBody').on('click', function() {
+                var item = $('#post_carrier_group_d__varList2').val();
+                if (item) {
+                    $('#post_carrier_group_d__htmlBody').insertAtCaret(item);
+                }
+            });
+
+            $('#testSendModal input').on('keyup', function() {
+                if (this.checkValidity()) {
+                    $(this).parents('div.form-group').removeClass('has-error');
+                } else {
+                    $(this).parents('div.form-group').addClass('has-error');
+                }
+                if ($('#testSendModal form').get(0).checkValidity()) {
+                    $('#sendTestMail').removeAttr('disabled');
+                } else {
+                    $('#sendTestMail').attr('disabled', 'disabled');
+                }
+            });
+            $('#sendTestMail').on('click', function() {
+                changeAction('{{ url('plugin_post_carrier_mail_customer_test') }}');
+            });
+
+            {% if not form.d__testEmail.vars.valid %}
+            $('#testSendModal').modal();
+            {% endif %}
+
+            // 確認画面へ
+            $('#postCarrierConfirmButton').on('click', function() {
+                $('#mode').val('confirm'); {# バリデータ有効 #}
+                $('#form1').submit();
+            });
+        });
+
+        function changeAction(action) {
+            document.form1.action = action;
+            document.form1.submit();
+        }
+
+        function postcarrierSelectTrigger(init = false) {
+            var trigger_type = $('#post_carrier_group_d__trigger').val();
+            var node_sch_date = $("#post_carrier_form_sch_date");
+            var node_event = $("#post_carrier_form_event");
+            switch (trigger_type) {
+            case 'schedule':
+                node_event.hide();
+                node_sch_date.show();
+                break;
+            case 'event':
+                node_sch_date.hide();
+                node_event.show();
+                postcarrierSelectEvent(init);
+                break;
+            default:
+                node_sch_date.hide();
+                node_event.hide();
+                break;
+            }
+        }
+
+        function postcarrierSelectEvent(init = false) {
+            var event_type = $('#post_carrier_b__event').val();
+            var order_product = $('#order-product');
+            var addCountButton = $('#addCountButton');
+            var eventDaySelect = $('#post_carrier_b__eventDaySelect');
+
+            {# クリア漏れがあるので対応できるまで初期化する #}
+            if (!init) {
+                $collectionHolder = $('#table-form-field');
+                $collectionHolder.children('tbody').remove();
+                $collectionHolder.append('<tbody></tbody>');
+                $('#form1').submit();
+            }
+
+            switch (event_type) {
+            case 'birthday':
+                if (eventDaySelect.children('option').length == 1) {
+                    eventDaySelect.prepend($('<option>').val('front').text('前'));
+                }
+                if (!init) {
+                    eventDaySelect.val('front');
+                }
+                break;
+            case 'memberRegistrationDate':
+            case 'paymentDate':
+            case 'latestOrderDate':
+            case 'latestCommitDate':
+            case 'orderDate':
+            case 'commitDate':
+                $('select#post_carrier_b__eventDaySelect option[value=front]').remove();
+                break;
+            }
+
+            switch (event_type) {
+            case 'birthday':
+            case 'memberRegistrationDate':
+                order_product.hide();
+                break;
+            case 'paymentDate':
+            case 'latestOrderDate':
+            case 'latestCommitDate':
+                addCountButton.hide();
+                order_product.show();
+                break;
+            case 'orderDate':
+            case 'commitDate':
+                addCountButton.show();
+                order_product.show();
+                break;
+            }
+        }
+
+        function postcarrierSelectMailMethod() {
+            var node_htmlBody = $("#post_carrier_form_htmlBody");
+            var mail_method = $('input[name=post_carrier_group\\[d__mail_method\\]]:checked').val();
+            if (mail_method == 1) {
+                node_htmlBody.show();
+            } else {
+                node_htmlBody.hide();
+            }
+        }
+
+        $.fn.extend({
+            insertAtCaret: function(v) {
+                var o = this.get(0);
+                o.focus();
+
+                if (!jQuery.browser) {
+                    jQuery.browser={ msie: ( navigator.appName == 'Microsoft Internet Explorer') ? true : false }
+                }
+
+                if (jQuery.browser.msie) {
+                    var r = document.selection.createRange();
+                    r.text = v;
+                    r.select();
+                } else {
+                    var s = o.value;
+                    var p = o.selectionStart;
+                    var np = p + v.length;
+                    o.value = s.substr(0, p) + v + s.substr(p);
+                    o.setSelectionRange(np, np);
+                }
+            }
+        });
+    </script>
+{% endblock javascript%}
+
+{% block main %}
+    <form name="form1" role="form" class="form-horizontal" id="form1" method="post" action="{{ url('plugin_post_carrier_mail_customer_select') }}">
+        {{ form_widget(form._token) }}
+        <input id="mode" type="hidden" name="mode" value="">
+        <input type="hidden" name="modal" value="">
+
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="card rounded border-0 mb-4">
+{#
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span class="card-title">
+                                        {{ 'postcarrier.select.card_title'|trans }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                            </div>
+                        </div>
+                    </div>
+#}
+                    <div class="card-body mb-lg-5">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__trigger.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__trigger) }}
+                                {{ form_errors(form.d__trigger) }}
+                            </div>
+                        </div>
+                        {# スケジュール配信 #}
+                        <div class="row" id="post_carrier_form_sch_date" style="display: none;">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__sch_date.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__sch_date) }}
+                                {{ form_errors(form.d__sch_date) }}
+                            </div>
+                        </div>
+                        {# ステップメール配信 #}
+                        <div class="row" id="post_carrier_form_event" style="display: none;">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>ステップメール条件</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row form-inline">
+                                    <div class="col form-inline">
+                                        {{ form_widget(form.b__event) }}
+                                        {{ form_errors(form.b__event) }}
+                                    </div>
+                                    <div class="col form-inline" style="padding-right: 2px">
+                                        {{ form_widget(form.b__eventDay) }}
+                                        {{ form_errors(form.b__eventDay) }}
+                                    </div>
+                                    <div>
+                                        日
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.b__eventDaySelect) }}
+                                        {{ form_errors(form.b__eventDaySelect) }}
+                                    </div>
+                                    <div class="col form-inline">
+                                        {{ form_widget(form.d__stepmail_time.hour) }}<span>&nbsp;時&nbsp;</span>
+                                        {{ form_widget(form.d__stepmail_time.minute) }}<span>&nbsp;分&nbsp;</span>
+                                        {{ form_errors(form.d__stepmail_time) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span class="card-title">
+                                        {{ 'postcarrier.select.card_title'|trans }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mb-lg-5">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__template.vars.label|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__template) }}
+                                {{ form_errors(form.d__template) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__mail_method.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__mail_method) }}
+                                {{ form_errors(form.d__mail_method) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__fromAddr.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__fromAddr) }}
+                                {{ form_errors(form.d__fromAddr) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__fromDisp.vars.label|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__fromDisp) }}
+                                {{ form_errors(form.d__fromDisp) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__subject.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__subject) }}
+                                {{ form_errors(form.d__subject) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__body.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__varList) }}
+                                <div style="margin: 8px">
+                                    <button id="post_carrier_insert_to_subject" class="btn btn-ec-regular" type="button">件名に差し込む</button>
+                                    <button id="post_carrier_insert_to_body" class="btn btn-ec-regular" type="button">本文に差し込む</button>
+                                </div>
+                                {{ form_widget(form.d__body, {'attr' : { 'rows' : 20 }}) }}
+                                {{ form_errors(form.d__body) }}
+                            </div>
+                        </div>
+                        <div class="row" id="post_carrier_form_htmlBody">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__htmlBody.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__varList2) }}
+                                <div style="margin: 8px">
+                                    <button id="post_carrier_insert_to_htmlBody" class="btn btn-ec-regular" type="button">本文に差し込む</button>
+                                </div>
+                                {{ form_widget(form.d__htmlBody, {'attr' : { 'rows' : 20 }}) }}
+                                {{ form_errors(form.d__htmlBody) }}
+                            </div>
+                        </div>
+                        <div style="display: none"> <!-- XXX -->
+                            {{ form_rest(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink" href="{{ url('plugin_post_carrier_mail_customer_search') }}" onclick="changeAction('{{ url('plugin_post_carrier_mail_customer_search') }}'); return false;">
+                                <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.select.btn_back'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <a class="btn btn-primary btn-block btn-lg active" role="button" data-toggle="modal" data-target="#testSendModal">
+                                    {{ 'postcarrier.confirm.btn_send_test'|trans }}
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5" type="submit" id="postCarrierConfirmButton">
+                                    {{ 'postcarrier.select.btn_confirm'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="testSendModal" class="modal" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ 'postcarrier.confirm.modal.title'|trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="testEmail" class="col-sm-2 control-label">
+                                    {{ 'postcarrier.confirm.modal.label_from'|trans }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control {% if not form.d__testEmail.vars.valid %}is-invalid{% endif %}" id="{{ form.d__testEmail.vars.id }}" name="{{ form.d__testEmail.vars.full_name }}" placeholder="{{ 'postcarrier.confirm.modal.placeholder_from'|trans }}" value="{{ form.d__testEmail.vars.value }}">
+                                    {{ form_errors(form.d__testEmail) }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="sendTestMail">{{ 'postcarrier.confirm.modal.btn_send'|trans }}</button>
+                        <button class="btn btn-default" data-dismiss="modal">{{ 'postcarrier.confirm.modal.btn_cancel'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{#
+  ポストキャリアコンバージョンタグ
+
+  購入完了画面のtwigファイル(src/Eccube/Resource/template/default/Shopping/complete.twig)中の {% endblock %} の直前の行に下記一行を挿入してください。
+  {{ include('@PostCarrier4/cv.twig', ignore_missing=true) }}
+#}
+{% if app.session.has('postcarrier.conversion_cookie') %}
+    <img width="0" height="0" alt="" id="post_carrier_cvtag" src="{{ url("post_carrier_receive") }}?p=v&amp;o={{ Order.orderNo }}&amp;t={{ Order.subtotal|round }}">
+{% endif %}

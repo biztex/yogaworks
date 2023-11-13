@@ -1,0 +1,35 @@
+<?php //Eccube%255CEntity%255CBaseInfo%2524Country
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ManyToOne'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ManyToOne')),
+        clone ($p['Doctrine\\ORM\\Mapping\\JoinColumns'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\JoinColumns')),
+        clone ($p['Doctrine\\ORM\\Mapping\\JoinColumn'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\JoinColumn')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Cache'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Cache')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'targetEntity' => [
+                'Eccube\\Entity\\Master\\Country',
+            ],
+            'value' => [
+                1 => [
+                    $o[2],
+                ],
+            ],
+            'name' => [
+                2 => 'country_id',
+            ],
+            'usage' => [
+                3 => 'NONSTRICT_READ_WRITE',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[3],
+    ],
+    []
+); }];

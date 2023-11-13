@@ -1,0 +1,154 @@
+<script>
+
+    const QD_TYPE_PRICE = "{{ constant('Plugin\\QuantityDiscount\\Entity\\QdProductClass::QD_TYPE_PRICE') }}";
+    const QD_TYPE_RATE = "{{ constant('Plugin\\QuantityDiscount\\Entity\\QdProductClass::QD_TYPE_RATE') }}";
+
+    $(function () {
+
+        // タイトルクリック
+        $('#plugin_qd_area_title_link').on('click', function () {
+            if($('.product_class_qd_area_target_group').hasClass('d-none')) {
+                $('.product_class_qd_area_target_group').removeClass('d-none');
+                $('#plugin_qd_area_title_link').text("{{ 'quantity_discount.admin.product_class_are_title'|trans }}");
+            } else {
+                $('.product_class_qd_area_target_group').addClass('d-none');
+                $('#plugin_qd_area_title_link').text(">>");
+            }
+        });
+
+        // 行追加
+        $('.qd_add_btn').on('click', function () {
+            listAdd($(this).data('product_class_name'));
+        });
+
+        // 入力変更 (price > rate)
+        $(document).on('click', '.qd_rate_change_btn', function() {
+            let target_key = $(this).data('target_key');
+            changePR(
+                '#qd_product_class_' + target_key + '_qd_rate_view_area',
+                '#qd_product_class_' + target_key + '_qd_price_view_area'
+            );
+            changePR(
+                '#qd_product_class_' + target_key + '_qd_rate_view_area_btn',
+                '#qd_product_class_' + target_key + '_qd_price_view_area_btn'
+            );
+            let qd_type_id = $(this).data('qd_type_id');
+            $('#' + qd_type_id).val(QD_TYPE_RATE);
+        });
+
+        // 入力変更 (rate > price)
+        $(document).on('click', '.qd_price_change_btn', function () {
+            let target_key = $(this).data('target_key');
+            changePR(
+                '#qd_product_class_' + target_key + '_qd_price_view_area',
+                '#qd_product_class_' + target_key + '_qd_rate_view_area'
+            );
+            changePR(
+                '#qd_product_class_' + target_key + '_qd_price_view_area_btn',
+                '#qd_product_class_' + target_key + '_qd_rate_view_area_btn'
+            );
+            let qd_type_id = $(this).data('qd_type_id');
+            $('#' + qd_type_id).val(QD_TYPE_PRICE);
+        });
+
+        // 行削除
+        $(document).on('click', '.qd_delete_btn', function () {
+            let target_key = $(this).data('target_key');
+            $('#qd_row_' + target_key).addClass('d-none');
+
+            let del_flg_id = $(this).data('del_flg_id');
+            $('#' + del_flg_id).val(1);
+        });
+
+    });
+
+    // リスト追加
+    function listAdd(class_id) {
+
+        let index = $('.qd_row_' + class_id).length;
+
+        let prototype = $('#product_class_qd_area_target_' + class_id).data('prototype');
+
+        let newForm = prototype.replace(/__name__/g, index).replace(/__class__/g, class_id);
+        $('.qd_row_' + class_id + ":last").after(newForm);
+
+        $('#product_class_matrix_product_classes_' + class_id + "_QdProductClasses_" + index + "_qd_type").val(QD_TYPE_PRICE);
+    }
+
+    // 表示変更
+    function changePR(onTarget, offTarget) {
+        $(onTarget).removeClass('d-none');
+        $(offTarget).addClass('d-none');
+    }
+
+    // 1行目コピー
+    $('#copy').on('click', function (event) {
+        event.preventDefault();
+
+        let target_id = '#product_class_matrix_product_classes_0_QdProductClasses_';
+        let index = 0;
+
+        let PRODUCT_CLASS_COUNT = {{ form.product_classes|length }};
+
+        // アクティブな1行名を取得
+        $('.qd_row_0').each(function () {
+
+            let key2 = $(this).data('key2');
+
+            if(!$(this).hasClass('d-none')) {
+                // アクティブ
+                for(let i = 1; i < PRODUCT_CLASS_COUNT; i++) {
+                    let qd_row = "#qd_row_" + i + "_" + index;
+                    if(!$(qd_row).length) {
+                        // 行追加
+                        listAdd(i);
+                    } else {
+                        $(qd_row).removeClass('d-none');
+                    }
+                }
+
+                $("[id$='QdProductClasses_" + key2 + "_quantity']").val($(target_id + key2 + "_quantity").val());
+                $("[id$='QdProductClasses_" + key2 + "_price']").val($(target_id + key2 + "_price").val());
+                $("[id$='QdProductClasses_" + key2 + "_rate']").val($(target_id + key2 + "_rate").val());
+                $("[id$='QdProductClasses_" + key2 + "_qd_type']").val($(target_id + key2 + "_qd_type").val());
+                $("[id$='QdProductClasses_" + key2 + "_del_flg']").val($(target_id + key2 + "_del_flg").val());
+
+                if($(target_id + key2 + "_qd_type").val() == QD_TYPE_PRICE) {
+                    changePR(
+                        '[id$="' + key2 + '_qd_price_view_area"]',
+                        '[id$="' + key2 + '_qd_rate_view_area"]'
+                    );
+                    changePR(
+                        '[id$="' + key2 + '_qd_price_view_area_btn"]',
+                        '[id$="' + key2 + '_qd_rate_view_area_btn"]'
+                    );
+                } else {
+                    changePR(
+                        '[id$="' + key2 + '_qd_rate_view_area"]',
+                        '[id$="' + key2 + '_qd_price_view_area"]'
+                    );
+                    changePR(
+                        '[id$="' + key2 + '_qd_rate_view_area_btn"]',
+                        '[id$="' + key2 + '_qd_price_view_area_btn"]'
+                    );
+                }
+
+            } else {
+
+                for(let i = 1; i < PRODUCT_CLASS_COUNT; i++) {
+                    let qd_row = "#qd_row_" + i + "_" + index;
+                    if(!$(qd_row).length) {
+                        // 行追加
+                        listAdd(i);
+                    }
+                    $(qd_row).addClass('d-none');
+                    $("[id$='QdProductClasses_" + key2 + "_del_flg']").val($(target_id + key2 + "_del_flg").val());
+                }
+            }
+
+            index++;
+        });
+
+    })
+
+</script>

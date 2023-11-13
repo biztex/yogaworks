@@ -1,0 +1,132 @@
+{% if(Order.Payment.method_class and Order.Payment.method_class==zeus_credit.credit_class_name) %}
+<style type="text/css">
+#zeus_payment_confirm dl dt, #zeus_payment_confirm dl dt .ec-label {
+	font-weight: normal;
+}
+
+#zeus_payment_confirm dl {
+	margin-bottom: 0;
+}
+
+#zeus_payment_confirm {
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 3px;
+}
+</style>
+<script>
+	$(function() {
+        var paymentName = "{{ zeus_credit.payment_method }}";
+		$('#zeus_payment_confirm').insertAfter(
+				$(".ec-orderPayment:contains('" + paymentName + "')"))
+				.addClass('ec-orderPayment');
+
+        //$('#'+zeus_payment_id).parent().append($('#zeus_payment_input'))
+	});
+</script>
+
+<div class="hidden">
+	<div id="zeus_payment_confirm">
+
+		{{ form_widget(form.ZeusCreditPaymentToken) }}
+
+
+		※お申し込みになる場合は、以下の項目をご確認いただき「注文する」ボタンを押してください。<br/>
+			<span class="text-danger"><strong>
+まだご注文手続きが完了しておりません。<br/>
+「注文する」「ご注文手続きに戻る」以外のボタン、リンクを押しますと、<br/>
+クレジットカード決済手続きが終了してしまいますので、ご注意ください。<br/><br/>
+</strong></span>
+
+
+		{% if zeus_credit.lastMaskedCard %}
+		<dl id="zeus_input_quick">
+			<dt>
+				{% if form.ZeusCreditPaymentQuick.vars.data %}
+				<input type="hidden" name="{{ form.ZeusCreditPaymentQuick.vars.full_name }}" value="1">
+				{% endif %}
+				<span class="confirm_value"> {% if zeus_credit.lastMaskedCard %}
+				<strong>前回利用したカード番号：{{ zeus_credit.lastMaskedCard }}<br /></strong>
+				{% endif %}
+				</span>
+			</dt>
+		</dl>
+		{% endif %}
+
+		<dl id="zeus_input_method">
+			<dt>
+				<span class="confirm_value"> <label class="ec-label required">支払い回数：</label>
+					{{ zeus_credit.payment_method_name }} <input type="hidden"
+					name="{{ form.ZeusCreditPaymentMethod.vars.full_name }}"
+					value="{{ form.ZeusCreditPaymentMethod.vars.value }}">
+				</span>
+			</dt>
+		</dl>
+
+		<dl id="input_name"
+			class="{% if(form.ZeusCreditPaymentQuick.vars.data) %}hidden{% endif %}">
+			<dt>
+				<label class="ec-label required">氏名(Name)：</label> <span
+					class="confirm_value"> {{ form.ZeusCreditPaymentCardName1.vars.value }}
+					{{ form.ZeusCreditPaymentCardName2.vars.value }} <input
+					type="hidden"
+					name="{{ form.ZeusCreditPaymentCardName1.vars.full_name }}"
+					value="{{ form.ZeusCreditPaymentCardName1.vars.value }}"> <input
+					type="hidden"
+					name="{{ form.ZeusCreditPaymentCardName2.vars.full_name }}"
+					value="{{ form.ZeusCreditPaymentCardName2.vars.value }}">
+				</span>
+			</dt>
+		</dl>
+
+		<dl id="zeus_input_cardno"
+			class="{% if(form.ZeusCreditPaymentQuick.vars.data) %}hidden{% endif %}">
+			<dt>
+				<label class="ec-label required">カード番号(Card Number)：</label> <span
+					class="confirm_value"> {{ zeus_credit.mask_cark_no }} <input
+					type="hidden"
+					name="{{ form.ZeusCreditPaymentCardNo.vars.full_name }}"
+					value="****************">
+				</span>
+
+			</dt>
+		</dl>
+
+		<dl id="zeus_input_expire"
+			class="{% if(form.ZeusCreditPaymentQuick.vars.data) %}hidden{% endif %}">
+			<dt>
+				<label class="ec-label required">カード有効期限(EXP)：</label> <span
+					class="confirm_value"> {{ form.ZeusCreditPaymentMonth.vars.value }}月
+					/{{ form.ZeusCreditPaymentYear.vars.value }}年 <input type="hidden"
+					name="{{ form.ZeusCreditPaymentMonth.vars.full_name }}"
+					value="{{ form.ZeusCreditPaymentMonth.vars.value }}"> <input
+					type="hidden"
+					name="{{ form.ZeusCreditPaymentYear.vars.full_name }}"
+					value="{{ form.ZeusCreditPaymentYear.vars.value }}">
+				</span>
+			</dt>
+		</dl>
+		{% if zeus_credit.config.cvvflg > 0 %}
+		<dl id="zeus_input_cvv" {% if zeus_credit.config.cvvflg == 2 and form.ZeusCreditPaymentQuick.vars.data %}style="display:none"{% endif %}>
+			<dt>
+				<label class="ec-label required">クレジットカード・セキュリティコード：</label> <span
+					class="confirm_value"> *** <input type="hidden"
+					name="{{ form.ZeusCreditPaymentCvv.vars.full_name }}" value="***">
+				</span>
+			</dt>
+		</dl>
+		{% endif %}
+		<div id="zeus_contact_info" style="margin-top: 20px;">
+			<strong>【クレジットカード決済に関するお問合せ】</strong><br /> 株式会社ゼウス<br /> 〒150-0002
+			東京都渋谷区渋谷2-1-1 青山ファーストビル<br /> カスタマーサポート（24時間365日）<br /> 電話番号:
+			0570-02-3939（つながらないときは 03-4334-0500）<br /> E-mail: <span
+				style="color: #0000ff; text-decoration: underline;">support@cardservice.co.jp</span>
+		</div>
+
+	</div>
+
+</div>
+{% endif %}
+
+
+

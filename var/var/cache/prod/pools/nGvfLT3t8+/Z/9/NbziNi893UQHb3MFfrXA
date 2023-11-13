@@ -1,0 +1,48 @@
+<?php //Eccube%255CController%255CAdmin%255CCustomer%255CCustomerEditController%2523index
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        clone $p['Symfony\\Component\\Routing\\Annotation\\Route'],
+        clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/customer/new',
+                '/%eccube_admin_route%/customer/{id}/edit',
+            ],
+            'name' => [
+                'admin_customer_new',
+                'admin_customer_edit',
+            ],
+            'methods' => [
+                [
+                    'GET',
+                    'POST',
+                ],
+                [
+                    'GET',
+                    'POST',
+                ],
+            ],
+            'requirements' => [
+                1 => [
+                    'id' => '\\d+',
+                ],
+            ],
+        ],
+        'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Template' => [
+            'template' => [
+                2 => '@admin/Customer/edit.twig',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+        $o[2],
+    ],
+    []
+); }];

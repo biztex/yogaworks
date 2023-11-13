@@ -1,0 +1,88 @@
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['store', 'plugin', 'plugin_list'] %}
+
+{% block title %}リッチエディター画面{% endblock %}
+{% block sub_title %}設定{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}{% endblock stylesheet %}
+
+{% block javascript %}{% endblock javascript %}
+
+{% block main %}
+    <form class="form-horizontal" method="post">
+        {{ form_widget(form._token) }}
+
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header"><span>エディター設定</span></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form_row(form.product_description_detail) }}
+                                    {{ form_row(form.product_free_area) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{ form_row(form.news_description) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header"><span>WYSIWYG設定</span></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form_row(form.image_upload_type) }}
+                                    <div style="padding: 15px;background: #eee;font-size: 0.8em;">
+                                        <h4>elFinderについて</h4>
+                                        <div>
+                                            elFinderは、三条項BSDライセンスのもと作成されているオープンソースのファイルマネージャーです。
+                                            <br/>機能が豊富でWindowsエクスプローラーのような操作性をもっています。
+                                            <br/>操作も直感的でWebの専門知識の少ない方でも扱いやすく作られていますが、日本語のファイル名などが扱えないなど、特定条件下で正常に動作しないなどの不具合がございますので、ご理解の上ご利用ください。
+                                            <br/><br/>参照リンク：<a target="_blank" href="https://studio-42.github.io/elFinder/">elFinder
+                                                -
+                                                file manager for web</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none">
+            {{ form_rest(form) }}
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink"
+                               href="{{ url('admin_store_plugin') }}">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                <span>プラグイン一覧</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5"
+                                        type="submit">登録</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

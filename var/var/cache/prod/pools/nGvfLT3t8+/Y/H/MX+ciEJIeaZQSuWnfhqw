@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CAbstractController
+
+return [PHP_INT_MAX, []];

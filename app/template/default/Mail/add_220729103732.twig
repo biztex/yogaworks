@@ -1,0 +1,154 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% autoescape 'safe_textmail' %}
+{{ Order.name01 }} {{ Order.name02 }} 様
+
+こんにちは。YOGA WORKS ONLINE STOREです。
+この度は、当店にてご注文いただき、誠にありがとうございます。
+
+ご注文商品は、下記内容にて発送いたします。
+商品受領のほど宜しくお願いいたします。
+
+{%  for Shipping in Order.Shippings %}
+　発送日：
+　配達日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_day }}
+　お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}
+{% endfor %}
+
+※お届時間指定は、届先が個人宅に限ります。
+　届先が個人宅以外の場合でもご希望時間帯を送り状へ印刷
+　いたしますが、運送会社ではサービス対象外となりますこと、
+　予めご了承ください。
+
+************************************************
+　ご請求金額
+************************************************
+ご注文日時：{{ Order.order_date|date_sec }}
+ご注文番号：{{ Order.order_no }}
+お支払い合計：{{ Order.payment_total|price}}
+お支払い方法：{{ Order.payment_method }}
+{% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+ご利用ポイント：{{ Order.usePoint|number_format }} pt
+加算ポイント：{{ Order.addPoint|number_format }} pt
+{% endif %}
+お問い合わせ：{{ Order.message }}
+
+************************************************
+　ご注文者情報
+************************************************
+お名前：{{ Order.name01 }} {{ Order.name02 }} 様
+お名前(カナ)：{{ Order.kana01 }} {{ Order.kana02 }} 様
+{% if Order.company_name %}
+会社名：{{ Order.company_name }}
+{% endif %}
+郵便番号：〒{{ Order.postal_code }}
+住所：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}
+電話番号：{{ Order.phone_number }}
+メールアドレス：{{ Order.email }}
+
+************************************************
+　配送情報
+************************************************
+{%  for Shipping in Order.Shippings %}
+◎お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}
+
+お名前：{{ Shipping.name01 }} {{ Shipping.name02 }} 様
+お名前(カナ)：{{ Shipping.kana01 }} {{ Shipping.kana02 }} 様
+{% if Shipping.company_name %}
+会社名：{{ Shipping.company_name }}
+{% endif %}
+郵便番号：〒{{ Shipping.postal_code }}
+住所：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}
+電話番号：{{ Shipping.phone_number }}
+{% endfor %}
+
+************************************************
+　ご注文商品明細
+************************************************
+
+{% set isShowReducedTaxMess = false %}
+{% for OrderItem in Order.MergedProductOrderItems %}
+商品コード：{{ OrderItem.product_code }}
+商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }} {{ OrderItem.classcategory_name2 }}{% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}
+
+単価：{{ OrderItem.price_inctax|price }}
+数量：{{ OrderItem.quantity|number_format }}
+
+{% endfor %}
+{% if isShowReducedTaxMess %}※は軽減税率対象商品です。
+{% endif %}
+-------------------------------------------------
+小　計：{{ Order.subtotal|price }}
+手数料：{{ Order.charge|price }}
+送　料：{{ Order.delivery_fee_total|price}}
+{% if Order.taxable_discount < 0 %}
+値引き：{{ Order.taxable_discount|price }}
+{% endif %}
+-------------------------------------------------
+合　計：{{ Order.taxable_total|price }}
+    {% for rate, total in Order.taxable_total_by_tax_rate %}
+    ({{ rate }} %対象：{{ total|price }})
+{% endfor %}
+{% for item in Order.tax_free_discount_items %}
+-------------------------------------------------
+{{ item.product_name }}：{{ item.total_price|price }}
+{% endfor %}
+-------------------------------------------------
+お支払い合計：{{ Order.payment_total|price }}
+
+************************************************
+
+{% if Order.complete_mail_message is not empty %}
+{{ Order.complete_mail_message }}
+{% endif %}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+天候不良による災害および輸送障害の影響で、下記地域において
+発送不可・配送遅延が発生しております。
+
+【沖縄・離島地域以外】（佐川急便）
+https://www2.sagawa-exp.co.jp/information/detail/225/
+https://www2.sagawa-exp.co.jp/whatsnew/detail/1932/
+
+【沖縄・離島地域】（ヤマト運輸）
+https://www.kuronekoyamato.co.jp/ytc/chien/chien_hp.html
+
+その他地域につきましても、今後の天候や道路状況によりお届けに遅れが
+生じる可能性がございます。
+到着日時指定をいただきましても、ご指定どおりの対応ができない場合が
+ございます。
+配達日時指定をされているお客さま方々には、 ご不便、ご迷惑をおかけし
+誠に申し訳ございませんが、何卒ご理解賜りますようお願い申し上げます。
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━
+ ここちいいヨガ、ここから。
+ ───────────────────
+有限会社ヨガワークス
+ YOGA WORKS CO., LTD.
+
+〒150-0043
+ 東京都渋谷区道玄坂1-21-1
+ SHIBUYA SOLASTA 3F
+ 有限会社ヨガワークス   
+ tel 050-5536-1057 ｜fax 050-5369-3136
+ mailto:shop@yogaworks.jp
+
+ YOGA WORKS BRAND SITE
+ https://www.yogaworks.co.jp/
+
+ YOGA WORKS BUSINESS SITE
+ https://www.yogamat.jp/
+
+ YOGA WORKS ONLINE STORE
+ https://www.yogaworks.jp/
+━━━━━━━━━━━━━━━━━━━
+{% endautoescape %}

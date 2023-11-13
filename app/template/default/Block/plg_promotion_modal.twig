@@ -1,0 +1,109 @@
+{#
+Plugin Name: JoolenPromotionModal4
+
+Copyright(c) joolen inc. All Rights Reserved.
+
+https://www.joolen.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% if PromotionModal is defined and not null %}
+    {% block stylesheet %}
+        <style>
+            .modal-body{
+                padding: 5px;
+            }
+            .modal-wrap {
+                display:table;
+                height: 100%;
+                width: 100%;
+            }
+            .modal-description{
+                margin-top: 10px;
+                padding: 0 10px;
+            }
+            .modal-outer {
+                display: table-cell!important;
+                vertical-align: middle!important;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .modal-content {
+                position: relative;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            .modal-body button {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                opacity: .5;
+            }
+            .modal-body img {
+                max-width: 100%;
+                height: auto;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -o-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+            }
+            .modal-open{
+                overflow: visible;
+            }
+            .modal-footer{
+                border-top: none;
+            }
+            .modal-footer .ec-blockBtn--cancel{
+                background-color: #787878;
+                border-color: #787878;
+            }
+        </style>
+    {% endblock %}
+    {% block javascript %}
+    <script>
+
+    $(function () {
+        $('#promotionModal, .close').on('click', function () {
+            $('#promotionModal').modal('hide');
+        });
+
+        $('.modal-content').on('click', function (e) {
+            e.stopPropagation();
+        });
+
+        $('#promotionModal').modal('show');
+    })
+    </script>
+    {% endblock %}
+    <div class="modal" data-backdrop="true" id="promotionModal" aria-hidden="false">
+        <div class="modal-wrap">
+            <div class="modal-outer">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {% if PromotionModal.image is not null %}
+                            <p><img src="{{ asset(PromotionModal.image, 'save_image') }}"></p>
+                        {% endif %}
+                        {% if PromotionModal.description is not null %}
+                            <div class="modal-description">{{ PromotionModal.description | raw }}</div>
+                        {% endif %}
+                    </div>
+                    {% if PromotionModal.ButtonName is not null %}
+                        <div class="modal-footer">
+                            {% if PromotionModal.url is not null %}
+                                <a href="{{PromotionModal.url}}" target="_blank" class="ec-blockBtn--cancel" role="button">{{PromotionModal.ButtonName}}</a>
+                            {% else %}
+                                <button type="button" class="ec-blockBtn--cancel">{{PromotionModal.ButtonName}}</button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

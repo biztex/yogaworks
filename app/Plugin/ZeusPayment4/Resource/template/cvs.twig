@@ -1,0 +1,54 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'cart_page' %}
+{% block javascript %}
+<script>
+<!--
+var isMSIE = /*@cc_on!@*/false;
+if (isMSIE) {
+    if(document.charset !== "utf-8"){
+        document.charset = "utf-8";
+        location.reload();
+    }
+}
+var zeusTimer = setTimeout(function next() {
+ document.charset='Shift_JIS';
+ document.nextform.submit();
+ }, 5000);
+-->
+</script>
+{% endblock javascript %}
+{% block main %}
+    <h1 class="page-heading">コンビニ決済申し込み</h1>
+	<form method="post" name="nextform" action="{{ eccube_config.zeus_cvs_link_point_url }}" Accept-charset="shift_jis">
+	<input type="hidden" name="clientip"     value="{{ config.clientip_cvs }}" />
+	<input type="hidden" name="act"          value="order" />
+	<input type="hidden" name="money"        value="{{ order.paymentTotal|round }}" />
+	<input type="hidden" name="username"     value="{{ kananame }}" />
+	<input type="hidden" name="telno"        value="{{ order.phone_number }}" />
+	<input type="hidden" name="email"        value="{{ order.email }}" />
+	<input type="hidden" name="sendid"       value="{{ order.id }}" />
+	<input type="hidden" name="sendpoint"    value="{{ sendPoint }}" />
+	<input type="hidden" name="siteurl"      value="{{ config.siteurl }}" />
+	<input type="hidden" name="sitestr"      value="{{ config.sitestr }}" />
+	<table>
+	  <tr>
+	    <td class="alignL">
+	      <p class="text-info">「次へ」をクリックするとコンビニ決済申し込みサイトに遷移します。ドメインが変わりますが、そのままお手続きを進めてください。</p>
+	      <p class="text-warning">
+	      ※決済用サイトに遷移しますと、ご注文完了となり、内容変更ができません。予めご了承ください。<br />
+	      ※画面が切り替るまで少々時間がかかる場合がございますが、そのままお待ちください。<br />
+	      ※画面が変わらない場合には、「次へ」をクリックしてください。
+	      </p>
+	    </td>
+	  </tr>
+	</table>
+    <div class="row no-padding">
+        <div class="btn_group col-sm-offset-4 col-sm-4">
+            <p>
+                <button id="zeus-submit-button" type="submit" class="btn btn-primary ec-blockBtn" onclick="document.charset='Shift_JIS';">次へ</button>
+            </p>
+            <p><a href="{{ url('zeus_payment_back') }}" onclick="javascript:clearTimeout(zeusTimer);" class="btn btn-info ec-blockBtn">戻る</a></p>
+        </div>
+    </div>
+	</form>
+{% endblock %}

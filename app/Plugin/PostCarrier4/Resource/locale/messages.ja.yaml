@@ -1,0 +1,187 @@
+postcarrier.title: ポストキャリア
+postcarrier.index.title: 配信
+postcarrier.index.btn_select_template: 配信内容を作成する
+postcarrier.select.card_title: 配信内容の設定
+postcarrier.select.btn_back: 検索画面に戻る
+postcarrier.select.btn_confirm: 確認画面へ
+postcarrier.select.note_name: ※ 名前差し込み時は {name} といれてください
+postcarrier.select.select_template: テンプレートを選択
+postcarrier.select.label_trigger: メール配信方法
+postcarrier.select.label_template: テンプレート
+postcarrier.select.label_fromAddr: 送信者アドレス
+postcarrier.select.label_fromDisp: 送信表示名
+postcarrier.select.label_mail_method: メール形式
+postcarrier.select.label_subject: 件名
+postcarrier.select.label_body: 本文 (テキスト形式)
+postcarrier.select.label_body_html: 本文 (HTML形式)
+postcarrier.confirm.html: 配信内容の確認
+postcarrier.confirm.btn_back: 配信内容の設定に戻る
+postcarrier.confirm.btn_send_test: テスト送信する
+postcarrier.confirm.btn_send: 配信する
+postcarrier.confirm.btn_schedule: 配信予約する
+postcarrier.confirm.modal.title: テスト送信
+postcarrier.confirm.modal.label_from: 送信先
+postcarrier.confirm.modal.placeholder_from: メールアドレス
+postcarrier.confirm.modal.btn_send: 送信
+postcarrier.confirm.modal.btn_cancel: 閉じる
+postcarrier.confirm.modal.confirm_prepare_message: メールマガジンを配信します。\nよろしいですか？
+postcarrier.confirm.modal.confirm_test_message: テストメールを送信します。\nよろしいですか？
+postcarrier.confirm.modal.confirm_test_success_message: テストメールを送信しました。
+postcarrier.confirm.modal.confirm_test_fail_message: テストメールの送信に失敗しました。
+postcarrier.confirm.label_count: 配信予定件数
+postcarrier.template.title: テンプレート設定
+postcarrier.template.btn_new: テンプレートを新規登録
+postcarrier.template.btn_save: 登録
+postcarrier.template.btn_review: プレビュー
+postcarrier.template.modal_del_message: このテンプレートを削除しても宜しいですか？
+postcarrier.template.btn_del: 削除
+postcarrier.template.btn_copy: コピー
+postcarrier.template.th_created_date: 作成日
+postcarrier.template.th_subject: 件名
+postcarrier.template.th_mail_format: メール形式
+postcarrier.template.card_title: テンプレート一覧
+postcarrier.template.preview.btn_back: 戻る
+postcarrier.history.title: 配信履歴
+postcarrier.history.btn_update: 更新
+postcarrier.history.btn_preview: プレビュー
+postcarrier.history.btn_condition: 配信条件
+postcarrier.history.btn_result: 配信結果
+postcarrier.history.btn_copy: コピー
+postcarrier.history.btn_analysis: 配信分析
+postcarrier.history.btn_analysis_customer: 顧客別配信分析
+postcarrier.history.btn_analysis_link: リンク別配信分析
+postcarrier.history.preview.btn_back: 戻る
+postcarrier.history.condition.label_null: 未指定
+postcarrier.history.result.no_record: 該当するデータがありませんでした。
+postcarrier.history.result.number_record: '総件数：%count%件'
+postcarrier.history.result.th_status: ステータス
+postcarrier.history.result.th_sending_id: 配信ID
+postcarrier.history.result.th_from: 送信先
+postcarrier.history.result.th_sending_date: 送信日時
+postcarrier.history.result.th_message_id: メッセージID
+postcarrier.history.result.status_unsend: 未送信
+postcarrier.history.result.status_sent: 送信済み
+postcarrier.history.result.status_fail: 送信失敗
+postcarrier.history.reuse_message: 配信済の設定内容を再利用して新しい配信を設定します。
+postcarrier.schedule.title: スケジュール
+postcarrier.schedule.btn_run: 即時配信
+postcarrier.schedule.btn_delete: 削除
+postcarrier.schedule.modal_del_message: このスケジュールを削除しますか？
+postcarrier.schedule.modal_run_message: このスケジュールを即時配信しますか？
+postcarrier.schedule.edit_message: 登録済スケジュールの配信内容を変更します。
+postcarrier.stepmail.title: ステップメール
+postcarrier.stepmail.th_start_time: ステップメール配信時刻
+postcarrier.stepmail.quantity: 購入回数
+postcarrier.stepmail.btn_no_condition: 無条件とする
+postcarrier.stepmail.btn_item_count: 購入回数で指定する
+postcarrier.stepmail.btn_add_product_item: 購入商品を条件として追加する
+postcarrier.stepmail.btn_pause: 一時停止
+postcarrier.stepmail.btn_resume: 　　再開　　
+postcarrier.stepmail.edit_message: 登録済ステップメールの配信内容を変更します。
+postcarrier.mail_customer.title: メルマガ専用会員管理
+postcarrier.mail_customer.card_title: メルマガ専用会員CSVファイルをアップロード
+postcarrier.mail_customer.csv_file: CSVファイル
+postcarrier.mail_customer.bulk_registration: 一括登録を実行
+postcarrier.mail_customer.drag_and_drop_image_description: CSVファイルをドラッグ＆ドロップまたは
+postcarrier.mail_customer.th_no: ID
+postcarrier.mail_customer.th_create_date: 登録日
+postcarrier.mail_customer.th_group_name: グループ名
+postcarrier.mail_customer.th_total: 人数
+postcarrier.mail_customer.search.btn_back: メルマガ専用会員管理に戻る
+postcarrier.mail_customer.label_ignore_permissions: メルマガを希望しない会員を含める
+postcarrier.mail_customer.label_check_permissions: メルマガを希望しない会員を含めない
+postcarrier.mail_customer.label_exclude_customer: EC本会員を除外する
+postcarrier.mail_customer.csv.email_col: メールアドレス
+postcarrier.mail_customer.csv.create_date_col: 会員登録日
+postcarrier.mail_customer.csv.memo01_col: 自由項目1
+postcarrier.mail_customer.csv.memo02_col: 自由項目2
+postcarrier.mail_customer.csv.email_description: 最低限このカラムのみで登録可能。存在すれば更新、削除は検索後に削除ボタン
+postcarrier.mail_customer.csv.create_date_description: 「YYYY-MM-DD hh:mm」または「YYYY-MM-DD」の形式で設定 (スラッシュでも可 例:「YYYY/MM/DD」) 省略時はアップロード時間
+postcarrier.mail_customer.csv.memo01_description: この値は差し込み項目 {memo01} として利用
+postcarrier.mail_customer.csv.memo02_description: 自由項目1〜自由項目10の合計10項目 {memo01} 〜 {memo10}
+postcarrier.mail_customer.tooltip.csv_upload: 所定の型のCSVデータを用いてメルマガ専用会員を一括で登録/追加/更新することができます。
+
+# 設定画面
+postcarrier.admin.config.title: ポストキャリア設定
+postcarrier.admin.config.sub_title: プラグイン一覧
+postcarrier.admin.config.config_title: アカウント設定
+postcarrier.admin.config.config_status_title: 登録状態
+postcarrier.admin.config.abount_service_title: サービスについて
+postcarrier.admin.config.last_registration_date: 最終登録日
+postcarrier.admin.config.effective_count: 有効アドレス件数
+postcarrier.admin.config.server_url: 接続先サーバーURL
+postcarrier.admin.config.shop_id: ショップID
+postcarrier.admin.config.shop_pass: ショップパスワード
+postcarrier.admin.config.click_ssl_url: クリックURL
+postcarrier.admin.config.request_data_url: リクエスト受付URL
+postcarrier.admin.config.module_data_url: モジュールデータURL
+postcarrier.admin.config.errors_to: エラー通知アドレス
+postcarrier.admin.config.basic_auth_user: ベーシック認証ユーザ名
+postcarrier.admin.config.basic_auth_pass: ベーシック認証パスワード
+postcarrier.admin.config.disable_check: 動作モード
+postcarrier.admin.config.server_api_url: サーバーAPI URL
+postcarrier.admin.config.address_count: 有効アドレス件数
+postcarrier.admin.config.conversion.save: 登録
+postcarrier.admin.config.conversion.back: プラグイン一覧
+postcarrier.admin.config.address_count.update.failure: 有効アドレス件数の更新に失敗しました。
+postcarrier.config.tooltip.server_url: 弊社からお知らせした値を入力ください。
+postcarrier.config.tooltip.shop_id: 弊社からお知らせした値を入力ください。
+postcarrier.config.tooltip.shop_pass: 弊社からお知らせした値を入力ください。
+postcarrier.config.tooltip.click_ssl_url: "ショップURL + /postcarrier を指定してください。例: https://shop.postcarrier.jp/postcarrier"
+postcarrier.config.tooltip.request_data_url: "ショップURL + /postcarrier を指定してください。"
+postcarrier.config.tooltip.module_data_url: "ショップURL + html/plugin/PostCarrier4/assets/ を指定してください。"
+postcarrier.config.tooltip.errors_to: エラー発生時に通知を受けるメールアドレス
+postcarrier.config.tooltip.basic_auth_user: ベーシック認証によるアクセス制限があるサイトで指定してください。
+postcarrier.config.tooltip.basic_auth_pass: ベーシック認証によるアクセス制限があるサイトで指定してください。
+postcarrier.config.tooltip.disable_check: "開発環境やIPアドレス制限などインターネットに公開されていないサイトは、テストモードを選択してください。ただし、スケジュール配信など即時配信以外の配信はテストモードでは動作しません。"
+postcarrier.config.tooltip.effective_count: 配信を希望するアドレスから配信除外アドレスを除いた件数です。
+
+# flash messages
+postcarrier.admin.save.complete: 登録しました。
+postcarrier.admin.save.error: 登録に失敗しました。
+postcarrier.common.get.failure: 情報の取得に失敗しました。
+postcarrier.common.need_configure: ポストキャリアアカウントを設定してください。
+
+admin.postcarrier.template.save.complete: メールテンプレート情報を保存しました。
+admin.postcarrier.template.save.failure: メールテンプレート情報の保存に失敗しました。
+admin.postcarrier.template.data.notfound: メールテンプレートが存在しません。
+admin.postcarrier.template.data.illegalaccess: 正常なアクセスではありません。
+admin.postcarrier.send.register.failure: 配信登録に失敗しました。
+admin.postcarrier.history.datanotfound: 配信履歴が存在しません。
+admin.postcarrier.history.search_count: '検索結果：%count%件が該当しました'
+admin.postcarrier.history.th_send_start_time: 配信開始時刻
+admin.postcarrier.history.th_send_end_time: 配信終了時刻
+admin.postcarrier.history.th_subject: 件名
+admin.postcarrier.history.th_trigger_type: 配信種別
+admin.postcarrier.history.th_ncustomers: 予定件数
+admin.postcarrier.history.th_total: 実配信件数
+admin.postcarrier.history.th_nclick: クリック数
+admin.postcarrier.history.th_sum_conversion: メルマガ売上
+admin.postcarrier.history.notice_search_no_data: 検索条件に該当するデータがありませんでした。
+admin.postcarrier.history.notice_no_data: 該当するデータがありませんでした。
+admin.postcarrier.customer.label_mailmagazine: メールマガジン送付について
+admin.postcarrier.customer.label_mailmagazine_yes: 受け取る
+admin.postcarrier.customer.label_mailmagazine_no: 受け取らない
+
+postcarrier.discard.title: 配信除外アドレス
+postcarrier.discard.th_address: 配信除外アドレス
+postcarrier.discard.th_date_created: 登録日
+postcarrier.discard.th_cause: 登録方法
+postcarrier.discard.btn_delete: 削除
+postcarrier.discard.modal_del_message: この配信除外アドレスを削除しますか？
+
+postcarrier.monthly_report.title: 月次配信件数
+postcarrier.monthly_report.th_send_month: 配信年月
+postcarrier.monthly_report.th_nsent: 配信件数
+postcarrier.monthly_report.th_cv_amount: コンバージョン金額
+
+postcarrier.mail_format.text: テキスト
+postcarrier.mail_format.html: HTML
+postcarrier.trigger_type.immediate: 即時配信
+postcarrier.trigger_type.schedule: スケジュール
+postcarrier.trigger_type.stepmail: ステップメール
+
+# src/Eccube/Form/Type/Admin/SearchCustomerType.php
+admin.common.birth_month: 誕生月
+postcarrier.common.group: メルマガグループ
+postcarrier.common.email: メールアドレス

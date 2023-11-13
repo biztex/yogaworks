@@ -1,0 +1,33 @@
+<?php //Eccube%255CController%255CAdmin%255CProduct%255CClassCategoryController%2523delete
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/%eccube_admin_route%/product/class_category/{class_name_id}/{id}/delete',
+            ],
+            'name' => [
+                'admin_product_class_category_delete',
+            ],
+            'requirements' => [
+                [
+                    'class_name_id' => '\\d+',
+                    'id' => '\\d+',
+                ],
+            ],
+            'methods' => [
+                [
+                    'DELETE',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

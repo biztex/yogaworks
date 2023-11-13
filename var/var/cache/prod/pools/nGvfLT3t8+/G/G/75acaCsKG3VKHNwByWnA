@@ -1,0 +1,3 @@
+<?php //Plugin%255CMailMagazine4%255CEntity%255CAdminCustomerQueryCustomizer
+
+return [PHP_INT_MAX, []];

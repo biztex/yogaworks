@@ -1,0 +1,52 @@
+<?php //Eccube%255CEntity%255CPage
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Table'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Table')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Index'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Index')),
+        clone ($p['Doctrine\\ORM\\Mapping\\InheritanceType'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\InheritanceType')),
+        clone ($p['Doctrine\\ORM\\Mapping\\DiscriminatorColumn'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\DiscriminatorColumn')),
+        clone ($p['Doctrine\\ORM\\Mapping\\HasLifecycleCallbacks'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\HasLifecycleCallbacks')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Entity'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Entity')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'dtb_page',
+                'dtb_page_url_idx',
+                3 => 'discriminator_type',
+            ],
+            'indexes' => [
+                [
+                    $o[1],
+                ],
+            ],
+            'columns' => [
+                1 => [
+                    'url',
+                ],
+            ],
+            'value' => [
+                2 => 'SINGLE_TABLE',
+            ],
+            'type' => [
+                3 => 'string',
+            ],
+            'length' => [
+                3 => 255,
+            ],
+            'repositoryClass' => [
+                5 => 'Eccube\\Repository\\PageRepository',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[2],
+        $o[3],
+        $o[4],
+        $o[5],
+    ],
+    []
+); }];

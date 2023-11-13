@@ -1,0 +1,8 @@
+gmc:
+  admin:
+    title: 'Google Merchant Center 連携'
+    site_verification:
+      settings: 'サイト認証設定'
+      file: '認証用HTMLファイル'
+    gmc:
+      settings: 'Merchant Center連携設定'

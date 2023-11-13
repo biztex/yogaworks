@@ -1,0 +1,62 @@
+<?php //Eccube%255CEntity%255CCart
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Table'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Table')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Index'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Index')),
+        clone ($p['Doctrine\\ORM\\Mapping\\UniqueConstraint'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\UniqueConstraint')),
+        clone ($p['Doctrine\\ORM\\Mapping\\InheritanceType'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\InheritanceType')),
+        clone ($p['Doctrine\\ORM\\Mapping\\DiscriminatorColumn'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\DiscriminatorColumn')),
+        clone ($p['Doctrine\\ORM\\Mapping\\HasLifecycleCallbacks'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\HasLifecycleCallbacks')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Entity'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Entity')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'dtb_cart',
+                'dtb_cart_update_date_idx',
+                'dtb_cart_pre_order_id_idx',
+                4 => 'discriminator_type',
+            ],
+            'indexes' => [
+                [
+                    $o[1],
+                ],
+            ],
+            'uniqueConstraints' => [
+                [
+                    $o[2],
+                ],
+            ],
+            'columns' => [
+                1 => [
+                    'update_date',
+                ],
+                [
+                    'pre_order_id',
+                ],
+            ],
+            'value' => [
+                3 => 'SINGLE_TABLE',
+            ],
+            'type' => [
+                4 => 'string',
+            ],
+            'length' => [
+                4 => 255,
+            ],
+            'repositoryClass' => [
+                6 => 'Eccube\\Repository\\CartRepository',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[3],
+        $o[4],
+        $o[5],
+        $o[6],
+    ],
+    []
+); }];

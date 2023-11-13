@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CAdmin%255CAdminController%2523getOrderEachStatus
+
+return [PHP_INT_MAX, []];

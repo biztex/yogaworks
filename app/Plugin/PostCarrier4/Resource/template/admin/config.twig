@@ -1,0 +1,341 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['store', 'plugin', 'plugin_list'] %}
+
+{% block title %}{{ 'postcarrier.admin.config.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.admin.config.sub_title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script>
+        $(function () {
+            $('#post_carrier_update_address_count').on('click', function() {
+                $.post(
+                    "{{ url('post_carrier_config_update_address_count') }}", []
+                ).done(function(res) {
+                    $('#post_carrier_address_count').text(res.address_count);
+                    $('#post_carrier_address_count_update_date').text(res.address_count_update_date);
+                }).fail(function (res) {
+                    alert('{{ 'postcarrier.admin.config.address_count.update.failure'|trans }}');
+                });
+            })
+        })
+    </script>
+{% endblock javascript%}
+
+{% block main %}
+    <form method="post" action="{{ url('post_carrier4_admin_config') }}">
+        {{ form_widget(form._token) }}
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-tooltip="true" data-placement="top"
+                                         title="{{ 'postcarrier.admin.config.abount_service_title'|trans }}">
+                                        <span class="card-title">{{ 'postcarrier.admin.config.abount_service_title'|trans }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <a data-toggle="collapse" href="#aboutService" aria-expanded="false"
+                                       aria-controls="aboutService">
+                                        <i class="fa fa-angle-up fa-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse show ec-cardCollapse" id="aboutService">
+                            <div class="card-body">
+                               <div>
+                                    本メルマガ配信サービス「PostCarrier for EC-CUBE」の無料プラン枠を超えるご利用には、有料プランのご契約が必要となります。<br>
+                                    <span>
+                                        <a href="https://www.postcarrier.jp/plan/free.html" target="_blank">
+                                            <button type="button" class="btn btn-ec-regular" style="margin:10px;">無料プランについて</button>
+                                        </a>
+                                        <a href="https://www.postcarrier.jp/entry/index.html" target="_blank">
+                                            <button type="button" class="btn btn-ec-regular" style="margin:10px;">お申し込みはこちら</button>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div>
+                                    サービスの詳細については、本サービスの<a href="https://www.postcarrier.jp/" target="_blank">ホームページ</a>、
+                                    またはこちらの<a href="https://www.postcarrier.jp/refresh_post.html" target="_blank">資料</a>をご覧ください。<br>
+                                    デモサイト・テスト導入・ご質問等ございましたら、下記フォームよりお問い合わせください。<br>
+                                    フリープランでご利用についてのサポートはメールのみとなります。<br>
+                                    <span>
+                                        <a href="https://www.postcarrier.jp/contact/index.html" target="_blank">
+                                            <button type="button" class="btn btn-ec-regular" style="margin:10px;">お問い合わせはこちら</button>
+                                        </a>
+                                        {#
+                                        <a href="https://www.postcarrier.jp/guide/" target="_blank">
+                                            <button type="button" class="btn btn-ec-regular" style="margin:10px;">操作マニュアルはこちら</button>
+                                        </a>
+                                        #}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-tooltip="true" data-placement="top" title="">
+                                        <span class="card-title">{{ 'postcarrier.admin.config.config_status_title'|trans }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <a data-toggle="collapse" href="#configStatus" aria-expanded="false"
+                                       aria-controls="configStatus">
+                                        <i class="fa fa-angle-up fa-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse show ec-cardCollapse" id="configStatus">
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="">
+                                            <label>{{ 'postcarrier.admin.config.last_registration_date'|trans }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                    {% if last_registration_date is null %}
+                                        <font color="red" style="font-weight: bold;">無料プランですぐに利用できます。右下の「登録」ボタンを今すぐクリック！！</font><br><br>
+                                        無料プランと導入手順については<a href="https://www.postcarrier.jp/plan/free.html" target="_blank">こちら</a>をご参照ください。<br>
+                                        有料プランをご契約予定の方も、はじめに無料プランでの登録と動作確認をお願いいたします。
+                                    {% else %}
+                                        {% if last_registration_mode == 1 %}テストモード{% else %}本番モード{% endif %}&nbsp;で&nbsp;{{ last_registration_date|date("Y/m/d H:i") }}&nbsp;に登録済
+                                    {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.effective_count'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.effective_count'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <span id="post_carrier_address_count">
+                                        {% if address_count is null %}
+                                            --
+                                        {% else %}
+                                            {{ address_count|number_format }}
+                                        {% endif %}
+                                        </span>&nbsp;件
+                                        (最終更新日:<span id="post_carrier_address_count_update_date">
+                                        {% if address_count_update_date is null %}
+                                            --
+                                        {% else %}
+                                            {{ address_count_update_date|date('Y/m/d H:i') }}
+                                        {% endif %}
+                                        </span>)
+                                        {% if last_registration_date is not null %}
+                                            &nbsp;&nbsp;<button type="button" name="post_carrier_update_address_count" id="post_carrier_update_address_count" class="btn btn-primary btn-xs">更新</button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                        <span class="card-title">{{ 'postcarrier.admin.config.config_title'|trans }}</span>
+                                        {# <i class="fa fa-question-circle fa-lg ml-1"></i> #}
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <a data-toggle="collapse" href="#basicConfig" aria-expanded="false"
+                                       aria-controls="basicConfig">
+                                        <i class="fa fa-angle-up fa-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse show ec-cardCollapse" id="basicConfig">
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.disable_check'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.disable_check'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.disable_check) }}
+                                        {{ form_errors(form.disable_check) }}
+                                        <div style="margin-top:10px;margin-bottom:10px;">
+                                           <span class="help-block"><font color="red" style="font-weight: bold;">本番環境では、本番モードを選択してください。</font></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.server_url'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.server_url'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.server_url) }}
+                                        {{ form_errors(form.server_url) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.shop_id'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.shop_id'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.shop_id) }}
+                                        {{ form_errors(form.shop_id) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.shop_pass'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.shop_pass'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.shop_pass) }}
+                                        {{ form_errors(form.shop_pass) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.click_ssl_url'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.click_ssl_url'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.click_ssl_url) }}
+                                        {{ form_errors(form.click_ssl_url) }}
+                                        <div style="margin-top:10px;">
+                                            パス部分の最後"/postcarrier"は変更できません。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.request_data_url'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.request_data_url'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.request_data_url) }}
+                                        {{ form_errors(form.request_data_url) }}
+                                        <div style="margin-top:10px;">
+                                            弊社サーバーからリクエスト受付URLにアクセスできる必要があります。<br>
+                                            下記IPアドレスからのアクセスを許可してください。<br>
+                                            133.242.117.192/26<br><br>
+                                            パス部分の最後"/postcarrier"は変更できません。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.module_data_url'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.module_data_url'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.module_data_url) }}
+                                        {{ form_errors(form.module_data_url) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.errors_to'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.errors_to'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                            <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.errors_to) }}
+                                        {{ form_errors(form.errors_to) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.basic_auth_user'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.basic_auth_user'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.basic_auth_user) }}
+                                        {{ form_errors(form.basic_auth_user) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'postcarrier.config.tooltip.basic_auth_pass'|trans }}">
+                                            <label>{{ 'postcarrier.admin.config.basic_auth_pass'|trans }}</label>
+                                            <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.basic_auth_pass) }}
+                                        {{ form_errors(form.basic_auth_pass) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink" href="{{ url('admin_store_plugin') }}"><i class="fa fa-backward" aria-hidden="true"></i>
+                                <span>{{ 'postcarrier.admin.config.conversion.back'|trans }}</span></a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5" type="submit">{{ 'postcarrier.admin.config.conversion.save'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% if qdForm.qd_type.vars.data == constant('Plugin\\QuantityDiscount\\Entity\\QdProductClass::QD_TYPE_RATE') %}
+    {% set qd_price = 'd-none' %}
+    {% set qd_rate = '' %}
+{% else %}
+    {% set qd_price = '' %}
+    {% set qd_rate = 'd-none' %}
+{% endif %}
+<div class="qd_row_{{ key1 }}{% if qdForm.del_flg.vars.data == 1 %} d-none{% endif %}" id="qd_row_{{ key1 }}_{{ key2 }}" data-key2="{{ key2 }}">
+<div class="form-row mb-1">
+    <div class="col col-xl-4">
+        {{ form_widget(qdForm.quantity) }}
+        {{ form_errors(qdForm.quantity) }}
+    </div>
+    <div class="col-10 col-xl-6">
+        <div class="{{ qd_price }}" id="qd_product_class_{{ key1 }}_{{ key2 }}_qd_price_view_area">
+            {{ form_widget(qdForm.price) }}
+            {{ form_errors(qdForm.price) }}
+        </div>
+        <div class="{{ qd_rate }}" id="qd_product_class_{{ key1 }}_{{ key2 }}_qd_rate_view_area">
+            <div class="input-group">
+                {{ form_widget(qdForm.rate) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                </div>
+                {{ form_errors(qdForm.rate) }}
+            </div>
+        </div>
+    </div>
+    <div class="mt-2 ml-2">
+        <a class="mt-1 qd_delete_btn"
+           data-target_key="{{ key1 }}_{{ key2 }}"
+           data-del_flg_id="{{ qdForm.del_flg.vars.id }}">
+            <i class="fa fa-close fa-lg"></i>
+        </a>
+    </div>
+    {{ form_widget(qdForm.qd_type) }}
+    {{ form_widget(qdForm.del_flg) }}
+</div>
+<div class="row">
+    <div class="col-xl-4"></div>
+    <div class="col-xl-8">
+        <div class="{{ qd_price }}" id="qd_product_class_{{ key1 }}_{{ key2 }}_qd_price_view_area_btn">
+            <div class="">
+                <a class="mt-1 qd_rate_change_btn"
+                   data-target_key="{{ key1 }}_{{ key2 }}"
+                   data-qd_type_id="{{ qdForm.qd_type.vars.id }}">
+                    <i class="fas fa-exchange-alt font-weight-bold"></i>
+                    <span class="font-weight-bold">{{ 'quantity_discount.admin.product_class_rate_change'|trans }}</span>
+                </a>
+            </div>
+        </div>
+        <div class="{{ qd_rate }}" id="qd_product_class_{{ key1 }}_{{ key2 }}_qd_rate_view_area_btn">
+            <div class="">
+                <a class="mt-1 qd_price_change_btn"
+                   data-target_key="{{ key1 }}_{{ key2 }}"
+                   data-qd_type_id="{{ qdForm.qd_type.vars.id }}">
+                    <i class="fas fa-exchange-alt font-weight-bold"></i>
+                    <span class="font-weight-bold">{{ 'quantity_discount.admin.product_class_price_change'|trans }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,224 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<style type="text/css">
+<!--
+#contents img {width:100%;}
+.cp_table *, .cp_table *:before, .cp_table *:after {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+}
+.cp_table {
+margin:1rem 0;
+width: 100%;
+border-collapse: collapse;
+border-right: 1px solid #dddddd;
+}
+.cp_table thead th {
+padding: 10px 15px;
+border-right: 1px solid #ffffff;
+border-bottom: 1px solid #ffffff;
+background: #dddddd;
+text-align: center;
+font-size:1.2rem;
+}
+.cp_table thead th:last-child {
+border-right: 1px solid #dddddd;
+}
+.cp_table tbody th {
+padding: 10px 15px;
+vertical-align: top;
+border-bottom: 1px solid #ffffff;
+background: #dddddd;
+white-space: nowrap;
+font-size:1.3rem;
+
+}
+.cp_table tbody tr:last-child th {
+border-bottom: 1px solid #dddddd;
+}
+.cp_table tbody td {
+padding: 10px 15px;
+vertical-align: top;
+border-bottom: 1px solid #dddddd;
+border-left: 1px solid #dddddd;
+background: #ffffff;
+width: 16%;
+text-align: center;
+}
+.pickup_item dl {padding:1rem 0;}
+@media only screen and (max-width:770px) {
+    .row { margin-right: 0px; margin-left: 0px; }
+    h1 {font-size:2.3rem; font-weight:500; padding-left:1rem;}
+    h3 {font-size:1.8rem; font-weight:500;}
+    .cp_table thead {
+	display: none;
+    }
+    .cp_table tbody th {
+	display: block;
+    }
+    .cp_table tbody td {
+	display: block;
+	padding: 10px 5px;
+    }
+    .cp_table tbody td::before {
+	/*font-weight: bold;*/
+	color: #888;
+	font-size: 0.9em;
+	float: right;/*上のth要素が長い場合ここを解除すると改行って見やすくなる*/
+	padding: 0.5em 1em 0.5em 0;
+	content: attr(label);
+    }
+    .cp_table tbody td p {
+	padding: 0.5em 1em 0 1em;
+	margin: 0;
+    }
+    .cp_table tbody td {
+    width: 100%;
+    }
+    p {padding:.5rem 0.5rem;}
+    .pickup_item dl {padding:1rem 0;}
+}
+--></style>
+
+<div id="contents">
+<h1 class="page-heading">マットケース対応表</h1>
+
+<div class="row">
+<div class="col-sm-6 col-xs-12">
+<div class="img"><img src="{{ asset('img/matbagchart/img01.jpg','user_data') }}"></div>
+</div>
+<div class="col-sm-6 col-xs-12 comment_area">
+<p>マットバッグを購入する際、忘れずチェックしたいのが「そのバッグにお持ちのヨガマットが入るかどうか」。<br>
+そこで、ヨガマットとマットバッグのマッチングを一覧化してみました。</p>
+<h3>ヨガマットと一緒に購入しておきたい、マットケース。</h3>
+<p>ヨガマットも揃えたし、いざヨガスタジオへ！…と、当日になって気付く「あれ、これどうやって持っていこう？･･･」
+そうなのです、細くて長いロール状のものをスマートに持ち運べるかばんは、そう無いもの。
+また、一度はなんとか持って出ても、2度目3度目となると、さすがに購入を検討したくなってくる。<br>
+ぜひここは、ヨガマットと一緒に揃えてしまいましょう！</p>
+</div>
+</div>
+
+<table class="cp_table">
+<thead>
+<tr>
+<th></th>
+<th><a href="/products/detail/21">メッシュバッグ</a></th>
+<th><a href="/products/detail/21">メッシュバッグ ポケット付</a></th>
+<th><a href="/products/detail/22">キャリーロープ ナチュラル</a></th>
+<th><a href="/products/detail/23">マットバッグ</a></th>
+
+<th><a href="/products/detail/34">コリーン・ウィルコックス ヨガケース</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th><a href="/products/detail/2">ヨガマット 3.5mm</a> / <a href="/products/detail/4">モリ《10cm》</a></th>
+<td label="メッシュバッグ"><p>&#9711;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#9711;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#9313;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#9313;</p></td>
+</tr>
+<tr>
+<th><a href="/products/detail/3">ヨガマット 6mm《12cm》</a></th>
+<td label="メッシュバッグ"><p>&#9711;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#9711;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#9711;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#9711;</p></td>
+</tr>
+<tr>
+<th><a href="/products/detail/8">ザ・ブラックマットII 6.5mm《14cm》</a></th>
+<td label="メッシュバッグ"><p>&#10005;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#10005;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#10005;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#9711;</p></td>
+</tr>
+<tr>
+<th><a href="/products/detail/7">プラネットサダナ 4.2mm《10cm》</a></th>
+<td label="メッシュバッグ"><p>&#10005;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#9711;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#10005;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#9711;</p></td>
+</tr>
+<tr>
+<th><a href="/products/detail/6">ピラティスマット 12mm《18cm》</a></th>
+<td label="メッシュバッグ"><p>&#10005;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#10005;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#10005;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#10005;</p></td>
+</tr>
+<tr>
+<th><a href="/products/detail/37">ヨガマットトロピカ《7cm》</a></th>
+<td label="メッシュバッグ"><p>&#9711;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#9711;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#9313;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#9313;</p></td>
+</tr>
+<tr>
+<th><a href="/products/detail/10">坐 メディテーション マット《8✕14.5cm》</a></th>
+<td label="メッシュバッグ"><p>&#10005;</p></td>
+<td label="メッシュバッグ ポケット付"><p>&#9711;</p></td>
+<td label="キャリーロープ ナチュラル"><p>&#9711;</p></td>
+<td label="マットバッグ"><p>&#9711;</p></td>
+
+<td label="コリーン・ウィルコックス ヨガケース"><p>&#9711;</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>※ &#9313; …2本まで入ります<br />
+※ 各マット名の後ろについている《●cm》は、マットを丸めたときの概算直径です。こちらを目安に、お持ちのマットを計測頂き、バッグに入る / 入らない、のご検討を頂ければ弊社以外から販売されているマットとの相性もご確認いただけるかと思います。また、ご参考までに掲載いたしているこの数値は、出荷時の・きっちり丸めた状態での計測値となっておりますのでご注意ください。</p>
+
+<div class="row" style="margin-top: 5em; padding-top: 2em; border-top: 2px solid #ccc;">
+    <div class="col-sm-4 col-xs-12" style="margin-bottom: 2em;">
+        <div class="pickup_item">
+        <a href="/products/detail/27">
+            <div class="item_photo"><img src="{{ asset('img/matbagchart/img02.jpg','user_data') }}"></div>
+            <dl>
+            <dt class="item_name text-warning">ヨガラグ</dt>
+            <dd class="item_comment">ヨガマットに重ねて敷くことで、グリップを高めたり、手汗による滑りを軽減するためのマットオプションです。</dd>
+            <dd class="more_link text-warning">read more</dd>
+            </dl>
+        </a>
+        </div>
+    </div>
+    <div class="col-sm-4 col-xs-12" style="margin-bottom: 2em;">
+        <div class="pickup_item">
+            <a href="/products/list?category_id=3">
+            <div class="item_photo"><img src="{{ asset('img/matbagchart/img03.jpg','user_data') }}"></div>
+            <dl>
+            <dt class="item_name text-warning">ヨガマット ケース</dt>
+            <dd class="item_comment">買ってみたら手持ちのマットが入らない・・・そんなことの無いよう、ヨガマットと一緒に揃えてしまいたい。</dd>
+            <dd class="more_link text-warning">read more</dd>
+            </dl>
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-4 col-xs-12" style="margin-bottom: 2em;">
+        <div class="pickup_item">
+        <a href="/user_data/specdetail#headding_mainte">
+            <div class="item_photo"><img src="{{ asset('img/matbagchart/img04.jpg','user_data') }}"></div>
+        <dl>
+        <dt class="item_name text-warning">洗い方</dt>
+        <dd class="item_comment">ヨガマットって洗えるの？どうやって？そんな疑問にお答えします。</dd>
+        <dd class="more_link text-warning">read more</dd>
+        </dl>
+        </a>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

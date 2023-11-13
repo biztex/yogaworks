@@ -1,0 +1,208 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<link rel="stylesheet" href="../html/user_data/assets/css/pages_sf.css">
+<style type="text/css">
+<!--
+.ec-layoutRole__header {background:#fff;}
+.ec-layoutRole {background:#b4d9ac;}
+.page-kv {background-image:url({{ asset('img/trialclass2023/tt_trialclass.png','user_data') }}); 
+background-size:100%; background-repeat:no-repeat; padding:0 120px; margin:10px 15px;}
+.inst_inner {padding:0 120px; margin:10px 15px;}
+.inst_inner img {margin:10px 0;}
+
+@media only screen and (max-width: 450px) {
+    .page-kv {background-image:url(../html/user_data/img/trialclass2023/tt_trialclass_sp.png); 
+    padding:0 15px; margin:10px 0;}
+    .inst_inner {padding:0; }
+}
+--></style>
+
+<main>
+	<article>
+		<section class="head">
+		<div class="page-kv">
+	        <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/pc01.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/sp01.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/sp01.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/pc01.png','user_data') }} 2000w" width="100%" alt="おすすめアイテム">
+            </picture>
+            
+            <a href="https://page.line.me/029sejwt?openQrModal=true">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/pc02.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/sp02.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/sp02.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/pc02.png','user_data') }} 2000w" width="100%" alt="OFFクーポン">
+            </picture>
+            </a>
+            
+            <!--<a href="https://www.yogaworks.jp/products/detail/193">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/pc03.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/sp03.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/sp03.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/pc03.png','user_data') }} 2000w" width="100%" alt="大注目アイテム">
+            </picture>
+			</a>-->
+        </div>
+		</section>
+		
+		<section class="instructors">
+		<div class="inst_inner">
+	        <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/0916.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/0916sp.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/0916sp.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/0916.png','user_data') }} 2000w" width="100%" alt="9月16日">
+            </picture>
+            
+            <a href="https://www.yogaworks.jp/products/detail/155">
+			<picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst16_01.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp16_01.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp16_01.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst16_01.png','user_data') }} 2000w" width="100%" alt="inst16_01">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/17">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst16_02.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp16_02.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp16_02.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst16_02.png','user_data') }} 2000w" width="100%" alt="inst16_02">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/16">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst16_03.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp16_03.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp16_03.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst16_03.png','user_data') }} 2000w" width="100%" alt="inst16_03">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/12">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst16_04.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp16_04.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp16_04.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst16_04.png','user_data') }} 2000w" width="100%" alt="inst16_04">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/3">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst16_05.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp16_05.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp16_05.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst16_05.png','user_data') }} 2000w" width="100%" alt="inst16_05">
+            </picture>
+			</a>
+            
+			
+			<picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/0917.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/0917sp.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/0917sp.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/0917png','user_data') }} 2000w" width="100%" alt="9月17日">
+            </picture>
+
+			<a href="https://www.yogaworks.jp/products/detail/12">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst17_01.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp17_01.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp17_01.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst17_01.png','user_data') }} 2000w" width="100%" alt="inst17_01">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/155">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst17_02.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp17_02.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp17_02.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst17_02.png','user_data') }} 2000w" width="100%" alt="inst17_02">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/2">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst17_03.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp17_03.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp17_03.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst17_03.png','user_data') }} 2000w" width="100%" alt="inst17_03">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/6">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst17_04.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp17_04.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp17_04.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst17_04.png','user_data') }} 2000w" width="100%" alt="inst17_04">
+            </picture>
+			</a>
+            
+            <a href="https://www.yogaworks.jp/products/detail/16">
+			<picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst17_05.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp17_05.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp17_05.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst17_05.png','user_data') }} 2000w" width="100%" alt="inst17_05">
+            </picture>
+			</a>
+            
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/0918.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/0918sp.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/0918sp.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/0918.png','user_data') }} 2000w" width="100%" alt="9月18日">
+            </picture>
+            
+            <a href="https://www.yogaworks.jp/products/detail/6">
+			<picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst18_01.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp18_01.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp18_01.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst18_01.png','user_data') }} 2000w" width="100%" alt="inst18_01">
+            </picture>
+			</a>
+            
+            <a href="https://www.yogaworks.jp/products/detail/5">
+			<picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst18_02.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp18_02.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp18_02.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst18_02.png','user_data') }} 2000w" width="100%" alt="inst17_02">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/14">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst18_03.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp18_03.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp18_03.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst18_03.png','user_data') }} 2000w" width="100%" alt="inst18_03">
+            </picture>
+			</a>
+            
+			<a href="https://www.yogaworks.jp/products/detail/16">
+            <picture>
+            <source media="(min-width:640px)" srcset="{{ asset('img/trialclass2023/inst18_04.png','user_data') }} 2000w">
+            <source media="(min-width:320px)" srcset="{{ asset('img/trialclass2023/inst-sp18_04.png','user_data') }} 870w">
+            <img srcset="{{ asset('img/trialclass2023/inst-sp18_04.png','user_data') }} 870w, 
+            {{ asset('img/trialclass2023/inst18_04.png','user_data') }} 2000w" width="100%" alt="inst18_04">
+            </picture>
+			</a>
+            
+        </div>
+		</section>
+
+	</article>
+</main>
+
+{% endblock %}

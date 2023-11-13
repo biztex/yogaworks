@@ -1,0 +1,54 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set Categories = repository('Eccube\\Entity\\Category').getList() %}
+
+{% macro tree(Category) %}
+    {% from _self import tree %}
+    <a href="{{ url('product_list') }}?category_id={{ Category.id }}">
+        {{ Category.name }}
+    </a>
+    {% if Category.children|length > 0 %}
+        <ul>
+            {% for ChildCategory in Category.children %}
+                <li>
+                    {{ tree(ChildCategory) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{# @see https://github.com/bolt/bolt/pull/2388 #}
+{% from _self import tree %}
+
+<div class="ec-headerCategoryArea_sp">
+
+    <div class="inner_catbox">
+        <div class="catbox"><a href="/products/list?category_id=11">
+            <img src="{{ asset('assets/img/common/ic_menu_new.png') }}" alt="新発売"></a>
+            新発売</div>
+        <div class="catbox"><a href="/products/list?category_id=9">
+            <img src="{{ asset('assets/img/common/ic_menu_peanuts.png') }}" alt="ピーナッツコラボ"></a>
+            ピーナッツ<br>コラボ</div>
+        <div class="catbox"><a href="/products/list?category_id=1">
+            <img src="{{ asset('assets/img/common/ic_menu_mat.png') }}" alt="マット/ラグ"></a>
+            マット/ラグ</div>
+        <div class="catbox"><a href="/products/list?category_id=2">
+            <img src="{{ asset('assets/img/common/ic_menu_props.png') }}" alt="プロップス"></a>
+            プロップス</div>
+        <div class="catbox"><a href="/products/list?category_id=3">
+            <img src="{{ asset('assets/img/common/ic_menu_matcase.png') }}" alt="ケース"></a>
+            ケース</div>
+        <div class="catbox"><a href="/products/list?category_id=4">
+            <img src="{{ asset('assets/img/common/ic_menu_matcare.png') }}" alt="雑貨"></a>
+            雑貨</div>
+
+</div>

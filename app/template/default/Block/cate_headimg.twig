@@ -1,0 +1,71 @@
+{% if app.request.query.get('category_id') == 9 %}
+{# Peanuts #}
+<div style="margin-bottom:5px; padding:0 10px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/category/top_peanuts3_ol_221024.jpg') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/category/top_peanuts3_ol870_221024.jpg') }} 870w">
+    <img srcset="{{ asset('assets/img/category/top_peanuts3_ol870_221024.jpg') }} 870w, {{ asset('assets/img/category/top_peanuts3_ol_221024.jpg') }} 2000w" width="100%" alt="Peanuts">
+    </picture>
+</div>
+
+{% elseif app.request.query.get('category_id') == 1 %}
+{# Yogamat Rag #}
+<div style="margin-bottom:5px; padding:0 10px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/category/cat_yogamat.jpg') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/category/cat_yogamat_sp.jpg') }} 870w">
+    <img srcset="{{ asset('assets/img/category/cat_yogamat_sp.jpg') }} 870w, {{ asset('assets/img/category/cat_yogamat.jpg') }} 2000w" width="100%" alt="Yogamat Rag">
+    </picture>
+</div>
+{% elseif app.request.query.get('category_id') == 2 %}
+{# Props #}
+<div style="margin-bottom:5px; padding:0 10px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/category/cat_props.jpg') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/category/cat_props_sp.jpg') }} 870w">
+    <img srcset="{{ asset('assets/img/category/cat_props_sp.jpg') }} 870w, {{ asset('assets/img/category/cat_props.jpg') }} 2000w" width="100%" alt="Props">
+    </picture>
+</div>
+{% elseif app.request.query.get('category_id') == 3 %}
+{# Matcase #}
+<div style="margin-bottom:5px; padding:0 10px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/category/cat_matcase.jpg') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/category/cat_matcase_sp.jpg') }} 870w">
+    <img srcset="{{ asset('assets/img/category/cat_matcase_sp.jpg') }} 870w, {{ asset('assets/img/category/cat_matcase.jpg') }} 2000w" width="100%" alt="Matcase">
+    </picture>
+</div>
+{% elseif app.request.query.get('category_id') == 4 %}
+{# Matcare #}
+<div style="margin-bottom:5px; padding:0 10px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/category/cat_matcare.jpg') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/category/cat_matcare_sp.jpg') }} 870w">
+    <img srcset="{{ asset('assets/img/category/cat_matcare_sp.jpg') }} 870w, {{ asset('assets/img/category/cat_matcare.jpg') }} 2000w" width="100%" alt="Matcare">
+    </picture>
+</div>
+{% elseif app.request.query.get('category_id') == 14 %}
+{# OUTLET #}
+<div style="margin-bottom:5px; padding:0 10px;">
+    <picture>
+    <source media="(min-width:640px)" srcset="{{ asset('assets/img/category/cat_outlet.png') }} 2000w">
+    <source media="(min-width:320px)" srcset="{{ asset('assets/img/category/cat_outlet_870.png') }} 870w">
+    <img srcset="{{ asset('assets/img/category/cat_outlet_870.png') }} 870w, {{ asset('assets/img/category/cat_outlet.png') }} 2000w" width="100%" alt="アウトレット">
+    </picture>
+    <div class="cat_head_topread">ヨガワークスでは、サステナブル（持続可能）な社会を目指すため、<br class="sp">
+    商品廃棄ゼロを目指した取り組みを行っています。<br>
+    検品により良品としては販売できなかったものの、機能性能的には問題ないアイテムを低価格でご提供することにより、<br>
+    国連が採択したSDGsの達成に協力すると共に「快適にヨガができる環境」を広げていきたいと考えています。
+    </div>
+    <div class="cat_head_img80"><img src="{{ asset('img/outlet/sdgs.png','user_data') }}"></div>
+    <div class="cat_head_img50"><img src="{{ asset('img/outlet/outlet_taishou.png','user_data') }}"></div>
+    <div class="cat_head_img80"><img src="{{ asset('img/outlet/why.png','user_data') }}"></div>
+    <p>アウトレット対象商品は、パッケージや表面にキズのある商品・サイズや色味が基準と異なる商品、取り扱い中止品などが対象となります。
+    良品として正規販売できないため低価格でのお届けとなりますが、ご利用いただく上での機能面では問題のない商品となります。<br>
+    <br>
+    ※アウトレット対象商品については原則として返品・交換の対象外となります。ご了承いただいた上でのご購入をお願いいたします。<br>
+    ※取扱終了予定商品のため、当サイト限定でのアウトレット価格となります。商品は良品と同じものです。<br>
+    <span style="color:red;">※アウトレット商品は各種クーポン対象外となりますのでご了承ください。</span></p>
+</div>
+{% else %}
+{% endif %}

@@ -1,0 +1,120 @@
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['store', 'plugin', 'plugin_list'] %}
+
+{% block title %}MailTemplate4{% endblock %}
+{% block sub_title %}プラグイン一覧{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}{% endblock stylesheet %}
+
+{% block javascript %}
+<script>
+    $('#btn_add_template').click(function(e){
+    var name = $('#template_name').val();
+    var subject = $('#template_subject').val();
+        if(name==''){
+            alert('テンプレートの名前を入力してください。');
+            return;
+        }
+        if(!confirm('テンプレートを追加しますか？')) return;
+
+        if(subject=='') subject = name;
+        $.ajax({
+            type: 'POST',
+            dataType: 'html',
+            data: {
+                'name' : name,
+                'subject' : subject,
+            },
+            url: '{{ url('mail_template4_admin_config_add') }}',
+            success: function(data) {
+                if(data=='ok'){
+                    $('form').submit();
+                }
+
+            },
+            error: function() {
+                alert('search product failed.');
+            }
+        });
+
+    });
+</script>
+{% endblock %}
+
+
+{% block main %}
+    <form role="form" method="post">
+
+        {{ form_widget(form._token) }}
+
+        <div class="c-contentsArea__cols">
+            <div class="c-contentsArea__primaryCol">
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header"><span>設定</span></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>name</th>
+                                    <th>file_name</th>
+                                    <th>mail_subject</th>
+                                    <th></th>
+                                </tr>
+                                {% for MailTemplate in MailTemplates %}
+                                    <tr>
+                                        <td>{{ MailTemplate.Id }}</td>
+                                        <td>{{ MailTemplate.Name }}</td>
+                                        <td>{{ MailTemplate.FileName }}</td>
+                                        <td>{{ MailTemplate.MailSubject }}</td>
+                                        <td>{% if MailTemplate.Id>8 %}
+{#                                                <input type="button" id="btn_delete_template" class="btn btn-ec-regular px-4 " data-style="expand-right" value="新規作成">#}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td></td>
+                                    <td><input id="template_name" type="text" class="form-control" /></td>
+                                    <td></td>
+                                    <td><input id="template_subject" type="text" class="form-control" /></td>
+                                    <td>
+                                        <input type="button" id="btn_add_template" class="btn btn-ec-regular px-4 " data-style="expand-right" value="新規作成">
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink"
+                               href="{{ url('admin_store_plugin') }}">
+                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                <span>プラグイン一覧</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5"
+                                        type="submit">登録</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

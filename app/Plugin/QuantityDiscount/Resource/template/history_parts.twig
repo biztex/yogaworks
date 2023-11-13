@@ -1,0 +1,59 @@
+{% set shipping_id = orderItem.Shipping.id %}
+{% set product_class_id = orderItem.ProductClass.id %}
+{% set key = shipping_id~'-'~product_class_id %}
+{% set isModeNormal = is_qd_mode_normal() %}
+{% set isDiscount = is_quantity_discount(orderItem) %}
+
+{% if qdIndex is defined %}
+    {% set suffix = '_'~qdIndex %}
+{% else %}
+    {% set suffix = '_d_'~key %}
+{% endif %}
+
+{# 履歴判定 #}
+{% if QuantityDiscounts|length == 0 %}
+    {#まとめ買い値引レコードなし#}
+    {% if isModeNormal == false %}
+        {#直接値引#}
+        {% if isDiscount %}
+            {% set qd_price = qd_product_price_inc_tax(orderItem, false) %}
+            {% if orderItem.product and orderItem.price_inc_tax == qd_price %}
+                <p id="replace_quantity_discount_history{{ suffix }}"
+                    class="ec-color-accent">{{ 'quantity_discount.front.quantity_discount_direct_enable'|trans }}</p>
+            {% else %}
+                <p id="replace_quantity_discount_history{{ suffix }}"
+                   class="ec-color-accent">{{ '【現在価格】'|trans }}{{ qd_price|price }}</p>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        {% if isDiscount %}
+            {% set now_discount_price = qd_discount_price_inc_tax(orderItem) %}
+            <p id="quantity_discount_history{{ suffix }}" class="ec-color-accent">
+                {{ 'quantity_discount.front.now_discount'|trans({'%discount%': now_discount_price}) }}</p>
+        {% endif %}
+    {% endif %}
+{% else %}
+    {#まとめ買いレコードあり#}
+    {% if QuantityDiscounts[key] is defined %}
+        <p id="quantity_discount_history{{ suffix }}">{{ 'quantity_discount.front.quantity_discount_enabled'|trans({'%discount%': QuantityDiscounts[key]|number_format }) }}</p>
+        {% if isModeNormal == false %}
+            {% if isDiscount %}
+                {% set qd_price = qd_product_price_inc_tax(orderItem, false) %}
+                {% if orderItem.product and orderItem.price_inc_tax != qd_price %}
+                    <p id="replace_quantity_discount_history{{ suffix }}"
+                       class="ec-color-accent">{{ '【現在価格】'|trans }}{{ qd_price|price }}</p>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            {% if isDiscount %}
+                {% set now_discount_price = qd_discount_price_inc_tax(orderItem, false) %}
+                {% set now_discount_price_view = qd_discount_price_inc_tax(orderItem) %}
+                {% if QuantityDiscounts[key] != now_discount_price %}
+                    {#まとめ買い値引価格が変わっている場合#}
+                    <p id="replace_quantity_discount_history{{ suffix }}"
+                       class="ec-color-accent">{{ 'quantity_discount.front.now_discount'|trans({'%discount%': now_discount_price_view}) }}</p>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}

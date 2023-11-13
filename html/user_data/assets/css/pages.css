@@ -1,0 +1,188 @@
+/* SPECIAL PAGE用 CSS */
+
+
+/* COMMON */
+img {width:100%;}
+a img {
+    display: block;
+}
+
+a:hover img {
+    opacity: .6;
+    -webkit-opacity: .6;
+    -moz-opacity: .6;
+    filter: alpha(opacity=60);
+    /* IE lt 8 */
+    -ms-filter: "alpha(opacity=60)";
+    /* IE 8 */
+    -webkit-transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -ms-transition: opacity .5s ease-out;
+    transition: opacity .5s ease-out;
+}
+
+
+/* winter_item2022 */
+.read_font {
+    font-family: fot-tsukubrdgothic-std, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    }							
+   
+    .maincontent h1 {text-align:center; font-family: fot-tsukubrdgothic-std, sans-serif;
+    font-weight: 400; font-style: normal; margin:4rem 0 2rem;}
+    
+    .maincontent h2 {text-align:center; font-family: fot-tsukubrdgothic-std, sans-serif;
+        font-weight: 400; font-size:2.4rem; line-height:1.6; font-style: normal; margin:4rem 0 2rem;}
+
+    .maincontent h3 {text-align:center; font-family: fot-tsukubrdgothic-std, sans-serif;
+        font-weight: bold; font-size:2rem; line-height:1.6; margin:4rem 0 2rem;}
+
+    .top_copy { padding:3rem 3rem 4rem; font-size: 18px; color: #333; line-height:1.6; width:60%; margin:0 auto; }
+    
+    .sub_copy { font-size: 20px; font-weight:bold; font-family: fot-tsukubrdgothic-std, sans-serif; max-width:700px; margin:0 auto 20px;  
+    text-align:center; }
+    
+    .sub_copy02 { font-size: 20px; font-weight:bold; font-family: fot-tsukubrdgothic-std, sans-serif; max-width:700px; margin:0 auto 20px; }
+
+    .maincontent { clear: both; overflow: hidden; }
+
+    .maincontent .inner {width:800px; margin:0 auto; overflow: hidden; padding:30px 0 50px;}
+
+    .maincontent .inner_left-img {width:47%; float:left; padding:50px 40px 0 0; }
+    .maincontent .inner_left-img2 {width:65%; float:left; padding:0; }
+    .maincontent .inner_left-txt {width:53%; float:left; position: relative; }
+    
+    .pd_info { font-size: 18px; font-weight:bold; font-family: fot-tsukubrdgothic-std, sans-serif; max-width:700px; margin:30px auto 20px;}
+
+
+    .maincontent .inner_right-img { width:47%; float:left; position: relative;}
+    .maincontent .inner_right-txt { width:53%; float:left; padding-left:40px; margin:0 0 100px 0;}
+    
+    .maincontent .inner02 .inner_left-img {width:57%; float:left; padding:0 40px 0 0; margin-top:30px;}
+
+    .maincontent .inner02 .inner_left-txt {width:43%; float:left; position: relative; overflow: hidden; margin-bottom:30px;}
+
+    .maincontent .inner03 .inner_left-img {width:50%; float:left; padding:0; margin-top:30px;}
+
+    .maincontent .inner03 .inner_left-txt {width:46%; float:left; position: relative; overflow: hidden; margin:0 0 80px 4%;}
+
+    .maincontent ol {width:800px; margin:0 auto; padding:20px 0 0; counter-reset: my-counter;}
+    .maincontent ol li {font-weight:bold; font-family: fot-tsukubrdgothic-std, sans-serif;font-size: 16px;position: relative; padding-left:22px;}
+    .maincontent ol li:before {
+        content: counter(my-counter);
+        counter-increment: my-counter;
+        border: 1px solid #333;
+        border-radius: 50%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 16px;
+        width: 16px;
+        font-size: 85%;
+        line-height: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 4px;
+      }
+    .maincontent .gallery img {width:48%; float:left; margin:0 1% 1%;}
+    .maincontent .pd_detail {clear:both; font-size:13px; }
+    .maincontent .product_info {margin:10px 0;}
+    
+    .img_center {max-width:680px; margin:0 auto 50px;}
+    .img_center60 {clear:both; max-width:500px; margin:0 auto 50px;}
+
+    .img_center80p {width:80%; margin:0 auto 20px;}
+    .img_center60p {width:60%; margin:50px auto;}
+    .img_center50p {width:50%; margin:0 auto 50px;}
+    .img_center40p {width:40%; margin:0 auto 50px;}
+    .img_center30p {width:30%; margin:0 auto 50px;}
+    .img_center20p {width:20%; margin:0 0 50px;}
+
+    .img_right40p {width:40%; float:right; margin:0 0 50px;}
+
+    .dot {
+        clear:both;
+        width:50%;
+        margin:0 auto;
+        background-color: #fff;
+  background-image:
+    radial-gradient(#909090 30%, transparent 0%);
+  background-size: 20px 20px;
+    }
+    
+    .maincontent ul.env { width: 760px; margin: 0 auto; padding:0;}
+    
+    .maincontent ul.env li { list-style: none;
+    float: left;
+    margin: 15px 2.5% 50px;
+    text-align: center;
+    width: 27%; }
+    .maincontent ul.env .item_txt span {font-weight: bold;}
+    .maincontent ul.env .item_txt { margin: 15px 0%; font-size:13px; }
+    
+    
+        @media only screen and (max-width:768px) {
+            
+        }
+    
+        @media only screen and (max-width:414px) {
+            .maincontent h2 {font-size:1.8rem; margin:0 10px;}
+            .maincontent h3 {
+                text-align: center;
+                font-size: 1.8rem;
+                margin: 4rem 10px 2rem;
+            }
+
+            .sub_copy { font-size: 18px; margin:30px 10px;}
+            .sub_copy02 { font-size: 16px; margin: 0 10px 20px; }
+            .maincontent .inner {
+                width:100%;
+                margin: 0 auto;
+                overflow: hidden;
+                padding: 15px 0;
+            }
+            .maincontent .inner_left-img,
+            .maincontent .inner_left-txt,
+            .maincontent .inner02 .inner_left-img,
+            .maincontent .inner02 .inner_left-txt,
+            .maincontent .inner_right-txt,
+            .maincontent .inner_right-img,
+            .maincontent .inner_left-img,
+            .maincontent .inner03 .inner_left-img,
+            .maincontent .inner03 .inner_left-txt {
+                width: 100%;
+                float: none;
+                padding: 0 10px 30px;
+                margin:0;
+            }
+
+            .pd_info {
+                font-size: 16px;
+                font-weight: bold;
+                font-family: fot-tsukubrdgothic-std, sans-serif;
+                max-width: 700px;
+                margin: 30px auto 20px;
+            }
+            .img_center,
+            .img_center60 {
+                width:auto;
+                margin: 0 10px 30px;
+            }
+            .maincontent ol {width:auto; margin:0 10px; padding:20px 0 0;}
+            .maincontent ol li {font-size: 14px; padding-left:18px; list-style:none;}
+            .maincontent ol li:before { height: 14px; width: 14px; }
+
+            .img_center40p {width:80%; margin:0 auto 50px;}
+
+            .img_right40p {
+                width: 50%;
+                margin: 0 10px 50px 0;
+            }
+            .dot {
+                width:70%;
+                margin:0 auto 50px;
+            }
+        }

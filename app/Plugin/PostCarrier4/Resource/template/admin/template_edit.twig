@@ -1,0 +1,234 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_template'] %}
+
+{% block title %}{{ 'postcarrier.template.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script>
+        $(function(){
+            $('input[name=post_carrier_template_edit\\[d__kind\\]]').on("change", function(){
+                postcarrierSelectKind();
+            });
+
+            $('input[name=post_carrier_template_edit\\[d__mail_method\\]]').on("change", function(){
+                postcarrierSelectMailMethod();
+            });
+
+            postcarrierSelectMailMethod();
+
+            $('#post_carrier_insert_to_subject').on('click', function() {
+                var item = $('#post_carrier_template_edit_d__varList').val();
+                if (item) {
+                    $('#post_carrier_template_edit_d__subject').insertAtCaret(item);
+                }
+            });
+            $('#post_carrier_insert_to_body').on('click', function() {
+                var item = $('#post_carrier_template_edit_d__varList').val();
+                if (item) {
+                    $('#post_carrier_template_edit_d__body').insertAtCaret(item);
+                }
+            });
+            $('#post_carrier_insert_to_htmlBody').on('click', function() {
+                var item = $('#post_carrier_template_edit_d__varList2').val();
+                if (item) {
+                    $('#post_carrier_template_edit_d__htmlBody').insertAtCaret(item);
+                }
+            });
+        });
+
+        function postcarrierSelectMailMethod() {
+            var node_htmlBody = $("#post_carrier_form_htmlBody");
+            var mail_method = $('input[name=post_carrier_template_edit\\[d__mail_method\\]]:checked').val();
+            if (mail_method == 1) {
+                node_htmlBody.show();
+            } else {
+                node_htmlBody.hide();
+            }
+        }
+
+        function postcarrierSelectKind() {
+            $('#mode').val('kind');
+            document.content_page_form.submit();
+        }
+
+        $.fn.extend({
+            insertAtCaret: function(v) {
+                var o = this.get(0);
+                o.focus();
+
+                if (!jQuery.browser) {
+                    jQuery.browser={ msie: ( navigator.appName == 'Microsoft Internet Explorer') ? true : false }
+                }
+
+                if (jQuery.browser.msie) {
+                    var r = document.selection.createRange();
+                    r.text = v;
+                    r.select();
+                } else {
+                    var s = o.value;
+                    var p = o.selectionStart;
+                    var np = p + v.length;
+                    o.value = s.substr(0, p) + v + s.substr(p);
+                    o.setSelectionRange(np, np);
+                }
+            }
+        });
+    </script>
+{% endblock javascript%}
+
+{% block main %}
+    <form role="form" name="content_page_form" id="content_page_form" method="post"
+          action="{{ url('plugin_post_carrier_template_commit', { id: template_id } ) }}">
+        {{ form_widget(form._token) }}
+        <input id="mode" type="hidden" name="mode" value="">
+        <div class="c-outsideBlock">
+            <div class="c-outsideBlock__contents">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span class="card-title">
+                                        {{ 'テンプレート編集'|trans }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mb-lg-5">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__kind.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__kind) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__mail_method.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__mail_method) }}
+                                {{ form_errors(form.d__mail_method) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__fromAddr.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__fromAddr) }}
+                                {{ form_errors(form.d__fromAddr) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__fromDisp.vars.label|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__fromDisp) }}
+                                {{ form_errors(form.d__fromDisp) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__subject.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__subject) }}
+                                {{ form_errors(form.d__subject) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__body.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__varList) }}
+                                {# {{ form_widget(form.d__varList_mail) }} #}
+                                <div style="margin: 8px">
+                                    <button id="post_carrier_insert_to_subject" class="btn btn-ec-regular" type="button">件名に差し込む</button>
+                                    <button id="post_carrier_insert_to_body" class="btn btn-ec-regular" type="button">本文に差し込む</button>
+                                </div>
+                                {{ form_widget(form.d__body, {'attr' : { 'rows' : 20 }}) }}
+                                {{ form_errors(form.d__body) }}
+                            </div>
+                        </div>
+                        <div class="row" id="post_carrier_form_htmlBody">
+                            <div class="col-3">
+                                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="Tooltip">
+                                    <span>{{ form.d__htmlBody.vars.label|trans }}</span>
+                                    <span class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                            </div>
+                            <div class="col mb-2">
+                                {{ form_widget(form.d__varList2) }}
+                                {# {{ form_widget(form.d__varList2_mail) }} #}
+                                <div style="margin: 8px">
+                                    <button id="post_carrier_insert_to_htmlBody" class="btn btn-ec-regular" type="button">本文に差し込む</button>
+                                </div>
+                                {{ form_widget(form.d__htmlBody, {'attr' : { 'rows' : 20 }}) }}
+                                {{ form_errors(form.d__htmlBody) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-conversionArea">
+            <div class="c-conversionArea__container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-6">
+                        <div class="c-conversionArea__leftBlockItem">
+                            <a class="c-baseLink" href="javascript:void(0)" onclick="window.history.back(-1);">
+                                <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.template.preview.btn_back'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-end">
+                            <div class="col-auto">
+                                <button class="btn btn-ec-conversion px-5" type="submit">
+                                    {{ 'postcarrier.template.btn_save'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

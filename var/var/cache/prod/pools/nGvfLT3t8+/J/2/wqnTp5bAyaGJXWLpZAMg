@@ -1,0 +1,32 @@
+<?php //Eccube%255CController%255CCartController%2523buystep
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/cart/buystep/{cart_key}',
+            ],
+            'name' => [
+                'cart_buystep',
+            ],
+            'requirements' => [
+                [
+                    'cart_key' => '[a-zA-Z0-9]+[_][\\x20-\\x7E]+',
+                ],
+            ],
+            'methods' => [
+                [
+                    'GET',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

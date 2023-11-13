@@ -1,0 +1,40 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved..
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+<div class="ec-topicRole">
+    <div class="ec-role">
+        <div class="ec-secHeading">
+            <span class="ec-secHeading__en">{{ 'TOPICS'|trans }}</span>
+            <span class="ec-secHeading__line"></span>
+            <span class="ec-secHeading__ja">{{ '特集'|trans }}</span>
+        </div>
+        <div class="ec-topicRole__list">
+            <div class="ec-topicRole__listItem">
+                <a href="https://my.ebook5.net/yogaworks/1HCO2f/" target="_blank">
+                    <img src="{{ asset('assets/img/top/bn-catalog2023.jpg') }}">
+                </a>
+                <p class="ec-topicRole__listItemTitle">{{ '2023 - 2024 New Catalog'|trans }}</p>
+            </div>
+            <div class="ec-topicRole__listItem">
+                <a href="{{ url('product_list') }}?category_id=14">
+                    <img src="{{ asset('img/outlet/bn_outlet80.png','user_data') }}">
+                </a>
+                <p class="ec-topicRole__listItemTitle">{{ 'MAX 80% OFF! アウトレット特集'|trans }}</p>
+            </div>
+            <div class="ec-topicRole__listItem">
+                <a href="{{ url('product_list') }}?category_id=9">
+                    <img src="{{ asset('assets/img/top/top_peanuts3sale_bn.jpg') }}">
+                </a>
+                <p class="ec-topicRole__listItemTitle">{{ 'PEANUTSコラボアイテムSALE中！'|trans }}</p>
+            </div>
+        </div>
+    </div>
+</div>

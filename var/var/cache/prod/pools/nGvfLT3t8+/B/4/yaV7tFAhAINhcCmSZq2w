@@ -1,0 +1,41 @@
+<?php //Eccube%255CEntity%255CCartItem%2524Cart
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ManyToOne'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ManyToOne')),
+        clone ($p['Doctrine\\ORM\\Mapping\\JoinColumns'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\JoinColumns')),
+        clone ($p['Doctrine\\ORM\\Mapping\\JoinColumn'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\JoinColumn')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'targetEntity' => [
+                'Eccube\\Entity\\Cart',
+            ],
+            'cascade' => [
+                [
+                    'persist',
+                ],
+            ],
+            'inversedBy' => [
+                'CartItems',
+            ],
+            'value' => [
+                1 => [
+                    $o[2],
+                ],
+            ],
+            'name' => [
+                2 => 'cart_id',
+            ],
+            'onDelete' => [
+                2 => 'CASCADE',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+); }];

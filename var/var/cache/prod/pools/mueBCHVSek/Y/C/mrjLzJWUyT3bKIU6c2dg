@@ -1,0 +1,3 @@
+1652226705
+eccube_entity_master_orderstatus%255Beccube_entity_master_orderstatus_eccube.entity.master.orderstatus_6%255D%255B1%255D
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:4:{s:19:"display_order_count";b:1;s:2:"id";i:6;s:4:"name";s:12:"入金済み";s:7:"sort_no";i:1;}s:5:"class";s:32:"Eccube\Entity\Master\OrderStatus";}

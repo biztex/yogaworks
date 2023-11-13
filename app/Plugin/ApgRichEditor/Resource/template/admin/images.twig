@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title>elFinder 2.1.x source version with PHP connector</title>
+
+    <!-- Section CSS -->
+    <!-- jQuery UI (REQUIRED) -->
+    <link rel="stylesheet" type="text/css"
+          href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <!-- elFinder CSS (REQUIRED) -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('ApgRichEditor/assets/vendors/elFinder-2.1.59/css/elfinder.min.css','plugin') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('ApgRichEditor/assets/vendors/elFinder-2.1.59/css/theme.css','plugin') }}">
+
+    <!-- Section JavaScript -->
+    <!-- jQuery and jQuery UI (REQUIRED) -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<![endif]-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- elFinder JS (REQUIRED) -->
+    <script src="{{ asset('ApgRichEditor/assets/vendors/elFinder-2.1.59/js/elfinder.min.js','plugin') }}"></script>
+
+    <!-- Extra contents editors (OPTIONAL) -->
+    <script src="{{ asset('ApgRichEditor/assets/vendors/elFinder-2.1.59/js/extras/editors.default.min.js','plugin') }}"></script>
+
+    <script src="{{ asset('ApgRichEditor/assets/vendors/elFinder-2.1.59/js/i18n/elfinder.ja.js','plugin') }}"></script>
+
+    <!-- elFinder initialization (REQUIRED) -->
+    <script type="text/javascript" charset="utf-8">
+        // Documentation for client options:
+        // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+        $(document).ready(function () {
+            var fileBrowserDialogue = {
+                init: function () {
+                },
+                submit: function (URL) {
+                    parent.tinymce.activeEditor.windowManager.getParams().setUrl(URL);
+                    var t = parent.tinymce.activeEditor.windowManager.windows[0];
+                    t.find('#src').fire('change');
+                    parent.tinymce.activeEditor.windowManager.close();
+                }
+            };
+            $('#elfinder').elfinder(
+                // 1st Arg - options
+                {
+                    cssAutoLoad: false,               // Disable CSS auto loading
+                    baseUrl: '{{ url('plugin_ApgRichEditor_images') }}',                    // Base URL to css/*, js/*
+                    url: '{{ url('plugin_ApgRichEditor_connect') }}' // connector URL (REQUIRED)
+                    , lang: 'ja'
+                    , getFileCallback: function (file) {
+                        fileBrowserDialogue.submit(file.url);
+                    }
+                    , uiOptions: {
+                        toolbar: [
+                            // toolbar configuration
+                            ['open'],
+                            ['back', 'forward'],
+                            ['reload'],
+                            ['home', 'up'],
+                            ['mkdir', 'mkfile', 'upload'],
+                            ['info'],
+                            ['quicklook'],
+                            ['copy', 'cut', 'paste'],
+                            ['rm'],
+                            ['duplicate', 'rename', 'edit'],
+                            ['selectall', 'selectnone', 'selection'],
+                            ['search'],
+                            ['view', 'sort'],
+                            ['help']
+                        ]
+                    }
+                },
+                // 2nd Arg - before boot up function
+                function (fm, extraObj) {
+                    // `init` event callback function
+                    fm.bind('init', function () {
+                        // Optional for Japanese decoder "encoding-japanese.js"
+                        if (fm.lang === 'ja') {
+                            fm.loadScript(
+                                ['https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/1.0.29/encoding.min.js'],
+                                function () {
+                                    if (window.Encoding && Encoding.convert) {
+                                        fm.registRawStringDecoder(function (s) {
+                                            return Encoding.convert(s, {to: 'UNICODE', type: 'string'});
+                                        });
+                                    }
+                                },
+                                {loadType: 'tag'}
+                            );
+                        }
+                    });
+                    // Optional for set document.title dynamically.
+                    var title = document.title;
+                    fm.bind('open', function () {
+                        var path = '',
+                            cwd = fm.cwd();
+                        if (cwd) {
+                            path = fm.path(cwd.hash) || null;
+                        }
+                        document.title = path ? path + ':' + title : title;
+                    }).bind('destroy', function () {
+                        document.title = title;
+                    });
+                }
+            );
+        });
+    </script>
+</head>
+<body>
+
+<!-- Element where elFinder will be created (REQUIRED) -->
+<div id="elfinder"></div>
+
+</body>
+</html>

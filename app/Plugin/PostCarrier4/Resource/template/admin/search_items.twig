@@ -1,0 +1,61 @@
+{#
+This file is part of PostCarrier for EC-CUBE
+
+Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+
+http://www.iplogic.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+<ul class="list-inline">
+    {# 命名規約に従い不要な項目を除外 #}
+    {% for child in form.children if child.vars.name != '_token'
+                                     and child.vars.name != 'discriminator_type'
+                                     and child.vars.name != 'OrderItems'
+                                     and child.vars.name != 'OrderStopItems'
+                                     and not (child.vars.name starts with 'b__')
+                                     and not (child.vars.name starts with 'd__')
+                                     and child.vars.data is not empty %}
+        <li class="list-inline-item">
+            {%- if child.vars.name == 'ignore_permissions' -%}
+                {% if child.vars.choices is defined %}
+                    {% for choice in child.vars.choices %}
+                       {% if choice.data == child.vars.data %}
+                           <span class="font-weight-bold">{{ choice.label|trans }}</span>
+                       {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <span class="font-weight-bold">{{ child.vars.label|trans }}</span>
+                {% endif %}
+            {%- else -%}
+            <span class="font-weight-bold">{{ child.vars.label|trans }}:</span>
+            {%- if child.vars.data is iterable -%}
+                {%- for value in child.vars.value -%}
+                    {# ChoiceType -> multiple:true #}
+                    {%- for choice in child.vars.choices -%}
+                        {%- if choice is selectedchoice(value) -%}
+                            {{ choice.label|trans }}
+                        {%- endif %}
+                    {%- endfor -%}
+                    {{ not loop.last ? ',' }}
+                {%- endfor -%}
+            {%- elseif php_is_a(child.vars.data, '\DateTime') -%}
+                {{ child.vars.data|date_day }}
+            {%- else -%}
+                {# ChoiceType -> multiple:false #}
+                {%- if child.vars.choices is defined and child.vars.choices is not empty -%}
+                    {%- for choice in child.vars.choices -%}
+                        {%- if choice is selectedchoice(child.vars.value) -%}
+                            {{ choice.label|trans }}
+                        {%- endif %}
+                    {%- endfor -%}
+                {%- else -%}
+                    {{ child.vars.data }}
+                {%- endif-%}
+            {%- endif -%}
+
+            {%- endif -%}
+        </li>
+    {% endfor %}
+</ul>

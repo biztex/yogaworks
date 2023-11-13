@@ -1,0 +1,24 @@
+<script>
+    $(function () {
+
+        $('#classcategory_id1').change(function() {
+
+            $('[class^="qd-product_class_id_"]').css('font-weight', "");
+
+            let ProductClassVal = $('#ProductClass').val();
+            if(ProductClassVal != "") {
+                $('.qd-product_class_id_' + ProductClassVal).css('font-weight', "bold");
+            }
+        });
+
+        $('#classcategory_id2').change(function() {
+
+            $('[class^="qd-product_class_id_"]').css('font-weight', "");
+
+            let ProductClassVal = $('#ProductClass').val();
+            if(ProductClassVal != "") {
+                $('.qd-product_class_id_' + ProductClassVal).css('font-weight', "bold");
+            }
+        });
+    })
+</script>

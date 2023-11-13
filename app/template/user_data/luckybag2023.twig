@@ -1,0 +1,55 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<link rel="stylesheet" href="../html/user_data/assets/css/pages_sf.css">
+<main>
+	<article>
+		<section class="maincontent">
+		<h2>新しい年に向けて、ヨガをはじめた人にも、ヨガを深めたい人にもオススメ。<br>
+			プロのこだわり溢れるアイテムが揃った、数量限定のお得な福袋です！</h2>
+		
+		<div><img src="../html/user_data/img/luckybag2023/line01.png"></div>
+
+
+		<div class="inner">
+			<h3>自宅用にもプレゼント用にも！<br>
+				ヨガがもっと楽しくなる、<br>
+				PEANUTSアイテムの限定セット♪</h3>
+			<div class="itemlist">
+				<div class="items"><a href="{{ url('product_detail', {'id': '145'}) }}"><img src="../html/user_data/img/luckybag2023/item01.png" alt="【福袋】PEANUTSコラボ限定セット モーブ"></a></div>
+				<div class="items"><a href="{{ url('product_detail', {'id': '146'}) }}"><img src="../html/user_data/img/luckybag2023/item02.png" alt="【福袋】PEANUTSコラボ限定セット ミッドナイト"></a></div>
+				<div class="items"><a href="{{ url('product_detail', {'id': '147'}) }}"><img src="../html/user_data/img/luckybag2023/item03.png" alt="【福袋】PEANUTSコラボ限定セット グレイトープ"></a></div>
+			</div>
+
+			<h3>これだけあればOK！<br>
+				ヨガを始める必需品が揃った<br>
+				お得なスターターセット♪</h3>
+			<div class="itemlist">
+				<div class="items"><a href="{{ url('product_detail', {'id': '148'}) }}"><img src="../html/user_data/img/luckybag2023/item04.png" alt="【福袋】スターターセット ブルー"></a></div>
+				<div class="items"><a href="{{ url('product_detail', {'id': '149'}) }}"><img src="../html/user_data/img/luckybag2023/item05.png" alt="【福袋】スターターセット ピンク"></a></div>
+			</div>
+
+			<h3>リラックス系のヨガに最適！<br>
+				心地よい香りとプロップスが<br>
+				深いリラックスに導きます。</h3>
+			<div class="itemlist">
+				<div class="items"><a href="{{ url('product_detail', {'id': '150'}) }}"><img src="../html/user_data/img/luckybag2023/item06.png" alt="【福袋】リラックスヨガセット グレイ"></a></div>
+				<div class="items"><a href="{{ url('product_detail', {'id': '151'}) }}"><img src="../html/user_data/img/luckybag2023/item07.png" alt="【福袋】リラックスヨガセット パープル"></a></div>
+				
+			</div>
+
+			<h3>プロも認めた至極の一枚。<br>
+				憧れのブラックマットで<br>
+				ヨガをもっと深めよう！</h3>
+			<div class="itemlist">
+				<div class="items"><a href="{{ url('product_detail', {'id': '152'}) }}"><img src="../html/user_data/img/luckybag2023/item08.png"alt="【福袋】ザ・ブラックマットセット"></a></div>
+			</div>
+
+
+		</div>
+
+		</section>
+
+	</article>
+</main>
+{% endblock %}

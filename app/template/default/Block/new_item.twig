@@ -1,0 +1,50 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+<div class="ec-role">
+    <div class="ec-newItemRole">
+        <div class="ec-newItemRole__list">
+            <div class="ec-newItemRole__listItem">
+                <div class="ec-newItemRole__listItemHeading ec-secHeading--tandem">
+                    <span class="ec-secHeading__en">{{ 'NEW ITEM'|trans }}</span>
+                    <span class="ec-secHeading__line"></span>
+                    <span class="ec-secHeading__ja">{{ '新着商品'|trans }}</span>
+                    <a class="ec-inlineBtn--top" href="{{ url('product_list') }}">{{ 'more'|trans }}</a>
+                </div>
+            </div>
+            <div class="ec-newItemRole__listItem">
+                <a href="{{ url('product_detail', {'id': '6'}) }}">
+                    <img src="{{ asset('/html/upload/save_image/1104094059_6545931b0b9e5.jpg', 'save_image') }}">
+                    <p class="ec-newItemRole__listItemTitle">{{ 'ピラティスマット12mm チャイ'|trans }}</p>
+                    <p class="ec-newItemRole__listItemCaption">{{ 'もっちりふわっと触感でサポートする12mm厚。2023年秋の限定カラーが新登場'|trans }}</p>
+                    <p class="ec-newItemRole__listItemPrice">{{ '￥6,380'|trans }}</p>
+                </a>
+            </div>
+            <div class="ec-newItemRole__listItem">
+                <a href="{{ url('product_detail', {'id': '179'}) }}">
+                    <img src="{{ asset('/html/upload/save_image/0405181123_642d3b3b83398.jpg', 'save_image') }}">
+                    <p class="ec-newItemRole__listItemTitle">{{ 'サダナ・ナチュラル・ピュア 4mm ディープガーネット'|trans }}</p>
+                    <p class="ec-newItemRole__listItemCaption">{{ '100%天然ゴム。地球環境にも自分にもやさしい、憧れのポーズに近づけるハイクオリティマット。'|trans }}</p>
+                    <p class="ec-newItemRole__listItemPrice">{{ '￥10,780'|trans }}</p>
+                </a>
+            </div>
+            <div class="ec-newItemRole__listItem">
+                <a href="{{ url('product_detail', {'id': '6'}) }}">
+                    <img src="{{ asset('/html/upload/save_image/0920152201_63295c0961ef9.jpg', 'save_image') }}">
+                    <p class="ec-newItemRole__listItemTitle">{{ 'ピラティスマット12mm ミント'|trans }}</p>
+                    <p class="ec-newItemRole__listItemCaption">{{ 'もっちりふわっと触感でサポートする12mm厚。インテリアにも馴染む人気のニュアンスカラー'|trans }}</p>
+                    <p class="ec-newItemRole__listItemPrice">{{ '￥6,380'|trans }}</p>
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

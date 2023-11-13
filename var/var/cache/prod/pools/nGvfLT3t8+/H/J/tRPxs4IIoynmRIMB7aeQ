@@ -1,0 +1,22 @@
+<?php //Eccube%255CEntity%255CTag%2524ProductTag
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\OneToMany'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\OneToMany')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'mappedBy' => [
+                'Tag',
+            ],
+            'targetEntity' => [
+                'Eccube\\Entity\\ProductTag',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

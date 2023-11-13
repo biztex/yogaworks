@@ -1,0 +1,59 @@
+{#
+Plugin Name: JoolenPointsForMemberRegistration4
+
+Copyright(c) joolen inc. All Rights Reserved.
+
+https://www.joolen.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+{% block javascript %}
+    <script>
+        $(function () {
+            // MEMO: ポイント設定の末尾に「会員登録時付与ポイント」を追加する
+            $('#ex-shop-point').parent().parent().append($('#member_registration_point_form'))
+        });
+    </script>
+{% endblock %}
+
+{% if form.member_registration_point is defined  %}
+    <div id="member_registration_point_form" class="card rounded border-0 mb-4">
+        <div class="card-header"><span>{{ 'joolenpointsformemberregistration4.admin.setting.shop.option_member_registration_point'|trans }}</span></div>
+        <div id="member-registration-point" class="card-body">
+            {# ポイント #}
+            <div class="row">
+                <div class="col-3">
+                    <div class="d-inline-block" data-tooltip="true" data-placement="top">
+                        <span>{{ 'joolenpointsformemberregistration4.admin.setting.shop.member_registration_point'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    {{ form_widget(form.member_registration_point) }}
+                    {{ form_errors(form.member_registration_point) }}
+                </div>
+            </div>
+
+            {# 付与期間 #}
+            <div class="row">
+                <div class="col-3">
+                    <div class="d-inline-block" data-tooltip="true" data-placement="top">
+                        <span>{{ 'joolenpointsformemberregistration4.admin.setting.shop.member_registration_point_apply_date'|trans }}</span>
+                    </div>
+                </div>
+                <div class="form-row align-items-center col mb-2">
+                    <div class="col">
+                        {{ form_widget(form.apply_datetime_start) }}
+                        {{ form_errors(form.apply_datetime_start) }}
+                    </div>
+                    <div class="col-auto text-center">{{ 'admin.common.separator__range'|trans }}</div>
+                    <div class="col">
+                        {{ form_widget(form.apply_datetime_end) }}
+                        {{ form_errors(form.apply_datetime_end) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

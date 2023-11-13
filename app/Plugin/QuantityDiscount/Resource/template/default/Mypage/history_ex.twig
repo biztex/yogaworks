@@ -1,0 +1,44 @@
+{% set qdIndex = 0 %}
+{% set remessage = false %}
+{% set inmessage = false %}
+
+{% for Shipping in Order.Shippings %}
+    <div>
+        {% for orderItem in Shipping.productOrderItems %}
+            {{ include('@QuantityDiscount/history_parts.twig', {'orderItem': orderItem}, ignore_missing=true) }}
+
+            {% set isDiscount = is_quantity_discount(orderItem) %}
+            {% if isDiscount %}
+                {#まとめ買い値引#}
+                {% set key = Shipping.id~'-'~orderItem.ProductClass.id %}
+                {% if QuantityDiscounts[key] is defined %}
+                    {% set now_discount_price = qd_discount_price_inc_tax(orderItem, false) %}
+                    {% if QuantityDiscounts[key] != now_discount_price %}
+                        {% set inmessage = true %}
+                    {% endif %}
+                {% else %}
+                    {% set now_discount_price = qd_product_price_inc_tax(orderItem, false) %}
+                    {% if orderItem.product and orderItem.price_inc_tax != now_discount_price %}
+                        {% set remessage = true %}
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                {#値引対象外#}
+                {% if orderItem.product and orderItem.price_inc_tax != orderItem.productClass.price02IncTax %}
+                    {% set remessage = true %}
+                {% endif %}
+            {% endif %}
+
+            {% set qdIndex = qdIndex + 1 %}
+        {% endfor %}
+    </div>
+{% endfor %}
+{% if remessage == false %}
+    <strong id="qd_no_diff"></strong>
+{% endif %}
+
+{% if inmessage %}
+<p id="qd_in_diff" class="ec-color-accent">
+    <strong>{{ 'quantity_discount.front.diff_alert'|trans }}</strong>
+</p>
+{% endif %}

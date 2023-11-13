@@ -1,0 +1,4 @@
+# app/config/eccube/routes/postcarrier_routes.yaml
+postcarrier_routes:
+    resource: 'Plugin\PostCarrier4\Service\PostCarrierService:loadRoutes'
+    type: service

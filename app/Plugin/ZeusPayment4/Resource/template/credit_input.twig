@@ -1,0 +1,457 @@
+{% if(Order.Payment.method_class and Order.Payment.method_class==zeus_credit.credit_class_name) %}
+    <style type="text/css">
+        #zeus_payment_input .ec-halfInput input[type='text']{
+            width:45%;
+        }
+        #zeus_payment_input{
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 3px;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            var zeus_payment_id = 'shopping_order_Payment_{{ zeus_credit.payment_id }}';
+            //var paymentName = "{{ eccube_config.zeus_payment_method_credit }}";
+
+            $('#shopping_order_use_point').data('origin',$('#shopping_order_use_point').val());
+            $("select[name*='[Delivery]']").each(function(){
+                $(this).data('origin',this.selectedIndex);
+            });
+
+            //$('#'+zeus_payment_id).origin_$('#'+zeus_payment_id).prop('checked');
+
+            //$('#zeus_payment_input').insertAfter($("label:contains('" + paymentName + "')"));
+            $('#'+zeus_payment_id).parent().append($('#zeus_payment_input'))
+
+            var tokenLoaded = false;
+
+            $("#shopping-form").submit(function() {
+
+                if($("#shopping-form").attr('action').indexOf('redirect')>0){
+
+                    if(!$('#shopping_order_ZeusCreditPaymentCardNo').val() && !$('#shopping_order_ZeusCreditPaymentCvv').val()){
+                        return;
+                    }
+
+                    var ret = confirm("決済が完了していません。このまま移動しますか？移動した場合は、カード番号などの入力欄がクリアされますので、再入力してください。");
+                    if(ret){
+                        $('#shopping_order_ZeusCreditPaymentCardNo').val('');
+                        $('#shopping_order_ZeusCreditPaymentCvv').val('');
+                    } else {
+                        if($('#shopping_order_use_point').val()!=$('#shopping_order_use_point').data('origin')){
+                            $('#shopping_order_use_point').val($('#shopping_order_use_point').data('origin'));
+                        } else if(!$('#'+zeus_payment_id).prop('checked')){
+                            $('#'+zeus_payment_id).prop('checked',true)
+                        } else {
+                            $("select[name*='[Delivery]']").each(function(){
+                                if($(this).data('origin')!=this.selectedIndex){
+                                    this.selectedIndex = $(this).data('origin');
+                                }
+                            });
+                        }
+
+
+                        loadingOverlay('hide');
+                    }
+
+                    if(!ret){
+                        $("#shopping-form").attr('action','{{ url("shopping") }}');
+
+                    }
+
+                    return ret;
+                }
+
+                if (!tokenLoaded) {
+                    callToken();
+                    return false;
+                }
+
+            });
+
+            var zeus_token_error_messages = {
+                "88888888" : "メンテナンス中です。",
+                "90100100" : "通信に失敗しました。",
+                "99999999" : "その他のシステムエラーが発生しました。",
+
+                "02030105" : "METHOD が 'POST' 以外",
+                "02030106" : "CONTENT-TYPE が 'text/xml' もしくは 'application/xml' 以外",
+                "02030107" : "CONTENT-LENGTH が存在しないか、0 が指定されている",
+                "02030108" : "CONTENT-LENGTH が 8192 byte より大きい",
+                "02030207" : "XML データが未送信",
+                "02030208" : "XML データが 8192 byte より大きい",
+                "02030209" : "XML データに構文エラーがある",
+                "02080114" : "XML の action が空",
+                "02080115" : "無効な action が指定されている",
+                "02130114" : "XML に authentication clientip が存在しない",
+                "02130117" : "clientip のフォーマットが不正",
+                "02130110" : "不正な clientip が指定された",
+                "02130118" : "不正な clientip が指定された",
+                "02130514" : "「カード番号」を入力してください。",
+                "02130517" : "「カード番号」を正しく入力してください。",
+                "02130619" : "「カード番号」を正しく入力してください。",
+                "02130620" : "「カード番号」を正しく入力してください。",
+                "02130621" : "「カード番号」を正しく入力してください。",
+                "02130640" : "「カード番号」を正しく入力してください。",
+                "02130714" : "「有効期限(年)」を入力してください。",
+                "02130717" : "「有効期限(年)」を正しく入力してください。",
+                "02130725" : "「有効期限(年)」を正しく入力してください。",
+                "02130814" : "「有効期限(月)」を入力してください。",
+                "02130817" : "「有効期限(月)」を正しく入力してください。",
+                "02130825" : "「有効期限(月)」を正しく入力してください。",
+                "02130922" : "「有効期限」を正しく入力してください。",
+                "02131014" : "CVVが不正です。",
+                "02131017" : "「セキュリティコード」を正しく入力してください。",
+                "02131117" : "「カード名義」を正しく入力してください。",
+                "02131123" : "「カード名義」を正しく入力してください。",
+                "02131124" : "「カード名義」を正しく入力してください。",
+            };
+
+            function getErrorMessage(error_code) {
+                if (typeof zeus_token_error_messages[error_code] == null) {
+                    return error_code + "An error has occurred.";
+                }
+                return error_code + ' : ' + zeus_token_error_messages[error_code];
+            }
+
+            function getToken(response) {
+                if (!response['result']) {
+                    alert(getErrorMessage(response['error_code'])); // エラーの場合
+                    loadingOverlay('hide');
+                    return;
+                } else {
+                    document.getElementById('shopping_order_ZeusCreditPaymentToken').value = response['token_key'];
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardNo').value = response['masked_card_number'];
+                    if (document.getElementById('shopping_order_ZeusCreditPaymentCvv')) {
+                        document.getElementById('shopping_order_ZeusCreditPaymentCvv').value = response['masked_cvv'];
+                    }
+
+                    tokenLoaded = true;
+                    $(".ec-blockBtn--action").click(); // フォーム送信（カード情報のかわりにトークンキーが送信されます）
+                }
+            }
+
+            function callToken() {
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function (){
+                    switch(this.readyState){
+                        case 4:
+                            if(this.status == 0){
+                                // 通信失敗
+                                var data = {
+                                    'result' : 0,
+                                    'error_code' : '90100100',
+                                };
+                                getToken(data);
+                                return;
+                            }
+                            if((200 <= this.status && this.status < 300) || (this.status == 304)){
+                                var xml = this.responseXML.documentElement;
+                                var status = '';
+                                if (xml.getElementsByTagName('status').length != 0) {
+                                    status = xml.getElementsByTagName('status')[0].textContent;
+                                }
+                                var error_code = '';
+                                if (xml.getElementsByTagName('code').length != 0) {
+                                    error_code = xml.getElementsByTagName('code')[0].textContent;
+                                }
+
+                                switch (status) {
+                                    case 'success' :
+                                        var token_key = '';
+                                        if (xml.getElementsByTagName('token_key').length != 0) {
+                                            token_key = xml.getElementsByTagName('token_key')[0].textContent;
+                                        }
+                                        var masked_card_number = '';
+                                        if (xml.getElementsByTagName('masked_card_number').length != 0) {
+                                            masked_card_number = xml.getElementsByTagName('masked_card_number')[0].textContent;
+                                        }
+                                        var masked_cvv = '';
+                                        if (xml.getElementsByTagName('masked_cvv').length != 0) {
+                                            masked_cvv = xml.getElementsByTagName('masked_cvv')[0].textContent;
+                                        }
+                                        var card_expires_month = '';
+                                        if (xml.getElementsByTagName('card_expires_month').length != 0) {
+                                            card_expires_month = xml.getElementsByTagName('card_expires_month')[0].textContent;
+                                        }
+                                        var card_expires_year = '';
+                                        if (xml.getElementsByTagName('card_expires_year').length != 0) {
+                                            card_expires_year = xml.getElementsByTagName('card_expires_year')[0].textContent;
+                                        }
+                                        var card_name = '';
+                                        if (xml.getElementsByTagName('card_name').length != 0) {
+                                            card_name = xml.getElementsByTagName('card_name')[0].textContent;
+                                        }
+                                        var data = {
+                                            'result'				 : 1,
+                                            'token_key'				 : token_key,
+                                            'masked_card_number'	 : masked_card_number,
+                                            'masked_cvv'			 : masked_cvv,
+                                            'card_expires_month'	 : card_expires_month,
+                                            'card_expires_year'		 : card_expires_year,
+                                            'card_name'				 : card_name,
+                                        };
+                                        break;
+                                    case 'invalid' :
+                                    case 'failure' :
+                                        var data = {
+                                            'result'		 : 0,
+                                            'error_code'	 : error_code,
+                                        };
+                                        break;
+                                    case 'maintenance' :
+                                        var data = {
+                                            'result'		 : 0,
+                                            'error_code'	 : '88888888',
+                                        };
+                                        break;
+                                    default :
+                                        var data = {
+                                            'result'		 : 0,
+                                            'error_code'	 : '99999999',
+                                        };
+                                        break;
+                                }
+                                getToken(data);
+                            }
+                    }
+                }
+
+
+                var quick = document.getElementById('shopping_order_ZeusCreditPaymentQuick');
+                if (quick && quick.checked) {
+                    action_type = 'quick'
+                } else {
+                    action_type = 'newcard'
+                }
+                var zeus_token_card_number = document.getElementById('shopping_order_ZeusCreditPaymentCardNo').value;
+                var objYear = document.getElementById('shopping_order_ZeusCreditPaymentYear');
+                var zeus_token_card_expires_year = objYear.options[objYear.selectedIndex].value;
+                var objMonth = document.getElementById('shopping_order_ZeusCreditPaymentMonth');
+                var zeus_token_card_expires_month = objMonth.options[objMonth.selectedIndex].value;
+                var zeus_token_card_cvv = "";
+                if (document.getElementById('shopping_order_ZeusCreditPaymentCvv')) {
+                    zeus_token_card_cvv = document.getElementById('shopping_order_ZeusCreditPaymentCvv').value;
+                }
+                var zeus_token_card_name = document.getElementById('shopping_order_ZeusCreditPaymentCardName1').value +
+                    " " +
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardName2').value;
+
+                var data = 	'<?xml version="1.0" encoding="utf-8"?>' +
+                    '<request service="token" action="' + action_type + '">' +
+                    '<authentication>' +
+                    '<clientip>{{ zeus_credit.config.getClientip() }}</clientip>' +
+                    '</authentication>' +
+                    '<card>';
+                if (zeus_token_card_cvv != "") {
+                    data = data +
+                        '<cvv>' + zeus_token_card_cvv + '</cvv>';
+                }
+                if (action_type == 'newcard') {
+                    data = data +
+                        '<number>' + zeus_token_card_number + '</number>' +
+                        '<expires>' +
+                        '<year>' + zeus_token_card_expires_year + '</year>' +
+                        '<month>' + zeus_token_card_expires_month + '</month>' +
+                        '</expires>' +
+                        '<name>' + zeus_token_card_name + '</name>';
+                }
+                data = data +
+                    '</card>' +
+                    '</request>';
+
+                request.open("POST", "{{ eccube_config.zeus_get_token_url }}", true);
+                request.setRequestHeader("Content-Type", "text/xml");
+                try {
+                    request.send(data);
+                } catch(e) {
+// 通信失敗
+                    var return_data = {
+                        'result' : 0,
+                        'error_code' : '90100100',
+                    };
+                    getToken(return_data);
+                }
+
+            }
+
+            function quickClick() {
+                var quick = document.getElementById('shopping_order_ZeusCreditPaymentQuick');
+                var disp = (quick && quick.checked)?'none':'block';
+
+                document.getElementById('zeus_input_name').style.display = disp;
+                document.getElementById('zeus_input_cardno').style.display = disp;
+                document.getElementById('zeus_input_expire').style.display = disp;
+                if (disp == 'none') {
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardName1').removeAttribute('required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardName2').removeAttribute('required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardNo').removeAttribute('required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentMonth').removeAttribute('required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentYear').removeAttribute('required');
+                } else {
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardName1').setAttribute('required', 'required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardName2').setAttribute('required', 'required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentCardNo').setAttribute('required', 'required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentMonth').setAttribute('required', 'required');
+                    document.getElementById('shopping_order_ZeusCreditPaymentYear').setAttribute('required', 'required');
+                }
+
+                {% if zeus_credit.config.cvvflg > 0 %}
+                if (disp == 'none') {//quick
+                    {% if zeus_credit.config.cvvflg == 1 or zeus_credit.config.cvvflg == 3 or zeus_credit.config.cvvflg == 4 %}
+                    document.getElementById('zeus_input_cvv').style.display = 'block';
+                    document.getElementById('shopping_order_ZeusCreditPaymentCvv').setAttribute('required', 'required');
+                    document.getElementById('cvv_require').style.display = 'inline';
+                    {% else %}
+                    document.getElementById('zeus_input_cvv').style.display = disp;
+                    document.getElementById('shopping_order_ZeusCreditPaymentCvv').removeAttribute('required');
+                    {% endif %}
+                } else { //first
+                    {% if zeus_credit.config.cvvflg == 1 or zeus_credit.config.cvvflg == 2 or zeus_credit.config.cvvflg == 3 or zeus_credit.config.cvvflg == 4 %}
+                    document.getElementById('zeus_input_cvv').style.display = disp;
+                    document.getElementById('shopping_order_ZeusCreditPaymentCvv').setAttribute('required', 'required');
+                    document.getElementById('cvv_require').style.display = 'inline';
+                    {% else %}
+                    document.getElementById('zeus_input_cvv').style.display = 'none';
+                    document.getElementById('shopping_order_ZeusCreditPaymentCvv').removeAttribute('required');
+                    {% endif %}
+                }
+                {% endif %}
+            }
+
+            quickClick();
+
+            $("#shopping_order_ZeusCreditPaymentQuick").click(function(){
+                quickClick();
+            });
+
+            //hack eccube problem add type=button for ec-inlineBtn
+            $(".ec-inlineBtn").attr("type", "button");
+        })
+
+    </script>
+    <div class="hidden">
+        <div id="zeus_payment_input">
+            {{ form_widget(form.ZeusCreditPaymentToken) }}
+
+            {% if form.vars.errors|length > 0 %}
+                ※お申し込みになる場合は、以下の項目をご入力いただき「確認する」ボタンを押してください。<br/>
+                <span class="text-danger"><strong>
+まだご注文手続きが完了しておりません。<br/>
+「確認する」以外のボタン、リンクを押しますと、クレジットカード決済手続きが<br/>
+終了してしまいますので、ご注意ください。<br/><br/>
+</strong></span>
+            {% else %}
+                ※お申し込みになる場合は、以下の項目をご確認いただき「確認する」ボタンを押してください。<br/>
+                <span class="text-danger"><strong>
+まだご注文手続きが完了しておりません。<br/>
+「確認する」「カートに戻る」以外のボタン、リンクを押しますと、<br/>
+クレジットカード決済手続きが終了してしまいますので、ご注意ください。<br/><br/>
+</strong></span>
+            {% endif %}
+
+            {% if zeus_credit.lastMaskedCard %}
+            <dl id="zeus_input_quick">
+                <dt>
+                    {{ form_widget(form.ZeusCreditPaymentQuick) }}
+                    {% if zeus_credit.lastMaskedCard %}<br><strong>前回利用したカード番号：{{ zeus_credit.lastMaskedCard }}<br/></strong>{% endif %}
+                    {% if zeus_credit.config.cvvflg == 1 %}
+                        <span class="text-danger">※セキュリティコードのみ必須入力となります。</span>
+                    {% endif %}
+                </dt>
+            </dl>
+            {% endif %}
+            <dl id="zeus_input_method">
+                <dt>
+                    <label class="ec-label required">支払い回数</label>
+                    <span class="ec-required">必須</span><br />
+                </dt>
+                <dd>
+                    <div class="ec-select{{ has_errors(form.ZeusCreditPaymentMethod) ? ' error'}}">
+                        {{ form_widget(form.ZeusCreditPaymentMethod) }}
+                        <br/><span class="text-danger">※一部分割・リボ払いに対応していないカードブランドもございます。</span>
+                        {{ form_errors(form.ZeusCreditPaymentMethod) }}
+                    </div>
+                </dd>
+            </dl>
+            <dl id="zeus_input_name">
+                <dt>
+                    <label class="ec-label required">氏名(Name)</label>
+                    <span class="ec-required">必須</span><br />
+                </dt>
+                <dd>
+                    <div class="ec-halfInput{{ has_errors(form.ZeusCreditPaymentCardName1, form.ZeusCreditPaymentCardName1) ? ' error'}}">
+                        {{ form_widget(form.ZeusCreditPaymentCardName1, {'attr': { 'placeholder' : "名 例: TARO" }}) }}
+                        {{ form_widget(form.ZeusCreditPaymentCardName2, {'attr': { 'placeholder' : "姓 例: YAMADA" }}) }}
+                        <br/><span class="text-danger">【半角英数字記号】<br/>※カード上の名前と申込者名が一致しない場合、クレジットカード使用停止などの処分が課せられる場合があります。</span>
+                        {{ form_errors(form.ZeusCreditPaymentCardName1) }}
+                        {{ form_errors(form.ZeusCreditPaymentCardName2) }}
+                    </div>
+                </dd>
+
+            </dl>
+
+            <dl id="zeus_input_cardno">
+                <dt>
+                    <label class="ec-label required">カード番号(Card Number)</label>
+                    <span class="ec-required">必須</span><br />
+                </dt>
+                <dd>
+                    <div class="ec-input{{ has_errors(form.ZeusCreditPaymentCardNo) ? ' error'}}">
+                        {{ form_widget(form.ZeusCreditPaymentCardNo, {'attr': {freeze_display_text: false, 'placeholder' : "例 :450123456789 0123" }}) }}
+                        <span class="text-danger">【半角英字】</span>
+                        {{ form_errors(form.ZeusCreditPaymentCardNo) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <dl id="zeus_input_expire">
+                <dt>
+                    <label class="ec-label required">カード有効期限(EXP)</label>
+                    <span class="ec-required">必須</span><br />
+                </dt>
+                <dd>
+                    <div class="ec-select{{ has_errors(form.ZeusCreditPaymentYear,form.ZeusCreditPaymentMonth) ? ' error'}}">
+                        {{ form_widget(form.ZeusCreditPaymentMonth) }}月 /{{ form_widget(form.ZeusCreditPaymentYear) }}年
+                    </div>
+                </dd>
+            </dl>
+		{% if zeus_credit.config.cvvflg > 0 %}
+            <dl id="zeus_input_cvv">
+                <dt>
+                    <label class="ec-label required">クレジットカード・セキュリティコード</label>
+                    <span class="ec-required" id="cvv_require">必須</span><br />
+                </dt>
+                <dd>
+                    <div class="clearfix ec-input{{ has_errors(form.ZeusCreditPaymentCvv) ? ' error'}}">
+                        {{ form_widget(form.ZeusCreditPaymentCvv, {'attr': {'placeholder' : "例: 999" }}) }}
+                        <span class="text-danger">【半角英字】</span>
+                        <br/>■セキュリティコード例<br/>
+                        <div class="col-sm-6" style="text-align:center;">
+                            VISA/MasterCard/JCB/Diners<br/>
+                            <img src="{{ asset(eccube_config.zeuspayment_img_urlpath ~ '/card1.jpg','plugin') }}" style="width:160px;"/>
+                        </div>
+                        <div class="col-sm-6"  style="text-align:center;">
+                            American Express<br/>
+                            <img src="{{ asset(eccube_config.zeuspayment_img_urlpath ~ '/card2.jpg','plugin') }}" style="width:160px;"/>
+                        </div>
+                        {{ form_errors(form.ZeusCreditPaymentCvv) }}
+                    </div>
+                </dd>
+            </dl>
+		{% endif %}
+            <div id="zeus_contact_info" style="margin-top:20px;">
+                <strong>【クレジットカード決済に関するお問合せ】</strong><br/>
+                株式会社ゼウス<br/>
+                〒150-0002 東京都渋谷区渋谷2-1-1 青山ファーストビル<br/>
+                カスタマーサポート（24時間365日）<br/>
+
+                電話番号: 0570-02-3939（つながらないときは 03-4334-0500）<br/>
+                E-mail: <span style="color:#0000ff; text-decoration:underline;">support@cardservice.co.jp</span>
+            </div>
+
+        </div>
+    </div>
+{% endif %}

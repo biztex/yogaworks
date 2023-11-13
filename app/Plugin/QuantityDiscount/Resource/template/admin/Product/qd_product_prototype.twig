@@ -1,0 +1,41 @@
+<div class="row qd_area_row mb-2{% if qdForm.del_flg.vars.data == 1 %} d-none{% endif %}" id="qd_area_row_{{ index }}">
+    <div class="col-3">
+        <div class="row col-auto">
+            <a class="qd_del_btn mr-2" data-key="{{ index }}">
+                <i class="fa fa-close fa-lg"></i>
+            </a>
+            <span>{{ 'quantity_discount.admin.quantity_discount_title'|trans }}</span>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="row col-4 mb-2">
+            {{ form_widget(qdForm.quantity) }}
+            {{ form_errors(qdForm.quantity) }}
+        </div>
+        <div class="row col mb-2">
+            {{ form_widget(qdForm.qd_type, {'label_attr': {'class': 'radio-inline'}, 'attr': {'data-target_index': index }}) }}
+            {{ form_errors(qdForm.qd_type) }}
+        </div>
+        {% if qdForm.qd_type.vars.data == constant('Plugin\\QuantityDiscount\\Entity\\QdProductClass::QD_TYPE_RATE') %}
+            {% set qd_price = 'd-none' %}
+            {% set qd_rate = '' %}
+        {% else %}
+            {% set qd_price = '' %}
+            {% set qd_rate = 'd-none' %}
+        {% endif %}
+        <div class="row col-4 mb-2 {{ qd_price }}" id="qd_price_{{ index }}">
+            {{ form_widget(qdForm.price) }}
+            {{ form_errors(qdForm.price) }}
+        </div>
+        <div class="row col-4 mb-2 {{ qd_rate }}" id="qd_rate_{{ index }}">
+            <div class="input-group">
+                {{ form_widget(qdForm.rate) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                </div>
+                {{ form_errors(qdForm.rate) }}
+            </div>
+        </div>
+        {{ form_widget(qdForm.del_flg) }}
+    </div>
+</div>

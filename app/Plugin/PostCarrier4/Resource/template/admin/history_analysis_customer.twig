@@ -1,0 +1,185 @@
+{#
+ This file is part of PostCarrier for EC-CUBE
+
+ Copyright(c) IPLOGIC CO.,LTD. All Rights Reserved.
+ http://www.iplogic.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+{% extends '@admin/default_frame.twig' %}
+
+{% set menus = ['postcarrier', 'postcarrier_history'] %}
+
+{% block title %}{{ 'postcarrier.history.title'|trans }}{% endblock %}
+{% block sub_title %}{{ 'postcarrier.title'|trans }}{% endblock %}
+
+{% block main %}
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="d-inline-block"><span class="card-title">{{ 'admin.postcarrier.history.th_subject'|trans }}</span></div>
+                            </div>
+                            <div class="col">
+                                <div class="d-inline-block">{{ subject }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-body rnStyle01">
+                        <div class="row">
+                            <div class="d-block text-center">
+                                <a href="{{ url('plugin_post_carrier_history_analysis', { id: id }) }}"
+                                   class="btn btn-ec-regular">{{ 'postcarrier.history.btn_analysis'|trans }}</a>
+                                <a href="{{ url('plugin_post_carrier_history_analysis_customer', { id: id }) }}"
+                                   class="btn btn-ec-regular -active">{{ 'postcarrier.history.btn_analysis_customer'|trans }}</a>
+                                <a href="{{ url('plugin_post_carrier_history_analysis_link', { id: id }) }}"
+                                   class="btn btn-ec-regular">{{ 'postcarrier.history.btn_analysis_link'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="headLabel">
+                            <li>
+                                クリック率（女性）
+                            </li>
+                            <li>
+                                クリック率（男性）
+                            </li>
+                            <li>
+                                CV率（女性）
+                            </li>
+                            <li>
+                                CV率（男性）
+                            </li>
+                        </ul>
+                        <div class="graphLabel">
+                            <span>クリック率</span>
+                            <span>CV率</span>
+                        </div>
+                        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js'></script> {# グラフ描画用ライブラリ本体 #}
+                        <script src="{{ asset('PostCarrier4/assets/js/graph_create.js','plugin') }}"></script>
+                        <link rel="stylesheet" href="{{ asset('PostCarrier4/assets/css/graph_create.css','plugin') }}">
+                        <script type="text/javascript">
+                        window.onload = function() {
+                            var cv_f = []; {# CV率(女性)の配列 10,20,30,40,50,60代,その他 の7要素 #}
+                            var cv_m = []; {# CV率(男性)の配列 10,20,30,40,50,60代,その他 の7要素 #}
+                            var clc_f = []; {# クリック数(女性)の配列 10,20,30,40,50,60代,その他 の7要素 #}
+                            var clc_m = []; {# クリック数(男性)の配列 10,20,30,40,50,60代,その他 の7要素 #}
+
+                            cv_f = ['{{ arrMarketing.conversionPer[0][0] }}','{{ arrMarketing.conversionPer[0][1] }}','{{ arrMarketing.conversionPer[0][2] }}',
+                                    '{{ arrMarketing.conversionPer[0][3] }}','{{ arrMarketing.conversionPer[0][4] }}','{{ arrMarketing.conversionPer[0][5] }}',
+                                    '{{ arrMarketing.conversionPer[0][6] }}'];
+                            cv_m = ['{{ arrMarketing.conversionPer[1][0] }}','{{ arrMarketing.conversionPer[1][1] }}','{{ arrMarketing.conversionPer[1][2] }}',
+                                    '{{ arrMarketing.conversionPer[1][3] }}','{{ arrMarketing.conversionPer[1][4] }}','{{ arrMarketing.conversionPer[1][5] }}',
+                                    '{{ arrMarketing.conversionPer[1][6] }}'];
+
+                            clc_f = ['{{ arrMarketing.clickPer[0][0] }}','{{ arrMarketing.clickPer[0][1] }}','{{ arrMarketing.clickPer[0][2] }}',
+                                     '{{ arrMarketing.clickPer[0][3] }}','{{ arrMarketing.clickPer[0][4] }}','{{ arrMarketing.clickPer[0][5] }}',
+                                     '{{ arrMarketing.clickPer[0][6] }}'];
+                            clc_m = ['{{ arrMarketing.clickPer[1][0] }}','{{ arrMarketing.clickPer[1][1] }}','{{ arrMarketing.clickPer[1][2] }}',
+                                     '{{ arrMarketing.clickPer[1][3] }}','{{ arrMarketing.clickPer[1][4] }}','{{ arrMarketing.clickPer[1][5] }}',
+                                     '{{ arrMarketing.clickPer[1][6] }}'];
+
+                            mixGraphCreate(cv_f,cv_m,clc_f,clc_m);
+                        };
+                        </script>
+
+                        <div class="byCustomer">
+                            <canvas id="bar01"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-body rnTable03">
+                        <p>クリック率/クリック数</p>
+                        <table class="table table-striped table-sm">
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>10代</th>
+                                <th>20代</th>
+                                <th>30代</th>
+                                <th>40代</th>
+                                <th>50代</th>
+                                <th>60代</th>
+                                <th>その他</th>
+                            </tr>
+                            <tr>
+                                <td>女性</td>
+                                <td><span>{{ arrMarketing.clickPer[0][0]|number_format }}</span><span>{{ arrMarketing.click[0][0]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[0][1]|number_format }}</span><span>{{ arrMarketing.click[0][1]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[0][2]|number_format }}</span><span>{{ arrMarketing.click[0][2]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[0][3]|number_format }}</span><span>{{ arrMarketing.click[0][3]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[0][4]|number_format }}</span><span>{{ arrMarketing.click[0][4]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[0][5]|number_format }}</span><span>{{ arrMarketing.click[0][5]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[0][6]|number_format }}</span><span>{{ arrMarketing.click[0][6]|number_format }}</span></td>
+                            </tr>
+                            <tr>
+                                <td>男性</td>
+                                <td><span>{{ arrMarketing.clickPer[1][0]|number_format }}</span><span>{{ arrMarketing.click[1][0]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[1][1]|number_format }}</span><span>{{ arrMarketing.click[1][1]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[1][2]|number_format }}</span><span>{{ arrMarketing.click[1][2]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[1][3]|number_format }}</span><span>{{ arrMarketing.click[1][3]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[1][4]|number_format }}</span><span>{{ arrMarketing.click[1][4]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[1][5]|number_format }}</span><span>{{ arrMarketing.click[1][5]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.clickPer[1][6]|number_format }}</span><span>{{ arrMarketing.click[1][6]|number_format }}</span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="card-body rnTable03">
+                        <p>コンバージョン率/コンバージョン数</p>
+                        <table class="table table-striped table-sm">
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>10代</th>
+                                <th>20代</th>
+                                <th>30代</th>
+                                <th>40代</th>
+                                <th>50代</th>
+                                <th>60代</th>
+                                <th>その他</th>
+                            </tr>
+                            <tr>
+                                <td>女性</td>
+                                <td><span>{{ arrMarketing.conversionPer[0][0]|number_format }}</span><span>{{ arrMarketing.conversion[0][0]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[0][1]|number_format }}</span><span>{{ arrMarketing.conversion[0][1]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[0][2]|number_format }}</span><span>{{ arrMarketing.conversion[0][2]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[0][3]|number_format }}</span><span>{{ arrMarketing.conversion[0][3]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[0][4]|number_format }}</span><span>{{ arrMarketing.conversion[0][4]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[0][5]|number_format }}</span><span>{{ arrMarketing.conversion[0][5]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[0][6]|number_format }}</span><span>{{ arrMarketing.conversion[0][6]|number_format }}</span></td>
+                            </tr>
+                            <tr>
+                                <td>男性</td>
+                                <td><span>{{ arrMarketing.conversionPer[1][0]|number_format }}</span><span>{{ arrMarketing.conversion[1][0]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[1][1]|number_format }}</span><span>{{ arrMarketing.conversion[1][1]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[1][2]|number_format }}</span><span>{{ arrMarketing.conversion[1][2]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[1][3]|number_format }}</span><span>{{ arrMarketing.conversion[1][3]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[1][4]|number_format }}</span><span>{{ arrMarketing.conversion[1][4]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[1][5]|number_format }}</span><span>{{ arrMarketing.conversion[1][5]|number_format }}</span></td>
+                                <td><span>{{ arrMarketing.conversionPer[1][6]|number_format }}</span><span>{{ arrMarketing.conversion[1][6]|number_format }}</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="c-conversionArea">
+        <div class="c-conversionArea__container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-6">
+                    <div class="c-conversionArea__leftBlockItem">
+                        <a class="c-baseLink" href="{{ url('plugin_post_carrier_history') }}">
+                            <i class="fa fa-backward" aria-hidden="true"></i><span>{{ 'postcarrier.history.preview.btn_back'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

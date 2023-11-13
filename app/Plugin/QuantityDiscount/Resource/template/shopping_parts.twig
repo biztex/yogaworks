@@ -1,0 +1,20 @@
+{% set isDiscount = is_quantity_discount(orderItem) %}
+{% if isDiscount %}
+    {% set discount = qd_discount_price_inc_tax(orderItem) %}
+    {% if qdIndex is defined %}
+        {% set suffix = '_'~qdIndex %}
+    {% else %}
+        {% set ProductClass = orderItem.ProductClass %}
+        {% set suffix = '_d_'~ProductClass.id %}
+    {% endif %}
+    <p id="quantity_discount{{ suffix }}" class="quantity_discount ec-color-accent">
+        {% set qd_mode_normal = is_qd_mode_normal() %}
+        {% if discount > 0 %}
+            {% if qd_mode_normal %}
+                {{ 'quantity_discount.front.quantity_discount_enabled'|trans({'%discount%': discount}) }}
+            {% else %}
+                {{ 'quantity_discount.front.quantity_discount_direct_enable'|trans }}
+            {% endif %}
+        {% endif %}
+    </p>
+{% endif %}

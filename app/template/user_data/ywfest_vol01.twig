@@ -1,0 +1,174 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+<!--adobe font-->
+<script>
+(function(d) {
+	var config = {
+			kitId: 'asc5pkt',
+			scriptTimeout: 3000,
+			async: true
+		},
+		h = d.documentElement,
+		t = setTimeout(function() {
+			h.className = h.className.replace(/bwf-loadingb/g, "") + " wf-inactive";
+		}, config.scriptTimeout),
+		tk = d.createElement("script"),
+		f = false,
+		s = d.getElementsByTagName("script")[0],
+		a;
+	h.className += " wf-loading";
+	tk.src = 'https://use.typekit.net/' + config.kitId + '.js';
+	tk.async = true;
+	tk.onload = tk.onreadystatechange = function() {
+		a = this.readyState;
+		if (f || a && a != "complete" && a != "loaded")
+			return;
+		f = true;
+		clearTimeout(t);
+		try {
+			Typekit.load(config)
+		} catch (e) {}
+	};
+	s.parentNode.insertBefore(tk, s)
+})(document);
+</script>
+
+<!-- ここから -->
+<style type="text/css">
+.read_font {
+font-family: fot-tsukubrdgothic-std, sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+img {width:100%;}
+a img {
+	display: block;
+}
+
+a:hover img {
+	opacity: .6;
+	-webkit-opacity: .6;
+	-moz-opacity: .6;
+	filter: alpha(opacity=60);
+	/* IE lt 8 */
+	-ms-filter: "alpha(opacity=60)";
+	/* IE 8 */
+	-webkit-transition: opacity .5s ease-out;
+	-moz-transition: opacity .5s ease-out;
+	-ms-transition: opacity .5s ease-out;
+	transition: opacity .5s ease-out;
+}
+
+
+.maincontent h2 img {width:auto; height:55px; margin:2rem 0 3rem 50px;}
+
+.maincontent h3 { padding:.5rem 0 .3rem; font-weight: 400;  margin:1rem 0;}
+
+.top_copy {
+padding:3rem 3rem 4rem;
+font-size: 30px;
+color: #333;
+text-align:center;
+line-height:1.6;
+}
+
+.maincontent {
+	clear: both;
+	overflow: hidden;
+}
+.f_red {color:#f00;}
+
+.tokuten {max-width:890px; margin:0 auto;}
+
+.goodslist_btn {width:460px; margin:10px auto 0; padding:20px 0;}
+.gentei_btn {width:300px; margin:20px auto 0; padding:20px 0;}
+.outlet_btn {width:720px; margin:20px auto 0; padding:20px 0;}
+.btn_info {font-size:13px; text-align:center;}
+
+a {
+	box-sizing: border-box;
+}
+
+.chart {max-width:800px; margin:0 auto 50px;; text-align: center;}
+.coupon {max-width:640px; margin:0 auto 50px; text-align: center;}
+
+	@media only screen and (max-width:768px) {
+    .btn_info {text-align:center;}
+    .maincontent h2 img {height:auto; margin:2rem 0 2rem 0px;}
+    .outlet_btn {width:100%; margin:0px auto 0; padding:0px 0 20px;}
+    	}
+
+	@media only screen and (max-width:375px) {
+		.top_copy {
+			font-size: 16px;
+			padding: 3rem .5rem 0;
+		}
+		
+		.coupon {font-size:13px; margin:0 auto 30px;}
+		.tokuten {font-size:14px;}
+		.goodslist_btn {width:100%; margin:10px auto 0; padding:20px 0;}
+		.gentei_btn {width:80%; margin:20px auto 0; padding:20px 0;}
+		
+		.btn_info {font-size:13px; text-align:center;}
+	}
+</style>
+<main>
+	<div><img src="/html/user_data/img/ywfest_vol01/kv.jpg"></div>
+
+
+<picture>
+<source media="(min-width:640px)" srcset="/html/user_data/img/ywfest_vol01/title.png 2000w">
+<source media="(min-width:320px)" srcset="/html/user_data/img/ywfest_vol01/title_sp.png 870w">
+<img srcset="/html/user_data/img/ywfest_vol01/title_sp.png 870w, /html/user_data/img/ywfest_vol01/title.png 2000w" width="100%" alt="イベントご参加への感謝を込めてヨガワークスからの3つのGift！">
+</picture>
+
+	<!-- yogamat -->
+	<article>
+		<section class="maincontent">
+
+		<h2><img class="sono1" src="/html/user_data/img/ywfest_vol01/sono1.png"></h2>	
+		<div class="coupon"><img src="/html/user_data/img/ywfest_vol01/coupon.png"><br><br>
+		ご注文確認画面で上記クーポンコードを入力するだけで、<br><span class="f_red">何品注文してもすべて20%OFFでご購入可能！</span><br>
+		ご自身や大事な方へのGiftとしてご利用ください♪
+		</div>
+
+		<div class="tokuten">
+		＊本イベントにご予約いただいた方の限定特典となります。ご予約いただいていない第三者への転載及びクーポン利用はお断りしておりますのでご了承ください。
+		</div>
+
+		<div class="row goodslist_btn"><a href="/"><img src="/html/user_data/img/ywfest_vol01/btn_goodslist.png" alt="ヨガマット・プロップス一覧を今すぐチェック！"></a></div>
+
+
+		<h2><img src="/html/user_data/img/ywfest_vol01/sono2.png"></h2>
+
+		<div class="row peanuts" style="text-align:center;"><img style="width:720px;" src="/html/user_data/img/ywfest_vol01/item_peanuts.jpg" alt="PEANUTSコラボ商品"></div>
+
+		<div class="tokuten">スイス発のパフォーマンスウェアブランド[sn]super.naturalのダブルネーム。大人気のピーナッツコラボアイテムが30%OFFの特別価格で数量限定販売！<br>
+		ヨガをはじめたばかりの方へのプレゼントにも最適な「ヨガマット・ヨガブロック・ヨガベルト」の3点セット♪かわいいキャラクターたちの限定デザイン商品があれば、大好きなヨガの時間が更に待ち遠しくなること間違いなし！<br>
+		<br>
+		【販売期限】2021年12月29日（水）12:00まで
+		</div>
+
+		<div class="row gentei_btn"><a href="/products/detail/54"><img src="/html/user_data/img/ywfest_vol01/btn_gentei.png" alt="限定セットの詳細はこちら"></a></div>
+		<div class="row btn_info">※クーポンとの併用はできませんのでご了承ください。</div>
+
+		<h2><img src="/html/user_data/img/ywfest_vol01/sono3.png"></h2>
+
+		<div class="row outlet_btn"><a href="/user_data/outlet2021"><img style="width:720px; border-radius:10px;" src="/html/user_data/img/ywfest_vol01/bn_outlet80.png" alt="アウトレットSALE"></a></div>
+
+		<div class="tokuten">ヨガワークスではサステナブル（持続可能）な社会を目指すため、商品廃棄ゼロを目指した取り組みを行っています。その一環として実施しているアウトレットSALEを、今ならなんと期間限定の最大80%でご利用いただけます！</div>
+
+		<div class="row gentei_btn"><a href="/user_data/outlet2021"><img src="/html/user_data/img/ywfest_vol01/btn_outlet.png" alt="アウトレットSALE会場はこちら"></a></div>
+		<div class="row btn_info">※クーポンとの併用はできませんのでご了承ください。</div>
+
+		</section>
+
+	</article>
+	<!-- //yogamat -->
+
+</main>
+<!-- //ここまで -->
+
+{% endblock %}

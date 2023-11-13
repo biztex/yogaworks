@@ -1,0 +1,3 @@
+<?php //Eccube%255CController%255CMypage%255CChangeController
+
+return [PHP_INT_MAX, []];

@@ -1,0 +1,3 @@
+<?php //Eccube%255CEntity%255CLayout%2523getColumnNum
+
+return [PHP_INT_MAX, []];

@@ -1,0 +1,92 @@
+<?php //Eccube%255CEntity%255CCustomer
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Table'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Table')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Index'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Index')),
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone $p['Doctrine\\ORM\\Mapping\\Index'],
+        clone ($p['Doctrine\\ORM\\Mapping\\UniqueConstraint'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\UniqueConstraint')),
+        clone ($p['Doctrine\\ORM\\Mapping\\InheritanceType'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\InheritanceType')),
+        clone ($p['Doctrine\\ORM\\Mapping\\DiscriminatorColumn'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\DiscriminatorColumn')),
+        clone ($p['Doctrine\\ORM\\Mapping\\HasLifecycleCallbacks'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\HasLifecycleCallbacks')),
+        clone ($p['Doctrine\\ORM\\Mapping\\Entity'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Entity')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'dtb_customer',
+                'dtb_customer_buy_times_idx',
+                'dtb_customer_buy_total_idx',
+                'dtb_customer_create_date_idx',
+                'dtb_customer_update_date_idx',
+                'dtb_customer_last_buy_date_idx',
+                'dtb_customer_email_idx',
+                'secret_key',
+                9 => 'discriminator_type',
+            ],
+            'indexes' => [
+                [
+                    $o[1],
+                    $o[2],
+                    $o[3],
+                    $o[4],
+                    $o[5],
+                    $o[6],
+                ],
+            ],
+            'uniqueConstraints' => [
+                [
+                    $o[7],
+                ],
+            ],
+            'columns' => [
+                1 => [
+                    'buy_times',
+                ],
+                [
+                    'buy_total',
+                ],
+                [
+                    'create_date',
+                ],
+                [
+                    'update_date',
+                ],
+                [
+                    'last_buy_date',
+                ],
+                [
+                    'email',
+                ],
+                [
+                    'secret_key',
+                ],
+            ],
+            'value' => [
+                8 => 'SINGLE_TABLE',
+            ],
+            'type' => [
+                9 => 'string',
+            ],
+            'length' => [
+                9 => 255,
+            ],
+            'repositoryClass' => [
+                11 => 'Eccube\\Repository\\CustomerRepository',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[8],
+        $o[9],
+        $o[10],
+        $o[11],
+    ],
+    []
+); }];

@@ -1,0 +1,6 @@
+services:
+
+  Plugin\SiteKit\Service\Google_Site_Kit_Proxy_Client:
+    factory: ['@Plugin\SiteKit\Service\SiteKitClientFactory', 'createClient']
+    class: Plugin\SiteKit\Service\Google_Site_Kit_Proxy_Client
+    arguments: ['@Plugin\SiteKit\Service\SiteKitClientFactory', '@router', '@security.token_storage', '@Eccube\Repository\BaseInfoRepository']

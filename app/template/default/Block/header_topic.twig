@@ -1,0 +1,61 @@
+<style type="text/css">
+.btn {
+    color: #fff;
+    xbackground: #ffce5b;
+    padding: .5em .5em;
+    xborder-radius: .3em;
+    xtext-align: center;
+    display: table;
+    cursor: pinter;
+}
+.btn:hover {
+    cursor: pinter;
+}
+.btn:active {
+    xbackground: #f4d600;
+}
+.box {
+    xborder: 2px solid #ffce5b;
+    xborder-radius: .3em;
+    xheight: 300px;
+    display:block;
+    padding:1rem .5rem; background:#ff5700; color:#fff; width:100%;text-align:center; font-size:13px;
+}
+.box a {color:#fff;}
+ 
+/* close button */
+.action-close {
+    position: relative;
+    xmargin-top: 2em;
+}
+.action-close .btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.action-close .box {
+    xmargin-bottom: 2em;
+    xborder: 2px solid #ffce5b;
+}
+ 
+/* checkbox 非表示 */
+.add-control .checkbox {
+    display: none;
+}
+ 
+/* close button's control */
+.add-control .action-close #close:checked ~ .btn {
+    display: none;
+}
+.add-control .action-close #close:checked ~ .box {
+    display: none;
+}
+</style>
+  
+<div class="add-control">
+    <div class="action-close">
+      <input type="checkbox" class="checkbox" id="close" name="close" />
+      <label for="close" class="btn"><i class="fa-regular fa-xmark-large fa-lg"></i></label>
+      <div class="box"><a href="https://www.yogaworks.jp/html/user_data/img/news/news_221005-kakaku.pdf" target="_blank">価格改定のお知らせ</a></div>
+    </div>
+</div>

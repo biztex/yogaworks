@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>This website is under maintenance ....</title>
+<meta charset="UTF-8">
+  <meta name="description" content="Website under maintenance">  
+  <meta name="author" content="https://downloadfort.com/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://www.yogaworks.jp/servermaintenance/CSS.css" rel="stylesheet" />	
+</head>
+<body class="body">
+    <img src="https://www.yogaworks.jp/servermaintenance/maintenance.png" class="imgcenter" />
+    <p class="txtblue">ただいまメンテナンス中です<br />
+      ご利用の皆様にはご迷惑をおかけし、申し訳ございません。<br>メンテナンス終了までしばらくお待ちください。</p>
+    <p class="txtwhite"><strong>Thank You!</strong> for visiting.</p>
+    
+</body>
+</html>

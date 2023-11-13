@@ -1,0 +1,3 @@
+<?php //Eccube%255CEntity%255CPaymentOption%2523setPaymentId
+
+return [PHP_INT_MAX, []];

@@ -1,0 +1,12 @@
+{% set qdIndex = 0 %}
+{% for CartIndex,Cart in Carts %}
+    {% for CartItem in Cart.CartItems %}
+        {% set ProductClass = CartItem.ProductClass %}
+        <ul>
+            <li>
+                {{ include('@QuantityDiscount/cart_parts.twig', {'CartItem': CartItem}, ignore_missing=true) }}
+            </li>
+        </ul>
+        {% set qdIndex = qdIndex + 1 %}
+    {% endfor %}
+{% endfor %}
