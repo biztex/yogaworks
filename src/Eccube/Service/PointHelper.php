@@ -156,7 +156,11 @@ class PointHelper
     {
         // ユーザの保有ポイントを減算
         $Customer = $itemHolder->getCustomer();
-        $Customer->setPoint($Customer->getPoint() - $point);
+        $point = $Customer->getPoint() - $point;
+        if($point < 0){
+            $point = 0;
+        }
+        $Customer->setPoint($point);
     }
 
     public function rollback(ItemHolderInterface $itemHolder, $point)
