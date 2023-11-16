@@ -190,7 +190,11 @@ class OrderStateMachine implements EventSubscriberInterface
         $Order = $event->getSubject()->getOrder();
         $Customer = $Order->getCustomer();
         if ($Customer) {
-            $Customer->setPoint(intval($Customer->getPoint()) + intval($Order->getAddPoint()));
+            $point = intval($Customer->getPoint()) + intval($Order->getAddPoint());
+            if($point < 0){
+                $point = 0;
+            }
+            $Customer->setPoint($point);
         }
     }
 
