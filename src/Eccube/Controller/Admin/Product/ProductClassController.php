@@ -102,8 +102,6 @@ class ProductClassController extends AbstractController
                     return $pc->getClassCategory1() !== null;
                 });
 
-                dd($ProductClasses);
-
             // 設定されている規格名1, 2を取得(商品規格の規格分類には必ず同じ値がセットされている)
             $FirstProductClass = $ProductClasses->first();
             $ClassName1 = $FirstProductClass->getClassCategory1()->getClassName();
@@ -178,6 +176,8 @@ class ProductClassController extends AbstractController
                 }
             }
         }
+
+        dd("AAA");
 
         return [
             'Product' => $Product,
