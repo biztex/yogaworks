@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a55d9f7ec182d90d4c338c24fc1c86e1",
+    "content-hash": "34d5ccd3afeee9a20d2c9b211db7636d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2483,6 +2483,30 @@
                 "id": 1940
             },
             "description": "ポストキャリアプラグイン",
+            "transport-options": {
+                "http": {
+                    "header": [
+                        "X-ECCUBE-KEY: 85c73b2090d086a9c318cf2dbad0a2a1d52d1ea2"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "ec-cube/productreserve4",
+            "version": "1.0.20",
+            "dist": {
+                "type": "tar",
+                "url": "https://package-api-c2.ec-cube.net/ec-cube/productreserve4/1.0.20/ProductReserve4-1.0.20.tgz"
+            },
+            "require": {
+                "ec-cube/plugin-installer": "~0.0.6 || ^2.0"
+            },
+            "type": "eccube-plugin",
+            "extra": {
+                "code": "ProductReserve4",
+                "id": 2011
+            },
+            "description": "予約商品プラグイン",
             "transport-options": {
                 "http": {
                     "header": [

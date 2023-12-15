@@ -1,0 +1,105 @@
+{# Style #}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/reserve4/css/jquery.datetimepicker.min.css', 'admin') }}">
+    <style type="text/css">
+        .product-class-ext .form-row { padding-top: 4px }
+        .wd200 { width: 200px}
+        .inline-input {display: inline-block; min-width: 140px}
+        .inline-check {display: inline-block}
+        .form-check-inline .form-check {
+            display: inline-block;
+            padding-left: 0px;
+        }
+    </style>
+{% endblock stylesheet %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/reserve4/js/jquery.datetimepicker.full.min.js', 'admin') }}"></script>
+    <script>
+        $(document).ready(function (){
+              jQuery.datetimepicker.setLocale('ja');
+              $("<th class=\"pt-2 pb-2\">予約商品設定</th>").insertAfter($('#ex-product_class table tr th:nth-child(8)'));
+
+              let bChecked;
+              {% for product_class_form in form.product_classes %}
+                    $tdTag = $('<td></td>').append($("#ex-product_class-ext-{{ product_class_form.vars.name }}"));
+                    $tdTag.insertAfter($('#ex-product_class-{{ product_class_form.vars.name }} td:nth-child(8)'));
+                    jQuery('#ex-product_class-ext-{{ product_class_form.vars.name }} input[type=text]').datetimepicker({
+                        datepicker: true,
+                        timepicker: true,
+                        lang: 'ja',
+                        format:'Y/m/d H:i',
+                        start: {{ reserve_start_date_default }}
+                    });
+
+                    jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_isNoUseStartDateTime').change(function() {
+                        jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_startDateTime').prop('disabled', this.checked? true:false);
+                    });
+
+                    jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_isNoUseEndDateTime').change(function() {
+                        jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_endDateTime').prop('disabled', this.checked? true:false);
+                    });
+
+                    jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_isNoUseShippingDateTime').change(function() {
+                        jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_shippingDate').prop('disabled', this.checked? true:false);
+                    });
+
+                    bChecked = jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_isNoUseStartDateTime').prop('checked');
+                    jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_startDateTime').prop('disabled', bChecked? true:false);
+
+                    bChecked = jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_isNoUseEndDateTime').prop('checked');
+                    jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_endDateTime').prop('disabled', bChecked? true:false);
+
+                    bChecked = jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_isNoUseShippingDateTime').prop('checked');
+                    jQuery('#product_class_matrix_product_classes_{{ product_class_form.vars.name }}_reservation_shippingDate').prop('disabled', bChecked? true:false);
+              {% endfor %}
+
+        });
+    </script>
+{% endblock javascript %}
+
+
+{% for product_class_form in form.product_classes %}
+    <div class= "align-middle product-class-ext" id="ex-product_class-ext-{{ product_class_form.vars.name }}">
+        <div class= "form-row">
+            <div style= "padding-left: 4px">
+                {{ form_widget(product_class_form.reservation_isAllowed) }}
+                {{ form_errors(product_class_form.reservation_isAllowed) }}
+            </div>
+        </div>
+        <div class= "form-row">
+            <div class= "col-8">
+                {{ form_widget(product_class_form.reservation_startDateTime, { 'attr': { 'class': 'inline-input', 'placeholder': '予約開始日'}}) }}
+                {{ form_errors(product_class_form.reservation_startDateTime) }}
+            </div>
+            <div class= "col-auto">
+                <div class= "form-check form-check-inline">
+                    {{ form_widget(product_class_form.reservation_isNoUseStartDateTime, { 'attr': { 'class': 'inline-check'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class= "form-row">
+            <div class= "col-8">
+                {{ form_widget(product_class_form.reservation_endDateTime, { 'attr': { 'class': 'inline-input', 'placeholder': '予約終了日'}}) }}
+                {{ form_errors(product_class_form.reservation_endDateTime) }}
+            </div>
+            <div class= "col-auto">
+                <div class= "form-check form-check-inline">
+                    {{ form_widget(product_class_form.reservation_isNoUseEndDateTime, { 'attr': { 'class': 'inline-check'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class= "form-row">
+            <div class= "col-8">
+                {{ form_widget(product_class_form.reservation_shippingDate, { 'attr': { 'class': 'inline-input', 'placeholder': '発送予定日'}}) }}
+                {{ form_errors(product_class_form.reservation_shippingDate) }}
+            </div>
+            <div class= "col-auto">
+                <div class= "form-check form-check-inline">
+                    {{ form_widget(product_class_form.reservation_isNoUseShippingDateTime, { 'attr': { 'class': 'inline-check'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+

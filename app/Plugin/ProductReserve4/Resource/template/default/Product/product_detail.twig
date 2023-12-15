@@ -1,0 +1,144 @@
+{% if productreserve4_reserve_status != constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_NORMAL') %}
+
+<div class="productreserve4-comment">
+    <p class="reservation4-comment" id="reservation4-comment{{ productreserve4_detail.product_id }}">
+        <span class="reservation4-shipping-date">発送予定日：{{ productreserve4_detail.shipping_date }} </span>
+        {% if productreserve4_detail.start_date and productreserve4_detail.end_date %}
+            (予約受付期間 {{ productreserve4_detail.start_date }} ～ 予約受付期間 {{ productreserve4_detail.end_date }})
+        {% elseif productreserve4_detail.start_date %}
+            (予約受付期間 {{ productreserve4_detail.start_date }}～ )
+        {% elseif productreserve4_detail.end_date %}
+            (予約受付期間 {{ productreserve4_detail.end_date }}まで )
+        {% endif %}
+    </p>
+</div>
+
+<script>
+    $(function () {
+        let status_reserve = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE') }};
+        let status_reserve_before = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE_BEFORE') }};
+        let status_reserve_end = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE_END') }};
+        let product_id = {{ productreserve4_detail.product_id }};
+        let product_reserve_status = {{ productreserve4_detail.product_reserve_status }};
+
+
+        $('.productreserve4-comment').insertAfter($('.ec-productRole__tags'));
+        if( product_reserve_status == status_reserve ) {
+            $('.add-cart').addClass("reservation4-add-cart").html("予約する");
+        } else if( product_reserve_status == status_reserve_before || product_reserve_status == status_reserve_end ) {
+            if( product_reserve_status == status_reserve_end ) {
+                $('.add-cart').addClass("reservation4-add-cart-disabled").prop('disabled', true).html("予約受付終了");
+            } else {
+                $('.add-cart').addClass("reservation4-add-cart-disabled").prop('disabled', true).html("予約する");
+            }
+        }
+
+        $('#form1 .ec-select select').on('change', function() {
+            if( product_reserve_status == status_reserve ) {
+                $('.add-cart').addClass("reservation4-add-cart").html("予約する");
+            } else if( product_reserve_status == status_reserve_before || product_reserve_status == status_reserve_end ) {
+                if( product_reserve_status == status_reserve_end ) {
+                    $('.add-cart').addClass("reservation4-add-cart-disabled").prop('disabled', true).html("予約受付終了");
+                } else {
+                    $('.add-cart').addClass("reservation4-add-cart-disabled").prop('disabled', true).html("予約する");
+                }
+            }
+        });
+
+    });
+</script>
+
+<style type="text/css">
+    .reservation4-comment { font-size: 14px; margin: 10px 0px 0px 0px; color: #000000; }
+    .reservation4-add-cart-disabled, .reservation4-add-cart { background-color: #30AADD ; border-color: #30AADD ;}
+    .reservation4-add-cart:hover { background-color: #15CBFF !important; ; border-color: #15CBFF !important; ;}
+    .reservation4-add-cart-disabled:hover {background-color: #30AADD !important; border-color: #30AADD !important;}
+    .reservation4-shipping-date { color: #000000; font-weight: 600; display: block;}
+    .reservation4-status-end { font-weight: 500; font-size: 24px;}
+</style>
+{% endif %}
+
+{% if productreserve4_has_class_detail  %}
+<div class="hidden">
+    {% for reserve in productreserve4_class_detail %}
+        <p class="reservation4-comment" id="reservation4-class-comment{{ reserve.product_id }}-{{ reserve.product_class_id }}">
+            <span class="reservation4-shipping-date">発送予定日：{{ reserve.shipping_date }} </span>
+            {% if reserve.start_date and reserve.end_date %}
+                (予約受付期間 {{ reserve.start_date }} ～ 予約受付期間 {{ reserve.end_date }})
+            {% elseif reserve.start_date %}
+                (予約受付期間 {{ reserve.start_date }}～ )
+            {% elseif reserve.end_date %}
+                (予約受付期間 {{ reserve.end_date }}まで )
+            {% endif %}
+        </p>
+    {% endfor %}
+</div>
+
+<script>
+    $(function () {
+        let status_reserve = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE') }};
+        let status_reserve_before = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE_BEFORE') }};
+        let status_reserve_end = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE_END') }};
+        let item_product_id = {{ product_id }};
+        let productreserve4_class_list = {{ productreserve4_class_detail|json_encode|raw }}
+
+        // Product Class
+        $('#form1 .ec-select select').on('change', function() {
+
+            $('.add-cart').removeClass("reservation4-add-cart").removeClass('reservation4-add-cart-disabled');
+            $('.ec-productRole__profile p.reservation4-comment').remove();
+
+            let class_category_id1 = $('#classcategory_id1').val();
+            let class_category_id2 = 0;
+            if (class_category_id1 === "") {
+                return;
+            }
+            if ($('#classcategory_id2').length) {
+                class_category_id2 = $('#classcategory_id2').val();
+                if (class_category_id2 === "") {
+                    return;
+                }
+                // console.log('category12 :', class_category_id1, class_category_id2);
+            } else {
+                // console.log('category1 :', class_category_id1);
+            }
+            class_category_id1 = Number(class_category_id1);
+            class_category_id2 = Number(class_category_id2);
+            for (let j in productreserve4_class_list) {
+                let product_class_reserve = productreserve4_class_list[j];
+
+                let product_id = product_class_reserve.product_id;
+                let product_class_id = product_class_reserve.product_class_id;
+                let product_class_category_id1 = product_class_reserve.product_class_category_id1;
+                let product_class_category_id2 = product_class_reserve.product_class_category_id2;
+                let product_reserve_status = product_class_reserve.product_reserve_status;
+
+                if (item_product_id == product_id && product_class_category_id1 == class_category_id1) {
+                    if (class_category_id2 == product_class_category_id2) {
+                        let reserve_info = $('#reservation4-class-comment' + product_id + '-' + product_class_id).clone();
+                        reserve_info.insertAfter($('.ec-productRole__tags'));
+                        if (product_reserve_status == status_reserve) {
+                            $('.add-cart').addClass("reservation4-add-cart").html("予約する");
+                        } else if (product_reserve_status == status_reserve_before || product_reserve_status == status_reserve_end) {
+                            if (product_reserve_status == status_reserve_end) {
+                                $('.add-cart').addClass("reservation4-add-cart-disabled").prop('disabled', true).html("予約受付終了");
+                            } else {
+                                $('.add-cart').addClass("reservation4-add-cart-disabled").prop('disabled', true).html("予約する");
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<style type="text/css">
+    .reservation4-comment { font-size: 14px; margin: 10px 0px 0px 0px; color: #000000; }
+    .reservation4-add-cart-disabled, .reservation4-add-cart { background-color: #30AADD ; border-color: #30AADD ;}
+    .reservation4-add-cart:hover { background-color: #15CBFF !important; ; border-color: #15CBFF !important; ;}
+    .reservation4-add-cart-disabled:hover {background-color: #30AADD !important; border-color: #30AADD !important;}
+    .reservation4-shipping-date { color: #000000; font-weight: 600; display: block;}
+    .reservation4-status-end { font-weight: 500; font-size: 24px;}
+</style>
+{% endif %}

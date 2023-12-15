@@ -130,3 +130,141 @@ margin:0 5px 15px 10px;
         }    
 }
 
+/* CHRISTMAS 2023 */
+
+.ec-layoutRole .ec-layoutRole__contents {max-width:100%;}
+.ec-layoutRole__header {background:#fff;}
+.ec-layoutRole {background:#fff;}
+
+br.sp {display:none;}
+br.pc {display:block;}
+img {width:100%;}
+
+.read {font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 400; font-style: normal;
+text-align:center; font-size:1.5rem; line-height:1.8; padding:35px 0 45px; }
+
+.text_red {color:#ca3535; font-weight:400;}
+
+.top_block {background:url(../../../user_data/img/christmas2023/col02_bk.png); background-size: auto; background-position: top; padding:50px 50px 70px; position: relative; font-family: 'Zen Kaku Gothic New', sans-serif; }
+.kazari01 {position:absolute; left:0; top:-35px; width:11%;}
+.kazari02 {position:absolute; right:10px; top:-35px; width:20%;}
+.kazari03 {position:absolute; left:0; bottom:0; width:11%;}
+
+h2.top_block_title {color:#fff; text-align: center; justify-content: center; width: 100%; font-size:2.4rem; margin:0; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 400;}
+h2.top_block_title .inner-txt {display: inline-block; margin:5px; padding:.3rem .8rem; background:#ca3535;}
+
+.top_block .inner_p {color:#fff; font-size:1.5rem; text-align:left; max-width:740px; margin:0 auto; padding:30px 0 0; line-height:1.8;}
+
+.top_block .inner_p span {display: inline; padding-bottom: 1.1em; background-size: 200% 0.4em;
+background-image: linear-gradient(to right, rgba(189, 0, 0, 0) 50%, rgb(189, 0, 0) 50%);
+transition: background-position 2s ease 0.1s; background-position: left -100% center; background-repeat: repeat no-repeat;
+}
+
+.content_list {font-family: 'Zen Kaku Gothic New', sans-serif; max-width:810px; margin:0 auto; padding:50px 0; overflow: hidden; font-weight: 400;}
+.content_list .inner_left,
+.content_list .inner_right { float:left; }
+
+.content_list li {padding:1rem 1rem 1rem .3rem; font-size:1.5rem; list-style-type: "・"; }
+.content_list li a {display: inline; padding-bottom: 2em; background-size: 200% 0.05em;
+background-image: linear-gradient(to right, rgba(189, 0, 0, 0) 50%, rgb(0, 0, 0) 50%);
+transition: background-position 2s ease 0.1s; background-position: left -100% center; background-repeat: repeat no-repeat;}
+.content_list li a:hover {text-decoration: none;}
+
+.box_frame {width:1040px; margin:0 auto;}
+.box01 {padding:60px 0; position: relative; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 400;}
+.box02 {background:#efeff1; padding:60px 0; position: relative; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 400;}
+.box03 {background:#f4f5f7; color:#1d1e35; padding:60px 0; position: relative; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 400;}
+
+.col_kazari01 {position:absolute; right:30px; top:5px; width:5%;}
+.col_kazari02 {position:absolute; right:30px; top:0; width:9.4%;}
+.col_kazari03 {position:absolute; left: 50%; transform: translateX(-50%); -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); top:0; width:7%;}
+.col_kazari04 {width:392px; position:absolute; left: 50%; bottom:0; transform: translateX(-50%); -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%);}
+
+.btn_box {width:531px; margin:0 auto; padding:0 75px 50px;}
+.btn_box02 {width:531px; margin:0 auto; padding:0 40px 50px;}
+.btn_box03 {width:531px; margin:0 auto; padding:0 40px 25px;}
+.btn_box04 {width:531px; margin:0 auto; padding:0 30px 50px;}
+
+.btn_houseyoga {width:167px; margin-right:20px; float:left;}
+.btn_mamas {width:194px; float:left;}
+.btn_korekarayoga {width:193px; margin-right:20px; float:left;}
+.btn_fromcolor {width:236px; float:left;}
+.btn_mens {width:183px; margin:0 auto; }
+.btn_karadani {width:225px; margin-right:20px; float:left;}
+.btn_teineini {width:225px; float:left;}
+.btn_maternity {width:158px; margin-right:20px; float:left;}
+.btn_relax {width:173px; float:left;}
+
+.banner_waku {width:860px; margin:0 auto;}
+.bn_block-a {width:416px; margin:0 5px 10px 5px; float:left;}
+.bn_block-b {width:416px; margin:0 0 10px 5px; float:left;}
+.bn_block-korc {width:416px; margin:0 auto;}
+
+h3.col_title {width:531px; margin:0 auto;}
+.waku {overflow: hidden; padding:15px 0 30px;}
+.waku .inner-block01 .pct {width:46%; margin-right:30px; float:left;}
+
+.waku .txt_box {width:460px; float:left; line-height:1.8; padding-top:1.1rem;}
+.waku h4 {font-weight: 500; font-size:2rem;}
+.waku .inner-block02 {float:right;}
+.waku .inner-block02 .pct {width:36%; height:auto; margin:0 30px 0 160px; float:left;}
+.waku .inner-block02 img.corner {width:100%; border-radius:0 0 23% 0;}
+.banner {width:416px; margin:0 auto;}
+.waku .inner-block03 {width:450px; font-size:1.6rem; margin:0 auto; padding:60px 0; text-align: center;}
+
+@media only screen and (max-width: 450px) {
+	br.sp {display:block;}
+	br.pc {display:none;}
+	
+	.read { font-size:1.4rem; padding:35px 3rem 45px; }
+
+	.top_block {background-size: auto; padding:40px 10px 90px; }
+
+	.kazari01 {position:absolute; left:0; top:-25px; width:30%;}
+	.kazari02 {position:absolute; right:-10px; top:-25px; width:40%;}
+	.kazari03 {position:absolute; left:0; bottom:0; width:26%;}
+
+	h2.top_block_title {font-size:2rem; }
+	.top_block .inner_p {font-size:1.45rem; width:100%;  padding:30px 6px 0; line-height:1.8;}
+
+	.content_list {width:100%; padding:30px 0; }
+	.content_list .inner_left,
+	.content_list .inner_right { float:none; }
+	.content_list ul {padding:0 0 0 25px; margin-bottom:0;}
+	.content_list li {padding: 1rem 1rem 1rem .2rem; }
+	
+	.col_kazari01 {right:30px; top:5px; width:14%;}
+	.col_kazari02 {right:28px; top:0; width:20%;}
+	.col_kazari03 {width:24%;}
+	.col_kazari04 {width:90%; }
+
+	.box_frame {width:100%; margin:0 auto;}
+	.box01 {padding:50px 0 40px; }
+	.box02 {padding:60px 0 40px; }
+	h3.col_title {width:100%; padding:0 30px;}
+
+	.btn_box, .btn_box02, .btn_box03, .btn_box04 {width:100%; padding:0 0 10px; }
+
+	.btn_houseyoga,
+	.btn_mamas,
+	.btn_korekarayoga,
+	.btn_fromcolor,
+	.btn_mens,
+	.btn_karadani,
+	.btn_teineini,
+	.btn_maternity,
+	.btn_relax {margin:0 auto 7px; float:none;}
+
+	.waku .inner-block01 .pct { width: 100%; margin: 0px; float: none;}
+	.waku .inner-block02 .pct { width: 90%; margin: 0 auto; float: none;}
+	.waku h4 {font-size: 1.6rem; }
+	.waku .txt_box { width: 100%; float: none; line-height: 1.8; padding: 15px;}
+
+	.banner { width: 92%; margin: 0 auto; }
+	.banner_waku {width:92%; margin:0 auto;}
+	.bn_block-a,
+	.bn_block-b,
+	.bn_block-korc {width: 100%; margin: 0 auto; margin:0 none;}
+
+	.waku .inner-block03 {width:100%; font-size:1.6rem; line-height:1.8; padding:40px 0;}
+}

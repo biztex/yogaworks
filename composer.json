@@ -43,6 +43,7 @@
         "ec-cube/orderbulkdelete4": "^1.1",
         "ec-cube/plugin-installer": "^2.0",
         "ec-cube/postcarrier4": "^4.3",
+        "ec-cube/productreserve4": "^1.0",
         "ec-cube/productreview4": "^4.1",
         "ec-cube/quantitydiscount": "^1.2",
         "ec-cube/recommend4": "^4.1",

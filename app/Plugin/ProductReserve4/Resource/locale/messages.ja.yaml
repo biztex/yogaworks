@@ -1,0 +1,16 @@
+plugin_reserve4.front.cart_exist_normal: 一般商品がカートにある場合は予約できません。
+plugin_reserve4.front.cart_exist_reserve: 予約商品がカートにある場合は一般商品を注文できません。
+plugin_reserve4.front.cart_invalid_request: カートへの追加に失敗しました。
+plugin_reserve4.admin.require_start_date: 予約開始日を入力してください。
+plugin_reserve4.admin.require_end_date: 予約終了日を入力してください。
+plugin_reserve4.admin.invalid_end_date: 予約終了日を正確に入力してください。
+plugin_reserve4.admin.require_shipping_date: 発送予定日を入力してください。
+plugin_reserve4.admin.invalid_shipping_date: 発送予定日を正確に入力してください。
+plugin_reserve4.admin.no_use: 指定なし
+plugin_reserve4.admin.no_shipping_date: 未定
+plugin_reserve4.product_class.require_start_date: 予約開始日を入力してください。
+plugin_reserve4.product_class.require_end_date: 予約終了日を入力してください。
+plugin_reserve4.product_class.invalid_end_date: 予約終了日を正確に入力してください。
+plugin_reserve4.product_class.require_shipping_date: 発送予定日を入力してください。
+plugin_reserve4.product_class.invalid_shipping_date: 発送予定日を正確に入力してください。
+

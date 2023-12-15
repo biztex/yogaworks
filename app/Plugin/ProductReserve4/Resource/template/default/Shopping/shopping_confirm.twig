@@ -1,0 +1,56 @@
+{% if not productreserve4_is_normal_order %}
+
+<script>
+    $(function () {
+        let productreserve4_list = {{ productreserve4_list|json_encode|raw }};
+        let status_normal = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_NORMAL') }};
+        let status_reserve = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE') }};
+        let status_reserve_before = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE_BEFORE') }};
+        let status_reserve_end = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::STATUS_RESERVE_END') }};
+
+        let ERROR_SUCCESS_NORMAL = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::ERROR_SUCCESS_NORMAL') }};
+        let ERROR_SUCCESS_RESERVE = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::ERROR_SUCCESS_RESERVE') }};
+        let ERROR_CANT_ORDER = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::ERROR_CANT_ORDER') }};
+        let ERROR_MIXED = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::ERROR_MIXED') }};
+        let ERROR_CANT_RESERVE = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::ERROR_CANT_RESERVE') }};
+        let ERROR_UNKNOWN = {{ constant('Plugin\\ProductReserve4\\Service\\ProductReserveService::ERROR_UNKNOWN') }};
+        let reserve_status = {{ productreserve4_reserve_status }};
+
+        let obj = $('.ec-blockBtn--action').addClass("reservation4-add-cart").html("予約する");
+        if(reserve_status != ERROR_SUCCESS_RESERVE) {
+            obj.addClass("reservation4-add-cart-disabled").attr("disabled", true);
+            let message = '';
+            if(reserve_status == ERROR_CANT_RESERVE || reserve_status == ERROR_MIXED) {
+                message = '一般商品がカートにある場合は予約できません。';
+            } else {
+                message = '予約商品がカートにある場合は一般商品を注文できません。';
+            }
+            $('.ec-orderDelivery__title').after("<div class='form-group'>\n" +
+                "<span class='ec-color-red'>" + message + "</span>\n" +
+                "</div>");
+        }
+
+        for(let i in productreserve4_list) {
+            let reserve = productreserve4_list[i];
+            let nth = parseInt(i)+1;
+            if(reserve.reserve_status == status_reserve) {
+                $( ".ec-orderDelivery__item ul li:nth-child("+(nth)+") div.ec-imageGrid__content").append('<p>発送予定日：'+ reserve.shipping_date + '</p>');
+            } else if(reserve.reserve_status == status_reserve_end) {
+                $( ".ec-orderDelivery__item ul li:nth-child("+(nth)+") div.ec-imageGrid__content").append('<p class="ec-color-red">予約終了</p>');
+            } else {
+                $(".ec-orderDelivery__item ul li:nth-child(" + (nth) + ") div.ec-imageGrid__content").append('<p class="ec-color-red">予約不可</p>');
+            }
+            // console.log(nth, reserve);
+        }
+    });
+</script>
+
+<style type="text/css">
+    .reservation4-comment { font-size: 14px; margin: 10px 0px 0px 0px; color: #000000; }
+    .reservation4-add-cart-disabled, .reservation4-add-cart { background-color: #30AADD !important; border-color: #30AADD  !important;}
+    .reservation4-add-cart:hover { background-color: #15CBFF !important; ; border-color: #15CBFF !important; ;}
+    .reservation4-add-cart-disabled:hover {background-color: #30AADD !important; border-color: #30AADD !important;}
+    .reservation4-shipping-date { color: #000000; font-weight: 600; display: block;}
+    .reservation4-status-end { font-weight: 500; font-size: 24px;}
+</style>
+{% endif %}
