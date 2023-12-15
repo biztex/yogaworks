@@ -91,7 +91,6 @@ class ProductClassController extends AbstractController
         if (!$Product) {
             throw new NotFoundHttpException();
         }
-        dd($Product);
 
         $ClassName1 = null;
         $ClassName2 = null;
@@ -102,6 +101,8 @@ class ProductClassController extends AbstractController
                 ->filter(function ($pc) {
                     return $pc->getClassCategory1() !== null;
                 });
+
+                dd($ProductClasses);
 
             // 設定されている規格名1, 2を取得(商品規格の規格分類には必ず同じ値がセットされている)
             $FirstProductClass = $ProductClasses->first();
@@ -119,6 +120,7 @@ class ProductClassController extends AbstractController
                 ['product_classes_exist' => true]);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+
                 // フォームではtokenを無効化しているのでここで確認する.
                 $this->isTokenValid();
 
@@ -177,7 +179,6 @@ class ProductClassController extends AbstractController
             }
         }
 
-//dump($form->createView());die();
         return [
             'Product' => $Product,
             'form' => $form->createView(),
