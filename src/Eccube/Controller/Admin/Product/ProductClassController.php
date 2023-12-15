@@ -117,9 +117,9 @@ class ProductClassController extends AbstractController
             $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
                 ['product_classes_exist' => true]);
             $form->handleRequest($request);
-            dd("AAA");
 
             if ($form->isSubmitted() && $form->isValid()) {
+                dd("AAA");
 
                 // フォームではtokenを無効化しているのでここで確認する.
                 $this->isTokenValid();
