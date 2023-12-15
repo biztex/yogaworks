@@ -87,8 +87,7 @@ class ProductClassController extends AbstractController
      */
     public function index(Request $request, $id, CacheUtil $cacheUtil)
     {
-//dump(ini_get("max_input_vars"));die();
-
+        dd($request);
         $Product = $this->findProduct($id);
         if (!$Product) {
             throw new NotFoundHttpException();
