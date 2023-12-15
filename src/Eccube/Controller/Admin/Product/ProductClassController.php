@@ -118,66 +118,65 @@ class ProductClassController extends AbstractController
                 ['product_classes_exist' => true]);
             $form->handleRequest($request);
 
-            // if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                
+                // フォームではtokenを無効化しているのでここで確認する.
+                $this->isTokenValid();
 
-            //     // フォームではtokenを無効化しているのでここで確認する.
-            //     $this->isTokenValid();
+                $this->saveProductClasses($Product, $form['product_classes']->getData());
 
-            //     $this->saveProductClasses($Product, $form['product_classes']->getData());
+                $this->addSuccess('admin.common.save_complete', 'admin');
 
-            //     $this->addSuccess('admin.common.save_complete', 'admin');
+                $cacheUtil->clearDoctrineCache();
 
-            //     $cacheUtil->clearDoctrineCache();
+                if ($request->get('return_product_list')) {
+                    return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId(), 'return_product_list' => true]);
+                }
 
-            //     if ($request->get('return_product_list')) {
-            //         return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId(), 'return_product_list' => true]);
-            //     }
+                return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId()]);
+            }
+        } else {
+            // 規格なし商品
+            $form = $this->createMatrixForm();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // フォームではtokenを無効化しているのでここで確認する.
+                $this->isTokenValid();
 
-            //     return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId()]);
-            // }
-        } 
-        // else {
-        //     // 規格なし商品
-        //     $form = $this->createMatrixForm();
-        //     $form->handleRequest($request);
-        //     if ($form->isSubmitted() && $form->isValid()) {
-        //         // フォームではtokenを無効化しているのでここで確認する.
-        //         $this->isTokenValid();
+                // 登録,更新ボタンが押下されたかどうか.
+                $isSave = $form['save']->isClicked();
 
-        //         // 登録,更新ボタンが押下されたかどうか.
-        //         $isSave = $form['save']->isClicked();
+                // 規格名1/2から商品規格の組み合わせを生成する.
+                $ClassName1 = $form['class_name1']->getData();
+                $ClassName2 = $form['class_name2']->getData();
+                $ProductClasses = $this->createProductClasses($ClassName1, $ClassName2);
 
-        //         // 規格名1/2から商品規格の組み合わせを生成する.
-        //         $ClassName1 = $form['class_name1']->getData();
-        //         $ClassName2 = $form['class_name2']->getData();
-        //         $ProductClasses = $this->createProductClasses($ClassName1, $ClassName2);
+                // 組み合わせのフォームを生成する.
+                // class_name1, class_name2が取得できるのがsubmit後のため, フォームを再生成して組み合わせ部分を構築している
+                // submit後だと, フォーム項目の追加やデータ変更が許可されないため.
+                $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
+                    ['product_classes_exist' => true]);
 
-        //         // 組み合わせのフォームを生成する.
-        //         // class_name1, class_name2が取得できるのがsubmit後のため, フォームを再生成して組み合わせ部分を構築している
-        //         // submit後だと, フォーム項目の追加やデータ変更が許可されないため.
-        //         $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
-        //             ['product_classes_exist' => true]);
-
-        //         // 登録ボタン押下時
+                // 登録ボタン押下時
 				
-        //         if ($isSave) {
-        //             $form->handleRequest($request);
-        //             if ($form->isSubmitted() && $form->isValid()) {
-        //                 $this->saveProductClasses($Product, $form['product_classes']->getData());
+                if ($isSave) {
+                    $form->handleRequest($request);
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        $this->saveProductClasses($Product, $form['product_classes']->getData());
 
-        //                 $this->addSuccess('admin.common.save_complete', 'admin');
+                        $this->addSuccess('admin.common.save_complete', 'admin');
 
-        //                 $cacheUtil->clearDoctrineCache();
+                        $cacheUtil->clearDoctrineCache();
 
-        //                 if ($request->get('return_product_list')) {
-        //                     return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId(), 'return_product_list' => true]);
-        //                 }
+                        if ($request->get('return_product_list')) {
+                            return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId(), 'return_product_list' => true]);
+                        }
 
-        //                 return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId()]);
-        //             }
-        //         }
-        //     }
-        // }
+                        return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId()]);
+                    }
+                }
+            }
+        }
 
 
         return [
