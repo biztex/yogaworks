@@ -87,11 +87,11 @@ class ProductClassController extends AbstractController
      */
     public function index(Request $request, $id, CacheUtil $cacheUtil)
     {
-        dd($request);
         $Product = $this->findProduct($id);
         if (!$Product) {
             throw new NotFoundHttpException();
         }
+        dd($Product);
 
         $ClassName1 = null;
         $ClassName2 = null;
