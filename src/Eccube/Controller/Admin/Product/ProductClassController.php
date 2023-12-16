@@ -92,8 +92,6 @@ class ProductClassController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        dd($Product);
-
         $ClassName1 = null;
         $ClassName2 = null;
 
@@ -119,6 +117,8 @@ class ProductClassController extends AbstractController
             $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
                 ['product_classes_exist' => true]);
             $form->handleRequest($request);
+
+            dd('eee');
 
             if ($form->isSubmitted() && $form->isValid()) {
                 
