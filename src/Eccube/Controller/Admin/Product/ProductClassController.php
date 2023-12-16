@@ -158,7 +158,6 @@ class ProductClassController extends AbstractController
                 // submit後だと, フォーム項目の追加やデータ変更が許可されないため.
                 $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
                     ['product_classes_exist' => true]);
-                    dd($form);
 
                 // 登録ボタン押下時
 				
@@ -416,6 +415,7 @@ class ProductClassController extends AbstractController
         array $options = []
     ) {
         $options = array_merge(['csrf_protection' => false], $options);
+        dd($options);
         $builder = $this->formFactory->createBuilder(ProductClassMatrixType::class, [
             'product_classes' => $ProductClasses,
             'class_name1' => $ClassName1,
