@@ -420,7 +420,7 @@ class ProductClassController extends AbstractController
             'class_name1' => $ClassName1,
             'class_name2' => $ClassName2,
         ], $options);
-        dd($builder);
+        dd($builder->getForm());
 
         return $builder->getForm();
     }
