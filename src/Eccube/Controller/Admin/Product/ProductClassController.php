@@ -113,12 +113,12 @@ class ProductClassController extends AbstractController
                 $this->createProductClasses($ClassName1, $ClassName2),
                 $ProductClasses);
 
+                dd('eee');
+
             // 組み合わせのフォームを生成する.
             $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
                 ['product_classes_exist' => true]);
             $form->handleRequest($request);
-
-            dd('eee');
 
             if ($form->isSubmitted() && $form->isValid()) {
                 
