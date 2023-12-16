@@ -113,7 +113,7 @@ class ProductClassController extends AbstractController
                 $this->createProductClasses($ClassName1, $ClassName2),
                 $ProductClasses);
 
-                dd($ProductClasses, $ClassName1, $ClassName2, $request);
+                // dd($ProductClasses, $ClassName1, $ClassName2, $request);
 
             // 組み合わせのフォームを生成する.
             $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
