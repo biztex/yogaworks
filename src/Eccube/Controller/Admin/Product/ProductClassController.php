@@ -87,6 +87,8 @@ class ProductClassController extends AbstractController
      */
     public function index(Request $request, $id, CacheUtil $cacheUtil)
     {
+dump(ini_get("max_input_vars"));die();
+
         $Product = $this->findProduct($id);
         if (!$Product) {
             throw new NotFoundHttpException();
@@ -113,13 +115,10 @@ class ProductClassController extends AbstractController
                 $this->createProductClasses($ClassName1, $ClassName2),
                 $ProductClasses);
 
-                // dd($ProductClasses, $ClassName1, $ClassName2, $request);
-
             // 組み合わせのフォームを生成する.
             $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
                 ['product_classes_exist' => true]);
             $form->handleRequest($request);
-
             if ($form->isSubmitted() && $form->isValid()) {
                 // フォームではtokenを無効化しているのでここで確認する.
                 $this->isTokenValid();
@@ -131,7 +130,6 @@ class ProductClassController extends AbstractController
                 $cacheUtil->clearDoctrineCache();
 
                 if ($request->get('return_product_list')) {
-
                     return $this->redirectToRoute('admin_product_product_class', ['id' => $Product->getId(), 'return_product_list' => true]);
                 }
 
@@ -156,17 +154,8 @@ class ProductClassController extends AbstractController
                 // 組み合わせのフォームを生成する.
                 // class_name1, class_name2が取得できるのがsubmit後のため, フォームを再生成して組み合わせ部分を構築している
                 // submit後だと, フォーム項目の追加やデータ変更が許可されないため.
-                // $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
-                //     ['product_classes_exist' => true]);
-
-                $options = array_merge(['csrf_protection' => false], ['product_classes_exist' => true]);
-                $builder = $this->formFactory->createBuilder(ProductClassMatrixType::class, [
-                    'product_classes' => $ProductClasses,
-                    'class_name1' => $ClassName1,
-                    'class_name2' => $ClassName2,
-                ], $options);
-
-                $form = $builder->getForm();
+                $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
+                    ['product_classes_exist' => true]);
 
                 // 登録ボタン押下時
 				
@@ -189,7 +178,7 @@ class ProductClassController extends AbstractController
             }
         }
 
-
+//dump($form->createView());die();
         return [
             'Product' => $Product,
             'form' => $form->createView(),
@@ -429,9 +418,8 @@ class ProductClassController extends AbstractController
             'class_name1' => $ClassName1,
             'class_name2' => $ClassName2,
         ], $options);
-        $form = $builder->getForm();
 
-        return $form;
+        return $builder->getForm();
     }
 
     /**
