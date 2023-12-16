@@ -153,12 +153,12 @@ class ProductClassController extends AbstractController
                 $ClassName2 = $form['class_name2']->getData();
                 $ProductClasses = $this->createProductClasses($ClassName1, $ClassName2);
 
-                dd($ProductClasses);
                 // 組み合わせのフォームを生成する.
                 // class_name1, class_name2が取得できるのがsubmit後のため, フォームを再生成して組み合わせ部分を構築している
                 // submit後だと, フォーム項目の追加やデータ変更が許可されないため.
                 $form = $this->createMatrixForm($ProductClasses, $ClassName1, $ClassName2,
                     ['product_classes_exist' => true]);
+                    dd($form);
 
                 // 登録ボタン押下時
 				
