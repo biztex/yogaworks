@@ -415,12 +415,12 @@ class ProductClassController extends AbstractController
         array $options = []
     ) {
         $options = array_merge(['csrf_protection' => false], $options);
-        dd($options);
         $builder = $this->formFactory->createBuilder(ProductClassMatrixType::class, [
             'product_classes' => $ProductClasses,
             'class_name1' => $ClassName1,
             'class_name2' => $ClassName2,
         ], $options);
+        dd($builder);
 
         return $builder->getForm();
     }
