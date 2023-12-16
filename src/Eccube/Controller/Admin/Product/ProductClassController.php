@@ -92,6 +92,8 @@ class ProductClassController extends AbstractController
             throw new NotFoundHttpException();
         }
 
+        dd($Product);
+
         $ClassName1 = null;
         $ClassName2 = null;
 
