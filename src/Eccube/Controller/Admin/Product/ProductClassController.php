@@ -87,7 +87,6 @@ class ProductClassController extends AbstractController
      */
     public function index(Request $request, $id, CacheUtil $cacheUtil)
     {
-dump(ini_get("max_input_vars"));die();
 
         $Product = $this->findProduct($id);
         if (!$Product) {
